@@ -1,302 +1,325 @@
 //
 //  Created by Pavel Sharanda on 20.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
+//  Copyright © 2016. All rights reserved.
 //
 
 import Foundation
 
-public extension Observable {
+extension Observable {
     
-    @discardableResult
-    public func filter(_ isIncluded: @escaping (T) -> Bool) -> Observable<T> {
+    public func filter(_ isIncluded: @escaping (ValueType) -> Bool) -> Observer<ValueType> {
         return flatMap {
             isIncluded($0) ? $0 : nil
         }
     }
-
-    @discardableResult
-    public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observable<T> {
-        
-        let signal = Signal<T>()
-        
-        var lastUpdateTime = Date.distantPast
-        var lastIgnoredValue: T? = nil
-        
-        subscribe { result in
-            let newDate = Date()
-            lastIgnoredValue = result
-            if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
-                lastUpdateTime = newDate
-                lastIgnoredValue = nil
-                signal.update(result)
-                
-                if latest {
-                    _ = JetPackUtils.after(timeInterval, queue: queue) { [weak signal] in
-                        guard let signal = signal, let lastIgnoredValue = lastIgnoredValue  else { return }
-                        signal.update(lastIgnoredValue)
-                    }
-                }
+    
+    public func forEach(_ f: @escaping (ValueType) -> Void) -> Observer<ValueType> {
+        return Observer { observer in
+            return self.subscribe { result in
+                f(result)
+                observer(result)
             }
         }
-        
-        return signal
     }
-    
-    @discardableResult
-    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observable<T> {
-        
-        let signal = Signal<T>()
+
+    public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
+        var lastUpdateTime = Date.distantPast
+        var lastIgnoredValue: ValueType? = nil
         
         var lastAfterCancel: (()->Void)? = nil
         
-        subscribe { result in
-            lastAfterCancel?()
-            
-            lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) { [weak signal] in
-                guard let signal = signal  else { return }
-                signal.update(result)
-            }
+        return Observer { observer in
+            return self.subscribe { result in
+                let newDate = Date()
+                lastIgnoredValue = result
+                if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
+                    lastUpdateTime = newDate
+                    lastIgnoredValue = nil
+                    observer(result)
+                    
+                    if latest {
+                        lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) {
+                            guard let lastIgnoredValue = lastIgnoredValue  else { return }
+                            observer(lastIgnoredValue)
+                        }
+                    }
+                }
+            }.with(disposable: DelegateDisposable {
+                lastAfterCancel?()
+                lastAfterCancel = nil
+            })
         }
-        return signal
     }
-    
-    @discardableResult
-    public func skip(x: Int) -> Observable<T> {
-        let signal = Signal<T>()
-        var total = 0
-        subscribe { result in
-            if total >= x {
-                signal.update(result)
-            }
-            total += 1
-        }
-        return signal
-    }
-    
-    @discardableResult
-    public func skip(last x: Int) -> Observable<T> {
-        let signal = Signal<T>()
-        var buffer: [T] = []
-        subscribe { result in
-            
-            buffer.append(result)
-            
-            if buffer.count > x {
-                signal.update(buffer[0])
-                buffer.removeFirst()
-            }            
-        }
-        return signal
-    }
-    
-    @discardableResult
-    public func skip<U>(until: Observable<U>) -> Observable<T> {
-        let signal = Signal<T>()
+
+    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {                
+        var lastAfterCancel: (()->Void)? = nil
         
+        return Observer { observer in
+            return self.subscribe { result in
+                lastAfterCancel?()
+                
+                lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) {
+                    observer(result)
+                }
+            }.with(disposable: DelegateDisposable {
+                lastAfterCancel?()
+                lastAfterCancel = nil
+            })
+        }
+    }
+
+    
+    public func skip(x: Int) -> Observer<ValueType> {
+        var total = 0
+        return Observer { observer in
+            return self.subscribe { result in
+                if total >= x {
+                    observer(result)
+                }
+                total += 1
+            }
+        }
+    }
+    
+    public func skip(last x: Int) -> Observer<ValueType> {
+        var buffer: [ValueType] = []
+        return Observer { observer in
+            return self.subscribe { result in
+                buffer.append(result)
+                
+                if buffer.count > x {
+                    observer(buffer[0])
+                    buffer.removeFirst()
+                }
+            }
+        }
+    }
+    
+    public func skip<U: Observable>(until: U) -> Observer<ValueType> {
         var canEmit = false
         
-        subscribe { result in
-            if canEmit {
-                signal.update(result)
-            }
-        }
-        
-        until.subscribe { _ in
+        let disposable = until.subscribe { _ in
             canEmit = true
         }
         
-        return signal
+        return Observer { observer in
+            return self.subscribe { result in
+                if canEmit {
+                    observer(result)
+                }
+            }.with(disposable: disposable)
+        }
     }
-    
-    @discardableResult
-    public func skip(while f: @escaping (T)->Bool) -> Observable<T> {
-        let signal = Signal<T>()
-        
+
+    public func skip(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
         var canEmit = false
-        subscribe { result in
-            
-            if !canEmit {
-                canEmit = f(result)
-            }
-            
-            if canEmit {
-                signal.update(result)
+        
+        return Observer { observer in
+            return self.subscribe { result in
+                if !canEmit {
+                    canEmit = f(result)
+                }
+                
+                if canEmit {
+                    observer(result)
+                }
             }
         }
-        
-        return signal
     }
-    
-    public var first: Observable<T> {
+
+    public var first: Observer<ValueType> {
         return take(first: 1)
     }
     
-    @discardableResult
-    public func take(first: Int) -> Observable<T> {
-        let signal = Signal<T>()
-        
+    public func take(first: Int) -> Observer<ValueType> {
         var counter = 0
         
-        subscribe { result in
-            if counter < first {
-                signal.update(result)
+        return Observer { observer in
+            return self.subscribe { result in
+                if counter < first {
+                    observer(result)
+                }
+                counter += 1
             }
-            counter += 1
         }
-        return signal
     }
     
-    @discardableResult
-    public func take<U>(until: Observable<U>) -> Observable<T> {
-        let signal = Signal<T>()
-        
+    public func take<U: Observable>(until: U) -> Observer<ValueType> {
         var canEmit = true
         
-        subscribe { result in
-            if canEmit {
-                signal.update(result)
-            }
-        }
-        
-        until.subscribe { _ in
+        let disposable = until.subscribe { _ in
             canEmit = false
         }
         
-        return signal
+        return Observer { observer in
+            return self.subscribe { result in
+                if canEmit {
+                    observer(result)
+                }
+            }.with(disposable: disposable)
+        }
     }
-    
-    @discardableResult
-    public func take(while f: @escaping (T)->Bool) -> Observable<T> {
-        let signal = Signal<T>()
-        
+
+    public func take(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
         var canEmit = true
-        subscribe { result in
-            
-            if canEmit {
-                canEmit = f(result)
-            }
-            
-            if canEmit {
-                signal.update(result)
+        
+        return Observer { observer in
+            return self.subscribe { result in
+                if !canEmit {
+                    canEmit = f(result)
+                }
+                
+                if canEmit {
+                    observer(result)
+                }
             }
         }
-        
-        return signal
     }
     
-    @discardableResult
-    public func find(_ f: @escaping (T) -> Bool) -> Observable<T> {
-        let signal = Signal<T>()
+    public func find(_ f: @escaping (ValueType) -> Bool) -> Observer<ValueType> {
         var found = false
-        subscribe { result in
-            if f(result) && !found {
-                found = true
-                signal.update(result)
+
+        return Observer { observer in
+            return self.subscribe { result in
+                if f(result) && !found {
+                    found = true
+                    observer(result)
+                }
             }
         }
-        return signal
     }
-    
-    @discardableResult
-    public func element(at index: Int) -> Observable<T> {
-        let signal = Signal<T>()
+
+    public func element(at index: Int) -> Observer<ValueType> {
         var currentIndex = 0
-        subscribe { result in
-            if currentIndex == index {
-                signal.update(result)
+        return Observer { observer in
+            return self.subscribe { result in
+                if currentIndex == index {
+                    observer(result)
+                }
+                currentIndex += 1
             }
-            currentIndex += 1
         }
-        return signal
     }
     
-    @discardableResult
-    public func pausable(_ controller: Observable<Bool>) -> Observable<T> {
-        let signal = Signal<T>()
+    public func pausable<U: Observable>(_ controller: U) -> Observer<ValueType> where U.ValueType == Bool {
+        var canEmit = false
         
-        subscribe {[weak controller] a in
-            if let canUpdate = controller?.lastValue, canUpdate {
-                signal.update(a)
-            }
+        let disposable = controller.subscribe { result in
+            canEmit = result
         }
         
-        return signal
+        return Observer { observer in
+            return self.subscribe { result in
+                if canEmit {
+                    observer(result)
+                }
+            }.with(disposable: disposable)
+        }
     }
-    
-    @discardableResult
-    public func pausableBuffered(_ controller: Observable<Bool>) -> Observable<T> {
-        let signal = Signal<T>()
+
+    public func pausableBuffered<U: Observable>(_ controller: U) -> Observer<ValueType> where U.ValueType == Bool {
+        var canEmit = false
+        var buffer: [ValueType] = []
         
-        var buffer: [T] = []
-        
-        subscribe {[weak controller] a in
-            if let canUpdate = controller?.lastValue, canUpdate {
-                buffer.forEach {signal.update($0)}
-                buffer.removeAll()
-                signal.update(a)
-            } else {
-                buffer.append(a)
-            }
+        let disposable = controller.subscribe { result in
+            canEmit = result
         }
         
-        return signal
+        return Observer { observer in
+            return self.subscribe { result in
+                if canEmit {
+                    buffer.forEach {observer($0)}
+                    buffer.removeAll()
+                    observer(result)
+                } else {
+                    buffer.append(result)
+                }
+
+            }.with(disposable: disposable)
+        }
     }
 }
 
-public extension Observable where T: Equatable {
+public extension Observable where ValueType: Equatable {
     
-    public var distinct: Observable<T> {
-        let signal = Signal<T>()
+    public var distinct: Observer<ValueType> {
+        var lastValue: ValueType?
         
-        subscribe { result in
-            if signal.lastValue != result {
-                signal.update(result)
+        return flatMap { result in
+            if let lv = lastValue {
+                return (lv != result) ? lv : nil
+            } else {
+                lastValue = result
+                return result
             }
         }
-        return signal
     }
     
-    @discardableResult
-    public func equal(_ value: T) -> Observable<T> {
+    public func equal(_ value: ValueType) -> Observer<ValueType> {
         return filter {
             ($0 == value)
         }
     }
     
-    @discardableResult
-    public func contains(where f: @escaping (T)->Bool) -> Observable<Bool> {
-        let signal = Signal<Bool>()
-        
+    public func contains(where f: @escaping (ValueType)->Bool) -> Observer<Bool> {
         var val = false
         
-        subscribe { result in
-            if !val && f(result) {
-                val = true
-                signal.update(val)
+        return Observer<Bool> { observer in
+            return self.subscribe { result in
+                if !val && f(result) {
+                    val = true
+                    observer(val)
+                }
             }
         }
-        return signal
     }
     
-    @discardableResult
-    public func contains(_ value: T) -> Observable<Bool> {
+    public func contains(_ value: ValueType) -> Observer<Bool> {
         return contains { value == $0 }
+    }
+    
+    public func findIndex(of value: ValueType) -> Observer<Int> {
+        var idx = 0
+        
+        return Observer<Int> { observer in
+            return self.subscribe { result in
+                if  result == value {
+                    observer(idx)
+                }
+                idx += 1
+            }
+        }
     }
 }
 
-public extension Observable where T: Hashable {
+extension Observable where ValueType: Hashable {
     
-    public var unique: Observable<T> {
-        let signal = Signal<T>()
+    public var unique: Observer<ValueType> {
+        var set = Set<ValueType>()
         
-        var set = Set<T>()
-        
-        subscribe { result in
-            if !set.contains(result) {
-                signal.update(result)
-                set.insert(result)
+        return Observer { observer in
+            return self.subscribe { result in
+                if !set.contains(result) {
+                    observer(result)
+                    set.insert(result)
+                }
             }
         }
-        return signal
+    }
+}
+
+extension Observable {
+    
+    public func findIndex(_ f: @escaping ((ValueType) -> Bool)) -> Observer<Int> {
+        var idx = 0
+        
+        return Observer { observer in
+            return self.subscribe { result in
+                if  f(result) {
+                    observer(idx)
+                }
+                idx += 1
+            }
+        }
     }
 }

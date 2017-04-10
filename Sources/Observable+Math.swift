@@ -1,110 +1,84 @@
 //
 //  Created by Pavel Sharanda on 22.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
+//  Copyright © 2016. All rights reserved.
 //
 
 import Foundation
 
-extension Observable where T: Comparable {
+extension Observable where ValueType: Comparable {
     
-    public var min: Observable<T> {
-        let signal = Signal<T>()
+    public var min: Observer<ValueType> {
+        var minValue: ValueType? = nil
         
-        var minValue: T? = nil
-        
-        subscribe { result in
-            
-            if let minValueNonNil = minValue {
-                if result < minValueNonNil {
+        return Observer { observer in
+            return self.subscribe { result in
+                if let minValueNonNil = minValue {
+                    if result < minValueNonNil {
+                        minValue = result
+                        observer(result)
+                    }
+                } else {
                     minValue = result
-                    signal.update(result)
+                    observer(result)
                 }
-            } else {
-                minValue = result
-                signal.update(result)
             }
         }
-        return signal
     }
     
-    public var max: Observable<T> {
-        let signal = Signal<T>()
+    public var max: Observer<ValueType> {
+        var maxValue: ValueType? = nil
         
-        var maxValue: T? = nil
-        
-        subscribe { result in
-            
-            if let minValueNonNil = maxValue {
-                if result > minValueNonNil {
+        return Observer { observer in
+            return self.subscribe { result in
+                if let minValueNonNil = maxValue {
+                    if result > minValueNonNil {
+                        maxValue = result
+                        observer(result)
+                    }
+                } else {
                     maxValue = result
-                    signal.update(result)
+                    observer(result)
                 }
-            } else {
-                maxValue = result
-                signal.update(result)
             }
         }
-        return signal
     }
 }
 
 extension Observable {
-    public var count: Observable<Int> {
-        let signal = Signal<Int>()
-        
-        var count = 0
-        
-        subscribe { result in
-            count += 1
-            signal.update(count)
-        }
-        return signal
+    
+    public var count: Observer<Int> {
+        return count {_ in true }
     }
     
-    @discardableResult
-    public func count(_ f: @escaping (T)->Bool) -> Observable<Int> {
-        let signal = Signal<Int>()
-        
+    public func count(_ f: @escaping (ValueType)->Bool) -> Observer<Int> {
         var count = 0
         
-        subscribe { result in
-            if f(result) {
-                count += 1
-                signal.update(count)
+        return Observer { observer in
+            return self.subscribe { result in
+                if f(result) {
+                    count += 1
+                    observer(count)
+                }
             }
         }
-        
-        return signal
     }
 }
 
-public protocol BooleanType {
-    var boolValue: Bool {get}
-}
-
-extension Bool: BooleanType {
-    public var boolValue: Bool {
-        return self
-    }
-}
-
-public extension Observable where T: BooleanType {
+public extension Observable where ValueType == Bool {
     
-    @discardableResult
-    public func and(_ observable: Observable<Bool>) -> Observable<Bool> {
+    public func and<U: Observable>(_ observable: U) -> Observer<Bool> where U.ValueType == ValueType {
         return combine(observable).map {
             if let s0 = $0.0, let s1 = $0.1 {
-                return s0.boolValue && s1
+                return s0 && s1
             } else {
                 return false
             }
         }
     }
-    
-    @discardableResult
-    public func or(_ observable: Observable<Bool>) -> Observable<Bool> {
+
+    public func or<U: Observable>(_ observable: U) -> Observer<Bool> where U.ValueType == ValueType {
         return combine(observable).map {
-            if let s0 = $0.0, s0.boolValue {
+            if let s0 = $0.0, s0 {
                 return true
             } else if let s1 = $0.1, s1 {
                 return true
@@ -114,8 +88,8 @@ public extension Observable where T: BooleanType {
         }
     }
     
-    public var not: Observable<Bool> {
-        return map { !$0.boolValue }
+    public var not: Observer<Bool> {
+        return map { !$0 }
     }
 }
 

@@ -6,332 +6,240 @@
 import Foundation
 
 
-private struct WeakBox<T: AnyObject> {
-    weak var object: T? = nil
-}
 
 public extension Observable {
     
-    @discardableResult
-    public func combine(_ with: Observable<T>...) -> Observable<([T?])> {
-        return combine(with)
-    }
-    
-    @discardableResult
-    public func combine(_ with: [Observable<T>]) -> Observable<([T?])> {
+    public func combine<U: Observable>(_ with: U) -> Observer<(ValueType?,U.ValueType?)> {
+        var left: ValueType?
+        var right: U.ValueType?
         
-        let signal = Signal<[T?]>()
-        
-        
-        let weakWith = with.map {WeakBox(object: $0)}
-        
-        subscribe { a in
-            var values = weakWith.map { $0.object?.lastValue }
-            values.insert(a, at: 0)
-            signal.update(values)
-        }
-        
-        for (idx, obj) in with.enumerated() {
-            var mutWith = with
-            mutWith.remove(at: idx)
-            mutWith.insert(self, at: 0)
-            
-            let weakMutWith = mutWith.map { WeakBox(object: $0) }
-            
-            obj.subscribe { a in
-                let values = weakMutWith.map { $0.object?.lastValue }
-                var mutValues = values
-                mutValues.insert(a, at: idx + 1)
-                signal.update(mutValues)
+        return Observer { observer in
+            let disposable = with.subscribe { result in
+                right = result
+                observer((left,right))
             }
-        }
-        return signal
-    }
-    
-    @discardableResult
-    public func combine<U>(_ with: Observable<U>) -> Observable<(T?,U?)> {
-        let signal = Signal<(T?, U?)>()
-        
-        subscribe {[weak with] a in
-            signal.update((a,with?.lastValue))
             
+            return self.subscribe { result in
+                left = result
+                observer((left,right))
+            }.with(disposable: disposable)
         }
-        with.subscribe {[weak self] b in
-            signal.update((self?.lastValue,b))
-        }
-        return signal
     }
     
-    @discardableResult
-    public func combine<A, B>(_ observable1: Observable<A>, _ observable2: Observable<B>) -> Observable<(T?, A?, B?)> {
-        let signal = Signal<(T?, A?, B?)>()
-        
-        subscribe {[weak observable1, weak observable2] result in
-            signal.update((result, observable1?.lastValue, observable2?.lastValue))
-        }
-        
-        observable1.subscribe {[weak self, weak observable2] result in
-            signal.update((self?.lastValue, result, observable2?.lastValue))
-        }
-        
-        observable2.subscribe {[weak self, weak observable1] result in
-            signal.update((self?.lastValue, observable1?.lastValue, result))
-        }
-        return signal
+    public func combine<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType?, A.ValueType?, B.ValueType?)> {
+        return combine(observable1).combine(observable2).map(repack)
     }
     
-    @discardableResult
-    public func combine<A, B, C>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>) -> Observable<(T?, A?, B?, C?)> {
-        let signal = Signal<(T?, A?, B?, C?)>()
-        
-        subscribe {[weak observable1, weak observable2, weak observable3] result in
-            signal.update((result, observable1?.lastValue, observable2?.lastValue, observable3?.lastValue))
-        }
-        observable1.subscribe {[weak self, weak observable2, weak observable3] result in
-            signal.update((self?.lastValue, result, observable2?.lastValue, observable3?.lastValue))
-        }
-        
-        observable2.subscribe {[weak self, weak observable1, weak observable3] result in
-            signal.update((self?.lastValue, observable1?.lastValue, result, observable3?.lastValue))
-        }
-        
-        observable3.subscribe {[weak self, weak observable1, weak observable2] result in
-            signal.update((self?.lastValue, observable1?.lastValue, observable2?.lastValue, result))
-        }
-        return signal
+    public func combine<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?)> {
+        return combine(observable1, observable2).combine(observable3).map(repack)
     }
     
-    @discardableResult
-    public func combine<A, B, C, D>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>, _ observable4: Observable<D>) -> Observable<(T?, A?, B?, C?, D?)> {
-        let signal = Signal<(T?, A?, B?, C?, D?)>()
-        
-        subscribe {[weak observable1, weak observable2, weak observable3, weak observable4] result in
-            signal.update((result, observable1?.lastValue, observable2?.lastValue, observable3?.lastValue, observable4?.lastValue))
-            
-        }
-        observable1.subscribe {[weak self, weak observable2, weak observable3, weak observable4] result in
-            signal.update((self?.lastValue, result, observable2?.lastValue, observable3?.lastValue, observable4?.lastValue))
-        }
-        
-        observable2.subscribe {[weak self, weak observable1, weak observable3, weak observable4] result in
-            signal.update((self?.lastValue, observable1?.lastValue, result, observable3?.lastValue, observable4?.lastValue))
-        }
-        
-        observable3.subscribe {[weak self, weak observable1, weak observable2, weak observable4] result in
-            signal.update((self?.lastValue, observable1?.lastValue, observable2?.lastValue, result, observable4?.lastValue))
-        }
-        
-        observable4.subscribe {[weak self, weak observable1, weak observable2, weak observable3] result in
-            signal.update((self?.lastValue, observable1?.lastValue, observable2?.lastValue, observable3?.lastValue, result))
-        }
-        
-        return signal
+    public func combine<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?, D.ValueType?)> {
+        return combine(observable1, observable2, observable3).combine(observable4).map(repack)
     }
-}
 
-public extension Observable {
-
-    @discardableResult
-    public func combineLatest(_ with: Observable<T>...) -> Observable<([T])> {
-        return combineLatest(with)
-    }
-    
-    @discardableResult
-    public func combineLatest(_ with: [Observable<T>]) -> Observable<([T])> {
-        
-        let signal = Signal<[T]>()
-        
-        let weakWith = with.map {WeakBox(object: $0)}
-        
-        subscribe { a in
-            
-            var values = weakWith.flatMap { $0.object?.lastValue }
-            if values.count == with.count {
-                values.insert(a, at: 0)
-                signal.update(values)
-            }
-        }
-        
-        for (idx, obj) in with.enumerated() {
-            var mutWith = with
-            mutWith.remove(at: idx)
-            mutWith.insert(self, at: 0)
-            
-            let weakMutWith = mutWith.map { WeakBox(object: $0) }
-            
-            obj.subscribe { a in
-                let values = weakMutWith.flatMap { $0.object?.lastValue }
-                if values.count == with.count {
-                    var mutValues = values
-                    mutValues.insert(a, at: idx + 1)
-                    signal.update(mutValues)
+    public func combine<T: Observable>(_ with: [T]) -> Observer<([ValueType?])> where T.ValueType == ValueType {
+        let initial: Observer<[ValueType?]> = map { [$0] }
+        let withAny = with.map { $0.anyObservable }
+        return withAny.reduce(initial) { left, right in
+            left.combine(right).map { (result, t) in
+                if let result = result {
+                    return result + [t]
+                } else {
+                    return [nil] + [t]
                 }
             }
         }
-        return signal
     }
+}
+
+public extension Observable {
     
-    @discardableResult
-    public func combineLatest<U>(_ with: Observable<U>) -> Observable<(T,U)> {
-        let signal = Signal<(T, U)>()
+    public func combineLatest<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
+        var left: ValueType?
+        var right: U.ValueType?
         
-        subscribe {[weak with] a in
-            if let withValue = with?.lastValue {
-                signal.update((a,withValue))
+        return Observer { observer in
+            let disposable = with.subscribe { result in
+                right = result
+                if let left = left, let right = right {
+                    observer((left,right))
+                }
             }
             
+            return self.subscribe { result in
+                left = result
+                if let left = left, let right = right {
+                    observer((left,right))
+                }
+            }.with(disposable: disposable)
         }
-        with.subscribe {[weak self] b in
-            if let value = self?.lastValue {
-                signal.update((value,b))
-            }
-        }
-        return signal
     }
+
     
-    @discardableResult
-    public func combineLatest<A, B>(_ observable1: Observable<A>, _ observable2: Observable<B>) -> Observable<(T, A, B)> {
+    public func combineLatest<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType, A.ValueType, B.ValueType)> {
         return combineLatest(observable1).combineLatest(observable2).map(repack)
     }
     
-    @discardableResult
-    public func combineLatest<A, B, C>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>) -> Observable<(T, A, B, C)> {
+    public func combineLatest<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
         return combineLatest(observable1, observable2).combineLatest(observable3).map(repack)
     }
     
-    @discardableResult
-    public func combineLatest<A, B, C, D>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>, observable4: Observable<D>) -> Observable<(T, A, B, C, D)> {
+    public func combineLatest<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
         return combineLatest(observable1, observable2, observable3).combineLatest(observable4).map(repack)
+    }
+    
+    public func combineLatest<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
+        let initial: Observer<[ValueType]> = map { [$0] }
+        let withAny = with.map { $0.anyObservable }
+        return withAny.reduce(initial) { left, right in
+            left.combineLatest(right).map { (result, t) in
+                return result + [t]
+            }
+        }
     }
 }
 
 public extension Observable {
     
-    @discardableResult
-    public func zip<U>(_ with: Observable<U>) -> Observable<(T,U)> {
-        let signal = Signal<(T, U)>()
+    public func zip<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
         
-        var aIsNewValue = false
-        var bIsNewValue = false
+        var left: ValueType?
+        var right: U.ValueType?
         
-        subscribe {[weak with] a in
-            aIsNewValue = true
-            
-            if let withValue = with?.lastValue, bIsNewValue {
-                aIsNewValue = false
-                bIsNewValue = false
-                signal.update((a,withValue))
+        var leftIsNewValue = false
+        var rightIsNewValue = false
+        
+        return Observer { observer in
+            let disposable = with.subscribe { result in
+                right = result
+                rightIsNewValue = true
+                if let left = left, let right = right, leftIsNewValue {
+                    leftIsNewValue = false
+                    rightIsNewValue = false
+                    observer((left,right))
+                }
             }
             
+            return self.subscribe { result in
+                left = result
+                leftIsNewValue = true
+                if let left = left, let right = right, rightIsNewValue {
+                    leftIsNewValue = false
+                    rightIsNewValue = false
+                    observer((left,right))
+                }
+            }.with(disposable: disposable)
         }
-        with.subscribe {[weak self] b in
-            bIsNewValue = true
-            if let value = self?.lastValue, aIsNewValue {
-                aIsNewValue = false
-                bIsNewValue = false
-                signal.update((value,b))
-            }
-        }
-        return signal
     }
     
-    @discardableResult
-    public func zip<A, B>(_ observable1: Observable<A>, _ observable2: Observable<B>) -> Observable<(T, A, B)> {
+    public func zip<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType, A.ValueType, B.ValueType)> {
         return zip(observable1).zip(observable2).map(repack)
     }
     
-    @discardableResult
-    public func zip<A, B, C>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>) -> Observable<(T, A, B, C)> {
+    public func zip<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
         return zip(observable1, observable2).zip(observable3).map(repack)
     }
     
-    @discardableResult
-    public func zip<A, B, C, D>(_ observable1: Observable<A>, _ observable2: Observable<B>, _ observable3: Observable<C>, observable4: Observable<D>) -> Observable<(T, A, B, C, D)> {
+    public func zip<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
         return zip(observable1, observable2, observable3).zip(observable4).map(repack)
+    }
+    
+    public func zip<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
+        let initial: Observer<[ValueType]> = map { [$0] }
+        let withAny = with.map { $0.anyObservable }
+        return withAny.reduce(initial) { left, right in
+            left.zip(right).map { (result, t) in
+                return result + [t]
+            }
+        }
     }
 }
 
 public extension Observable {
     
-    @discardableResult
-    public func merge(_ observables: Observable<T>...) -> Observable<T> {
+    public func merge<T: Observable>(_ observables: T...) -> Observer<ValueType> where T.ValueType == ValueType {
         return merge(observables)
     }
     
-    @discardableResult
-    public func merge(_ observables: [Observable<T>]) -> Observable<T> {
-        let signal = Signal<T>()
-        subscribe { result in
-            signal.update(result)
-        }
+    public func merge<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
         
-        observables.forEach {
-            $0.subscribe { result in
-                signal.update(result)
+        return Observer { observer in
+    
+            let disposable = observables.reduce(EmptyDisposable() as Disposable) {
+                return $0.0.with(disposable: $0.1.subscribe { result in
+                    observer(result)
+                })
             }
+            
+            return self.subscribe { result in
+                observer(result)
+            }.with(disposable: disposable)
         }
-        
-        return signal
     }
 
-    @discardableResult
-    public func sample<U>(_ with: Observable<U>) -> Observable<(T)> {
-        let signal = Signal<(T)>()
+    
+    public func sample<U: Observable>(_ with: U) -> Observer<ValueType> {
+        var value: ValueType?
         
-        var value: T? = nil
-        subscribe { a in
-            value = a
-        }
-        
-        with.subscribe { b in
+        return Observer { observer in
             
-            if let v = value {
-                signal.update(v)
-                value = nil
+            let disposable = with.subscribe { _ in
+                if let v = value {
+                    observer(v)
+                    value = nil
+                }
             }
+            
+            return self.subscribe { result in
+                value = result
+            }.with(disposable: disposable)
         }
-        return signal
+    }
+
+    public func withLatestFrom<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
+        var lastValue: U.ValueType?
+        
+        return Observer { observer in
+            
+            let disposable = with.subscribe { result in
+                lastValue = result
+            }
+            
+            return self.subscribe { result in
+                if let lastValue = lastValue {
+                    observer(result, lastValue)
+                }
+            }.with(disposable: disposable)
+        }
     }
     
-    @discardableResult
-    public func withLatestFrom<U>(_ with: Observable<U>) -> Observable<(T,U)> {
-        let signal = Signal<(T, U)>()
-        
-        subscribe {[weak with] a in
-            if let withValue = with?.lastValue {
-                signal.update((a,withValue))
-            }
-        }
-        
-        return signal
-    }
-    
-    @discardableResult
-    public func amb(_ observables: Observable<T>...) -> Observable<T> {
+    public func amb<T: Observable>(_ observables: T...) -> Observer<ValueType> where T.ValueType == ValueType {
         return amb(observables)
     }
     
-    @discardableResult
-    public func amb(_ observables: [Observable<T>]) -> Observable<T> {
-        let signal = Signal<T>()
+    //emit events only from observable which emitted the very first event
+    public func amb<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
+        var config = (0..<(observables.count + 1)).map { _ in  false }
         
-        let all: [Observable<T>] = [self] + observables
-        
-        var config: [Bool] = all.map { _ in false }
-        
-        for (idx, observable) in all.enumerated() {
-            observable.subscribe { result in
-                
-                if !(config.reduce(false) { $0 || $1 }) {
-                    config[idx] = true
-                }
-                
-                if config[idx] {
-                    signal.update(result)
-                }
+        return Observer { observer in
+            let all = [self.anyObservable] + observables.map { $0.anyObservable }
+            var c = 0
+            
+            return all.reduce(EmptyDisposable() as Disposable) {
+                c += 1
+                let idx = c - 1
+                return $0.0.with(disposable: $0.1.subscribe { result in
+                    
+                    if !(config.reduce(false) { $0 || $1 }) {
+                        config[idx] = true
+                    }
+                    
+                    if config[idx] {
+                        observer(result)
+                    }
+                })
             }
         }
-        
-        return signal
     }
 }

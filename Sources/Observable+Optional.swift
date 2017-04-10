@@ -1,6 +1,6 @@
 //
 //  Created by Pavel Sharanda on 16.02.17.
-//  Copyright © 2017 SnipSnap. All rights reserved.
+//  Copyright © 2017. All rights reserved.
 //
 
 import Foundation
@@ -14,29 +14,29 @@ extension Optional: Optionable  {
     
 }
 
-extension Observable where T: Optionable {
+extension Observable where ValueType: Optionable {
     
-    public var ignoreNil: Observable<T.Wrapped> {
+    public var someOnly: Observer<ValueType.Wrapped> {
         return flatMap { $0.flatMap {$0} }
     }
     
-    public var nilOnly: Observable<Void> {
+    public var noneOnly: Observer<Void> {
         return flatMap {
             $0.flatMap {_ -> Void? in nil } ?? ()
         }
     }
     
-    public var isNil: Observable<Bool> {
+    public var isNone: Observer<Bool> {
         return map { ($0.flatMap { _ in return false }) ?? true }
     }
     
-    public var isNotNil: Observable<Bool> {
+    public var isSome: Observer<Bool> {
         return map { ($0.flatMap { _ in return true }) ?? false }
     }
 }
 
-extension Observable where T: Sequence, T.Iterator.Element: Optionable  {
-    public var any: Observable<T.Iterator.Element.Wrapped> {
+extension Observable where ValueType: Sequence, ValueType.Iterator.Element: Optionable  {
+    public var anySome: Observer<ValueType.Iterator.Element.Wrapped> {
         return flatMap { res in
             for r in res {
                 if let d = (r.flatMap { $0 }) {

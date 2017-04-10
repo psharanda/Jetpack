@@ -1,70 +1,55 @@
 //
 //  Created by Pavel Sharanda on 20.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
+//  Copyright © 2016. All rights reserved.
 //
 
 import Foundation
 
 extension Observable {
     
-    @discardableResult
-    public func map<U>(_ f: @escaping (T) -> U) -> Observable<U> {
-        let signal = Signal<U>()
-        subscribe { result in
-            signal.update(f(result))
+    public func map<U>(_ transform: @escaping (ValueType)-> U) -> Observer<U> {
+        return Observer<U> { observer in
+            return self.subscribe { result in
+                observer((transform(result)))
+            }
         }
-        return signal
     }
     
-    @discardableResult
-    public func reduce<U>(_ initial: U, f: @escaping (U, T) -> U) -> Observable<U> {
-        let signal = Signal<U>()
+    public func flatMap<U>(_ transform: @escaping (ValueType)-> U?) -> Observer<U> {
+        return Observer<U> { observer in
+            return self.subscribe { result in
+                if let newValue = transform(result) {
+                    observer(newValue)
+                }
+            }
+        }
+    }
+    
+    public func reduce<U>(_ initial: U, f: @escaping (U, ValueType) -> U) -> Observer<U> {
         var reduced: U = initial
-        subscribe { result in
-            reduced = f(reduced, result)
-            signal.update(reduced)
+        return Observer<U> { observer in
+            return self.subscribe { result in
+                reduced = f(reduced, result)
+                observer(reduced)
+            }
         }
-        return signal
     }
+
     
-    @discardableResult
-    public func just<U>(_ value: U) -> Observable<U>{
-        return map { _ in
+    public func just<U>(_ value: U) -> Observer<U> {
+        return map { _ -> U in
             return value
         }
     }
     
-    public var just: Observable<Void>{
-        return map { _ in }
+    public var just: Observer<Void> {
+        return just(())
     }
     
-    @discardableResult
-    public func findIndex(_ f: @escaping ((T) -> Bool)) -> Observable<Int> {
-        let signal = Signal<Int>()
-        var idx = 0
-        subscribe { result in
-            if  f(result) {
-                signal.update(idx)
-            }
-            idx += 1
+    public var observer: Observer<ValueType> {
+        return Observer { observer in
+            return self.subscribe(observer)
         }
-        return signal
-    }
-}
-
-extension Observable where T: Equatable {
-    
-    @discardableResult
-    public func findIndex(of value: T) -> Observable<Int> {
-        let signal = Signal<Int>()
-        var idx = 0
-        subscribe { result in
-            if  result == value {
-                signal.update(idx)
-            }
-            idx += 1
-        }
-        return signal
     }
 }
 

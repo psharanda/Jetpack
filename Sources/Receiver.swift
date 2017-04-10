@@ -1,12 +1,14 @@
 //
 //  Created by Pavel Sharanda on 16.02.17.
-//  Copyright © 2017 SnipSnap. All rights reserved.
+//  Copyright © 2017. All rights reserved.
 //
 
 import Foundation
 
-// wrapper around real state
-public class BindingTarget<T>: Bindable {
+/**
+ Wrapper around some state which provides interface for binding
+ */
+public class Receiver<T>: Bindable {
     
     private let setter: (T)->Void
     

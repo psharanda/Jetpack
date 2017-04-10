@@ -1,29 +1,50 @@
 //
 //  Created by Pavel Sharanda on 16.02.17.
-//  Copyright © 2017 SnipSnap. All rights reserved.
+//  Copyright © 2017. All rights reserved.
 //
 
 import Foundation
 
-// real state
-public class State<T>: Bindable {
-    
-    private var _value: T
+/**
+ Standalone reactive state
+ */
+public final class State<T>: Observable, Bindable {
+    public typealias ValueType = T
     
     public var value: T {
-        return _value
+        return property.value
     }
     
-    let onChange: (T, T)->Void
+    public let property: Property<T>
+    public let receiver: Receiver<T>
     
     public init(_ value: T, onChange: @escaping (T, T)->Void) {
-        _value = value
-        self.onChange = onChange
+        
+        let signal = Signal<T>()
+        var v = value
+        
+        property = Property(signal: signal) {
+            return v
+        }
+        receiver = Receiver {
+            onChange(v, $0)
+            v = $0
+            signal.update(v)
+        }
+    }
+    
+    public convenience init(_ value: T) {
+        self.init(value, onChange: {_, _ in })
+    }
+    
+    public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
+        return property.subscribe(observer)
     }
     
     public func update(_ newValue: T) {
-        let oldValue = _value
-        _value = newValue
-        onChange(oldValue, newValue)
+        receiver.update(newValue)
     }
+
 }
+
+

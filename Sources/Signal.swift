@@ -1,18 +1,52 @@
 //
 //  Created by Pavel Sharanda on 16.02.17.
-//  Copyright © 2017 SnipSnap. All rights reserved.
+//  Copyright © 2017. All rights reserved.
 //
 
 import Foundation
 
-///Bindable observable but with no initial value "var x: Bool? = nil|true|false"
-public class Signal<T>: Observable<T>, Bindable {
+/**
+ Object which holds and manages subscribers and can broadcast values to them
+ */
+public final class Signal<T>: Observable, Bindable {
     
-    public override init() {
-        super.init()
+    public typealias ValueType = T
+    
+    private var observers: [TaggedObserver<T>] = []
+    
+    private var lastToken: UInt = 0
+    
+    public init() {
+    }
+    
+    @discardableResult
+    public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
+        lastToken += 1
+        
+        let token = lastToken
+        observers.append(TaggedObserver<T>(token: token, observer: observer))
+        
+        return DelegateDisposable {
+            self.unsubscribe(token)
+        }
     }
     
     public func update(_ newValue: T) {
-        rawUpdate(newValue)
+        observers.forEach {
+            $0.observer(newValue)
+        }
     }
+    
+    private func unsubscribe(_ token: UInt) {
+        guard let idx = (observers.index { $0.token == token }) else {
+            return
+        }
+        
+        observers.remove(at: idx)
+    }
+}
+
+private struct TaggedObserver<T> {
+    let token: UInt
+    let observer: (T)->Void
 }

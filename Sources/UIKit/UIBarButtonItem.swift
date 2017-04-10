@@ -2,13 +2,16 @@ import UIKit
 
 extension Jetpack where Base: UIBarButtonItem {
     
-    public var clicked: Observable<Void> {
-        return makeObservable(key: "clicked", setup: { base, target, action, _ in
+    public var clicked: Observer<Void> {
+        return makeTargetActionObservable(key: #function, setup: { base, target, action in
             base.target = target
             base.action = action
-        }) { _ in
-            ()
-        }
+        }, cleanup: { base, _, _ in
+            base.target = nil
+            base.action = nil
+        }, getter: { _ in
+             ()
+        })
     }
 }
 

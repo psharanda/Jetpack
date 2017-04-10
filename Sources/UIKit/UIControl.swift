@@ -1,42 +1,43 @@
 import UIKit
 
 fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
-    return "controlEventsKey \(controlEvents.rawValue)"
+    return "\(#function) \(controlEvents.rawValue)"
 }
 
 extension Jetpack where Base: UIControl {
 
-    /// Create a signal which sends a `value` event for each of the specified
-    /// control events.
-    public func signalControlEvents<T>(_ controlEvents: UIControlEvents, update: @escaping (Base)->T) -> Observable<T> {
+    public func signalControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Observer<T> {
         let key = controlEventsKey(controlEvents)
-        
-        return makeObservable(key: key, setup: { base, target, action, _ in
+    
+        return makeTargetActionObservable(key: key, setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
-        }, update: update)
+            print(target, action, controlEvents)
+        }, cleanup: { base, target, action in
+            base.removeTarget(target, action: action, for: controlEvents)
+        }, getter: getter)
+        
 	}
     
-    public func propertyControlEvents<T>(_ controlEvents: UIControlEvents, update: @escaping (Base)->T) -> Property<T> {
+    public func propertyControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Property<T> {
         let key = controlEventsKey(controlEvents)
         
-        return makeProperty(key: key, setup: { base, target, action, _ in
+        return makeTargetActionProperty(key: key, setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
-        }, update: update)
+        }, cleanup: { base, target, action in
+            base.removeTarget(target, action: action, for: controlEvents)
+        }, getter: getter)
     }
 
-	/// Sets whether the control is enabled.
-	public var isEnabled: BindingTarget<Bool> {
-		return makeBindingTarget(key: "isEnabled") { $0.isEnabled = $1 }
+	public var isEnabled: Receiver<Bool> {
+        return makeReceiver(key: #function) { $0.isEnabled = $1 }
 	}
 
-	/// Sets whether the control is selected.
-	public var isSelected: BindingTarget<Bool> {
-		return makeBindingTarget(key: "isSelected") { $0.isSelected = $1 }
+	public var isSelected: Receiver<Bool> {
+		return makeReceiver(key: #function) { $0.isSelected = $1 }
 	}
 
-	/// Sets whether the control is highlighted.
-	public var isHighlighted: BindingTarget<Bool> {
-		return makeBindingTarget(key: "isHighlighted") { $0.isHighlighted = $1 }
+	public var isHighlighted: Receiver<Bool> {
+		return makeReceiver(key: #function) { $0.isHighlighted = $1 }
 	}
 }
 

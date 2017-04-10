@@ -1,6 +1,6 @@
 //
 //  Created by Pavel Sharanda on 17.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
+//  Copyright © 2016. All rights reserved.
 //
 
 import Foundation
@@ -9,7 +9,7 @@ private var NSObject_jx_objects: UInt8 = 0
 
 extension NSObject {
     
-    var jx_objects: NSMutableDictionary {
+    private var jx_objects: NSMutableDictionary {
         switch (objc_getAssociatedObject(self, &NSObject_jx_objects) as? NSMutableDictionary) {
         case .some(let p):
             return p
@@ -24,6 +24,10 @@ extension NSObject {
         jx_objects.removeAllObjects()
     }
     
+    public func jx_removeObject(forKey: String) {
+        jx_objects.removeObject(forKey: forKey)
+    }
+    
     public func jx_lazyObject<U>(key: String, creator: (()->U)) -> U {
         if let val = jx_objects.object(forKey: key), let obj = val as? U {
             return obj
@@ -33,59 +37,36 @@ extension NSObject {
             return object
         }
     }
-    
-    public func jx_lazyBindingTarget<T>(key: String, setter: @escaping (T)->Void) -> BindingTarget<T> {
-        return jx_lazyObject(key: key) {
-            return BindingTarget<T>(setter: setter)
-        }
-    }
-    
-    public func jx_lazySignal<T>(key: String, setup: (Signal<T>)->Void = {_ in }) -> Signal<T> {
-        return jx_lazyObject(key: key) {
-            let signal = Signal<T>()
-            setup(signal)
-            return signal
-        }
-    }
-    
-    public func jx_lazyMutableProperty<T>(key: String, initialValue: T, setup: (MutableProperty<T>)->Void = {_ in }) -> MutableProperty<T> {
-        return jx_lazyObject(key: key) {
-            let property = MutableProperty<T>(initialValue)
-            setup(property)
-            return property
-        }
-    }
-    
-    public func jx_lazyState<T>(key: String, initialValue: T, onChange: @escaping (T, T)->Void = {_ in }) -> State<T> {
-        return jx_lazyObject(key: key) {
-            return State<T>(initialValue, onChange: onChange)
-        }
-    }
 }
 
 extension Jetpack where Base: NSObject {
     
-    ///   A binding target that holds no strong references to the object.
-    public func makeBindingTarget<U>(key: String, _ action: @escaping (Base, U)->Void) -> BindingTarget<U> {
-        return base.jx_lazyBindingTarget(key: key) { [weak base] value in
-            if let base = base {
+    public func makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
+        return base.jx_lazyObject(key: key) {[unowned base] in
+            return Receiver { value in
                 action(base, value)
             }
         }
     }
     
-    public func makeObservable<T>(key: String, setup: (Base, AnyObject, Selector, Signal<T>)->Void, update: @escaping (Base)->T) -> Observable<T> {
+    public func makeTargetActionObservable<T>(key: String,
+                                           setup: (Base, AnyObject, Selector)->Void,
+                                           cleanup: @escaping (Base, AnyObject, Selector)->Void,
+                                           getter: @escaping (Base)->T) -> Observer<T> {
         return base.jx_lazyObject(key: key) { () -> SignalActionHandler<Base, T> in
-            let controlHandler = SignalActionHandler(key: key, base: base, update: update)
-            setup(base, controlHandler, #selector(SignalActionHandler<Base, T>.jx_handleAction), controlHandler.signal)
+            let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
+            setup(base, controlHandler, #selector(SignalActionHandler<Base, T>.jx_handleAction))
             return controlHandler
-        }.signal
+        }.signal.observer
     }
     
-    public func makeProperty<T>(key: String, setup: (Base, AnyObject, Selector, MutableProperty<T>)->Void, update: @escaping (Base)->T) -> Property<T> {
+    public func makeTargetActionProperty<T>(key: String,
+                                         setup: (Base, AnyObject, Selector)->Void,
+                                         cleanup: @escaping (Base, AnyObject, Selector)->Void,
+                                         getter: @escaping (Base)->T) -> Property<T> {
         return base.jx_lazyObject(key: key) { () -> PropertyActionHandler<Base, T> in
-            let controlHandler = PropertyActionHandler(key: key, base: base, update: update)
-            setup(base, controlHandler, #selector(PropertyActionHandler<Base, T>.jx_handleAction), controlHandler.property)
+            let controlHandler = PropertyActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
+            setup(base, controlHandler, #selector(PropertyActionHandler<Base, T>.jx_handleAction))
             return controlHandler
         }.property
     }
@@ -96,36 +77,60 @@ extension NSObject: JetpackExtensionsProvider {}
 fileprivate class SignalActionHandler<Base: AnyObject, T>: NSObject {
     
     let signal = Signal<T>()
-    let update: (Base)->T
-    unowned let base: Base
+    let getter: (Base)->T
+    weak var base: Base?
     let key: String
+    let cleanup: (Base, AnyObject, Selector)->Void
     
-    init(key: String, base: Base, update: @escaping (Base)->T) {
+    init(key: String, base: Base, getter: @escaping (Base)->T, cleanup: @escaping (Base, AnyObject, Selector)->Void) {
         self.key = key
-        self.update = update
+        self.getter = getter
         self.base = base
+        self.cleanup = cleanup
     }
     
     @objc func jx_handleAction() {
-        signal.update(update(base))
+        if let base = base {
+            signal.update(getter(base))
+        }
+        
+    }
+    
+    deinit {
+        if let base = base {
+            cleanup(base, self, #selector(jx_handleAction))
+        }
     }
 }
 
 fileprivate class PropertyActionHandler<Base: AnyObject, T>: NSObject {
     
-    let property: MutableProperty<T>
-    let update: (Base)->T
-    unowned let base: Base
+    let signal = Signal<T>()
+    let property: Property<T>
+    let getter: (Base) ->T
+    weak var base: Base?
     let key: String
+    let cleanup: (Base, AnyObject, Selector)->Void
     
-    init(key: String, base: Base, update: @escaping (Base)->T) {
+    init(key: String, base: Base, getter: @escaping (Base)->T, cleanup: @escaping (Base, AnyObject, Selector)->Void) {
         self.key = key
-        self.update = update
+        self.getter = getter
         self.base = base
-        property = MutableProperty(update(base))
+        self.cleanup = cleanup
+        property = Property(signal: signal) {
+            getter(base)
+        }
     }
     
     @objc func jx_handleAction() {
-        property.update(update(base))
+        if let base = base {
+            signal.update(getter(base))
+        }
+    }
+    
+    deinit {
+        if let base = base {
+            cleanup(base, self, #selector(jx_handleAction))
+        }
     }
 }

@@ -1,6 +1,6 @@
 //
 //  Created by Pavel Sharanda on 20.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
+//  Copyright © 2016. All rights reserved.
 //
 
 import Foundation
@@ -34,7 +34,7 @@ enum Result<T>: Errorable, Resultable {
 */
 
 public protocol Errorable {
-    var error: NSError? {get}
+    var error: Error? {get}
 }
 
 public protocol Resultable {
@@ -42,30 +42,22 @@ public protocol Resultable {
     var result: ResultType? {get}
 }
 
-public extension Observable where T: Errorable {
+public extension Observable where ValueType: Errorable {
     
-    public var error: Observable<NSError> {
+    public var error: Observer<Error> {
         return flatMap { result in
             result.error
         }
     }
 }
 
-public extension Observable where T: Resultable {
+public extension Observable where ValueType: Resultable {
     
-    public var result: Observable<T.ResultType> {
+    public var result: Observer<ValueType.ResultType> {
         return flatMap { result in
             result.result
         }
     }
 }
 
-public extension RetriableTaskHolder where T: Errorable {
-    
-    @discardableResult
-    public func retryAfterError(_ numberOfTimes: Int, timeout: TimeInterval? = nil, queue: DispatchQueue = DispatchQueue.main) -> RetriableTaskHolder<T> {
-        return retry(numberOfTimes, timeout: timeout, queue: queue) {
-            $0.error != nil
-        }
-    }
-}
+

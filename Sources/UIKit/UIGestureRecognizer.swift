@@ -3,11 +3,13 @@ import UIKit
 
 extension Jetpack where Base: UIGestureRecognizer {
     
-    public var stateChanged: Observable<(CGPoint, UIGestureRecognizerState)> {
-        return makeObservable(key: "stateChanged", setup: { base, target, action, _ in
+    public var stateChanged: Observer<(CGPoint, UIGestureRecognizerState)> {        
+        return makeTargetActionObservable(key: #function, setup: { base, target, action in
             base.addTarget(target, action: action)
-        }) { base in
+        }, cleanup: { base, target, action in
+            base.removeTarget(target, action: action)
+        }, getter: { base in
             (base.location(in: base.view), base.state)
-        }
+        })        
     }
 }
