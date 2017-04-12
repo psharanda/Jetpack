@@ -625,8 +625,6 @@ class JetpackTests: XCTestCase {
     
     func testFlatMapLatestTask() {
         
-        let expect = expectation(description: "result")
-        
         let buttonClick = Signal<Void>()
         
         var genValue = 10
@@ -638,17 +636,12 @@ class JetpackTests: XCTestCase {
             }
             .subscribe {
                 XCTAssertEqual($0.isEqual(expectedValue), true)
-                expect.fulfill()
         }
         
         buttonClick.update()
         
         genValue = 20
         buttonClick.update()
-        
-        self.waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
     }
     
     func testFlatMapMerge() {

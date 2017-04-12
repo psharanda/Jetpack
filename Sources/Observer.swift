@@ -25,15 +25,15 @@ public struct Observer<T>: Observable {
 }
 
 extension Observer {
-    public static func from(value: ValueType) -> Observer<ValueType> {
-        return Observer<ValueType> { observer in
+    public static func from(value: T) -> Observer<T> {
+        return Observer<T> { observer in
             observer(value)
             return EmptyDisposable()
         }
     }
     
-    public static var never: Observer<ValueType> {
-        return Observer<ValueType> { observer in
+    public static var never: Observer<T> {
+        return Observer<T> { observer in
             return EmptyDisposable()
         }
     }
