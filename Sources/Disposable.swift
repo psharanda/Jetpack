@@ -5,6 +5,9 @@
 
 import Foundation
 
+public protocol Disposable {
+    func dispose()
+}
 
 extension Disposable {
     func with(disposable: Disposable) -> Disposable {
@@ -12,33 +15,37 @@ extension Disposable {
     }
 }
 
-final class  EmptyDisposable: Disposable {
-    func dispose() {}
+public final class  EmptyDisposable: Disposable {
+    
+    public init() {
+    }
+    
+    public func dispose() {}
 }
 
-final class DelegateDisposable: Disposable {
+public final class DelegateDisposable: Disposable {
     private var disposeImpl: (() -> Void)?
     
-    init(cancelImp: @escaping () -> Void) {
+    public init(cancelImp: @escaping () -> Void) {
         self.disposeImpl = cancelImp
     }
     
-    func dispose() {
+    public func dispose() {
         disposeImpl?()
         disposeImpl = nil
     }
 }
 
-final class CompositeDisposable: Disposable {
+public final class CompositeDisposable: Disposable {
     private var left: Disposable?
     private var right: Disposable?
     
-    init(left: Disposable, right: Disposable) {
+    public init(left: Disposable, right: Disposable) {
         self.left = left
         self.right = right
     }
     
-    func dispose() {
+    public func dispose() {
         left?.dispose()
         right?.dispose()
         left = nil
@@ -46,27 +53,33 @@ final class CompositeDisposable: Disposable {
     }
 }
 
-final class SerialDisposable: Disposable {
+public final class SerialDisposable: Disposable {
     private var disposable: Disposable?
     
-    func swap(with: Disposable) {
+    public init() {
+    }
+    
+    public func swap(with: Disposable) {
         disposable = with
     }
     
-    func dispose() {
+    public func dispose() {
         disposable?.dispose()
         disposable = nil
     }
 }
 
-final class MultiDisposable: Disposable {
+public final class MultiDisposable: Disposable {
     private var disposables: [Disposable] = []
     
-    func add(_ disposable: Disposable) {
+    public init() {
+    }
+    
+    public func add(_ disposable: Disposable) {
         disposables.append(disposable)
     }
     
-    func dispose() {
+    public func dispose() {
         disposables.forEach {
             $0.dispose()
         }

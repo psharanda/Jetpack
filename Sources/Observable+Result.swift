@@ -5,42 +5,17 @@
 
 import Foundation
 
-
-/* Example of possible Result enum
-
-enum Result<T>: Errorable, Resultable {
-    case Success(T)
-    case Failure(NSError)
-    
-    var result: T? {
-        switch self {
-        case .Success(let result):
-            return result
-        default:
-            return nil
-        }
-    }
-    
-    var error: NSError? {
-        switch self {
-        case .Failure(let error):
-            return error
-        default:
-            return nil
-        }
-    }
-}
- 
-*/
-
 public protocol Errorable {
     var error: Error? {get}
 }
 
-public protocol Resultable {
-    associatedtype ResultType
-    var result: ResultType? {get}
+public protocol Valueable {
+    associatedtype ValueType
+    var value: ValueType? {get}
 }
+
+extension Result: Errorable, Valueable { }
+extension TaskResult: Errorable, Valueable { }
 
 public extension Observable where ValueType: Errorable {
     
@@ -51,11 +26,11 @@ public extension Observable where ValueType: Errorable {
     }
 }
 
-public extension Observable where ValueType: Resultable {
+public extension Observable where ValueType: Valueable {
     
-    public var result: Observer<ValueType.ResultType> {
+    public var value: Observer<ValueType.ValueType> {
         return flatMap { result in
-            result.result
+            result.value
         }
     }
 }

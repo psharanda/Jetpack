@@ -623,6 +623,34 @@ class JetpackTests: XCTestCase {
         buttonClick.update()
     }
     
+    func testFlatMapLatestTask() {
+        
+        let expect = expectation(description: "result")
+        
+        let buttonClick = Signal<Void>()
+        
+        var genValue = 10
+        let expectedValue = Result(value: 20)
+        
+        _ = buttonClick
+            .flatMapLatest {
+                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).delay(timeInterval: 1).resultObserver
+            }
+            .subscribe {
+                XCTAssertEqual($0.isEqual(expectedValue), true)
+                expect.fulfill()
+        }
+        
+        buttonClick.update()
+        
+        genValue = 20
+        buttonClick.update()
+        
+        self.waitForExpectations(timeout: 5) { error in
+            XCTAssertNil(error)
+        }
+    }
+    
     func testFlatMapMerge() {
         
         let buttonClick = Signal<Void>()

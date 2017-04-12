@@ -5,10 +5,6 @@
 
 import Foundation
 
-public protocol Disposable {
-    func dispose()
-}
-
 public protocol Observable {
     associatedtype ValueType
     func subscribe(_ observer: @escaping (ValueType) -> Void) -> Disposable
@@ -33,7 +29,7 @@ public struct AnyObservable<T>: Observable {
     }
 }
 
-extension Observable{
+extension Observable {
     var anyObservable: AnyObservable<ValueType> {
         return AnyObservable(observable: self)
     }
