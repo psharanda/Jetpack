@@ -45,12 +45,6 @@ extension Observable {
     public var just: Observer<Void> {
         return just(())
     }
-    
-    public var observer: Observer<ValueType> {
-        return Observer { observer in
-            return self.subscribe(observer)
-        }
-    }
 }
 
 

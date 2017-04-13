@@ -9,9 +9,9 @@ import Foundation
 
 public extension Observable {
     
-    public func combine<U: Observable>(_ with: U) -> Observer<(ValueType?,U.ValueType?)> {
+    public func combine<T: Observable>(_ with: T) -> Observer<(ValueType?,T.ValueType?)> {
         var left: ValueType?
-        var right: U.ValueType?
+        var right: T.ValueType?
         
         return Observer { observer in
             let disposable = with.subscribe { result in
@@ -40,7 +40,7 @@ public extension Observable {
 
     public func combine<T: Observable>(_ with: [T]) -> Observer<([ValueType?])> where T.ValueType == ValueType {
         let initial: Observer<[ValueType?]> = map { [$0] }
-        let withAny = with.map { $0.anyObservable }
+        let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.combine(right).map { (result, t) in
                 if let result = result {
@@ -55,9 +55,9 @@ public extension Observable {
 
 public extension Observable {
     
-    public func combineLatest<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
+    public func combineLatest<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
         var left: ValueType?
-        var right: U.ValueType?
+        var right: T.ValueType?
         
         return Observer { observer in
             let disposable = with.subscribe { result in
@@ -91,7 +91,7 @@ public extension Observable {
     
     public func combineLatest<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
         let initial: Observer<[ValueType]> = map { [$0] }
-        let withAny = with.map { $0.anyObservable }
+        let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.combineLatest(right).map { (result, t) in
                 return result + [t]
@@ -102,10 +102,10 @@ public extension Observable {
 
 public extension Observable {
     
-    public func zip<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
+    public func zip<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
         
         var left: ValueType?
-        var right: U.ValueType?
+        var right: T.ValueType?
         
         var leftIsNewValue = false
         var rightIsNewValue = false
@@ -147,7 +147,7 @@ public extension Observable {
     
     public func zip<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
         let initial: Observer<[ValueType]> = map { [$0] }
-        let withAny = with.map { $0.anyObservable }
+        let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.zip(right).map { (result, t) in
                 return result + [t]
@@ -179,7 +179,7 @@ public extension Observable {
     }
 
     
-    public func sample<U: Observable>(_ with: U) -> Observer<ValueType> {
+    public func sample<T: Observable>(_ with: T) -> Observer<ValueType> {
         var value: ValueType?
         
         return Observer { observer in
@@ -197,8 +197,8 @@ public extension Observable {
         }
     }
 
-    public func withLatestFrom<U: Observable>(_ with: U) -> Observer<(ValueType,U.ValueType)> {
-        var lastValue: U.ValueType?
+    public func withLatestFrom<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
+        var lastValue: T.ValueType?
         
         return Observer { observer in
             
@@ -223,7 +223,7 @@ public extension Observable {
         var config = (0..<(observables.count + 1)).map { _ in  false }
         
         return Observer { observer in
-            let all = [self.anyObservable] + observables.map { $0.anyObservable }
+            let all = [self.asObserver] + observables.map { $0.asObserver }
             var c = 0
             
             return all.reduce(EmptyDisposable() as Disposable) {

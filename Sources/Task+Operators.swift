@@ -18,7 +18,7 @@ extension TaskProtocol {
     /**
      Perform one task after another
      */
-    public func then<U, R: TaskProtocol>(_ task: @escaping (ValueType)->R) -> Task<U> where R.ValueType == U  {
+    public func then<U>(_ task: @escaping (ValueType)->Task<U>) -> Task<U>  {
         return Task<U> { completion  in
             let serial = SerialDisposable()
             serial.swap(with: self.start { result in

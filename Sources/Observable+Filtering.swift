@@ -95,7 +95,7 @@ extension Observable {
         }
     }
     
-    public func skip<U: Observable>(until: U) -> Observer<ValueType> {
+    public func skip<T: Observable>(until: T) -> Observer<ValueType> {
         var canEmit = false
         
         let disposable = until.subscribe { _ in
@@ -144,7 +144,7 @@ extension Observable {
         }
     }
     
-    public func take<U: Observable>(until: U) -> Observer<ValueType> {
+    public func take<T: Observable>(until: T) -> Observer<ValueType> {
         var canEmit = true
         
         let disposable = until.subscribe { _ in
@@ -201,7 +201,7 @@ extension Observable {
         }
     }
     
-    public func pausable<U: Observable>(_ controller: U) -> Observer<ValueType> where U.ValueType == Bool {
+    public func pausable<T: Observable>(_ controller: T) -> Observer<ValueType> where T.ValueType == Bool {
         var canEmit = false
         
         let disposable = controller.subscribe { result in
@@ -217,7 +217,7 @@ extension Observable {
         }
     }
 
-    public func pausableBuffered<U: Observable>(_ controller: U) -> Observer<ValueType> where U.ValueType == Bool {
+    public func pausableBuffered<T: Observable>(_ controller:T) -> Observer<ValueType> where T.ValueType == Bool {
         var canEmit = false
         var buffer: [ValueType] = []
         

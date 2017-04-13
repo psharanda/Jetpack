@@ -39,5 +39,13 @@ extension Observer {
     }
 }
 
+extension Observable {
+    public var asObserver: Observer<ValueType> {
+        return Observer { observer in
+            return self.subscribe(observer)
+        }
+    }
+}
+
 
 

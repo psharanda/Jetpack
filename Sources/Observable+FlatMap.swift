@@ -8,8 +8,8 @@ import Foundation
 
 extension Observable {
     
-    public func flatMapLatest<U: Observable>(_ f: @escaping ((ValueType) -> U)) -> Observer<U.ValueType> {
-        return Observer<U.ValueType> { observer in
+    public func flatMapLatest<U>(_ f: @escaping ((ValueType) -> Observer<U>)) -> Observer<U> {
+        return Observer<U> { observer in
             let serial = SerialDisposable()
             
             serial.swap(with: self.subscribe { result in
@@ -20,8 +20,8 @@ extension Observable {
         }
     }
     
-    public func flatMapMerge<U: Observable>(_ f: @escaping ((ValueType) -> U)) -> Observer<U.ValueType> {
-        return Observer<U.ValueType> { observer in
+    public func flatMapMerge<U>(_ f: @escaping ((ValueType) -> Observer<U>)) -> Observer<U> {
+        return Observer<U> { observer in
             let multi = MultiDisposable()
             
             multi.add(self.subscribe { result in

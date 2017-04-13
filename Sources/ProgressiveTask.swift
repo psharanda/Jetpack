@@ -48,7 +48,7 @@ extension ProgressiveTask {
      */
     public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping (@escaping (ProgressType) -> Void) -> TaskResult<T>) {
         self.init { progress, completion in
-            return workerQueue.run(task: {
+            return workerQueue.run(worker: {
                 return worker(progress)
             }, completionQueue: completionQueue) { value in
                 completion(value)

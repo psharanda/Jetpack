@@ -34,9 +34,7 @@ extension Task {
      */
     public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> TaskResult<T>) {
         self.init { completion in
-            return workerQueue.run(task: {
-                return worker()
-            }, completionQueue: completionQueue) { value in
+            return workerQueue.run(worker: worker, completionQueue: completionQueue) { value in
                 completion(value)
             }
         }

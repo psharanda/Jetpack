@@ -66,7 +66,7 @@ extension Observable {
 
 public extension Observable where ValueType == Bool {
     
-    public func and<U: Observable>(_ observable: U) -> Observer<Bool> where U.ValueType == ValueType {
+    public func and<T: Observable>(_ observable: T) -> Observer<Bool> where T.ValueType == ValueType {
         return combine(observable).map {
             if let s0 = $0.0, let s1 = $0.1 {
                 return s0 && s1
@@ -76,7 +76,7 @@ public extension Observable where ValueType == Bool {
         }
     }
 
-    public func or<U: Observable>(_ observable: U) -> Observer<Bool> where U.ValueType == ValueType {
+    public func or<T: Observable>(_ observable:T) -> Observer<Bool> where T.ValueType == ValueType {
         return combine(observable).map {
             if let s0 = $0.0, s0 {
                 return true

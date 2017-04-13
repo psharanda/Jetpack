@@ -23,8 +23,8 @@ extension DispatchQueue {
     }
     
     @discardableResult
-    public func after(timeInterval: TimeInterval, block: @escaping (Bool)->Void) ->  Disposable {
-        var closure = Optional.some(block)
+    public func after(timeInterval: TimeInterval, action: @escaping (Bool)->Void) ->  Disposable {
+        var closure = Optional.some(action)
         
         let cancelableClosure = {
             let tmp = closure
@@ -42,7 +42,7 @@ extension DispatchQueue {
     }
     
     @discardableResult
-    public func run<T>(task: @escaping ()->TaskResult<T>, completionQueue: DispatchQueue = .main, completion: @escaping (TaskResult<T>)->Void) -> Disposable {
+    public func run<T>(worker: @escaping ()->TaskResult<T>, completionQueue: DispatchQueue = .main, completion: @escaping (TaskResult<T>)->Void) -> Disposable {
         var cancelled = false
         
         let cancelableClosure = {
@@ -51,7 +51,7 @@ extension DispatchQueue {
         
         async {
             if !cancelled {
-                let result = task()
+                let result = worker()
                 completionQueue.async {
                     if !cancelled {
                         completion(result)

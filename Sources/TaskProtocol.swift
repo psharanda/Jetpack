@@ -14,7 +14,7 @@ public protocol TaskProtocol {
 }
 
 extension TaskProtocol {
-    public var resultObserver: Observer<Result<ValueType>> {
+    public var asObserver: Observer<Result<ValueType>> {
         return Observer { observer in
             return self.start { result in
                 if let r = result.result {
@@ -24,9 +24,15 @@ extension TaskProtocol {
         }
     }
     
-    public var taskResultObserver: Observer<TaskResult<ValueType>> {
+    public var asTaskObserver: Observer<TaskResult<ValueType>> {
         return Observer { observer in
             return self.start(observer)
+        }
+    }
+    
+    public var asTask: Task<ValueType> {
+        return Task { completion in
+            return self.start(completion)
         }
     }
 }

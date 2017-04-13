@@ -897,7 +897,7 @@ class TaskTests: XCTestCase {
                 }
                 .onProgress { progressValue in
                     progress.append(progressValue)
-                }                
+                }.asTask
             }
         
         _ = r.start {

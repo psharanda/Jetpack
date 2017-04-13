@@ -49,15 +49,15 @@ extension Jetpack where Base: NSObject {
         }
     }
     
-    public func makeTargetActionObservable<T>(key: String,
+    public func makeTargetActionObservable<U>(key: String,
                                            setup: (Base, AnyObject, Selector)->Void,
                                            cleanup: @escaping (Base, AnyObject, Selector)->Void,
-                                           getter: @escaping (Base)->T) -> Observer<T> {
-        return base.jx_lazyObject(key: key) { () -> SignalActionHandler<Base, T> in
+                                           getter: @escaping (Base)->U) -> Observer<U> {
+        return base.jx_lazyObject(key: key) { () -> SignalActionHandler<Base, U> in
             let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
-            setup(base, controlHandler, #selector(SignalActionHandler<Base, T>.jx_handleAction))
+            setup(base, controlHandler, #selector(SignalActionHandler<Base, U>.jx_handleAction))
             return controlHandler
-        }.signal.observer
+        }.signal.asObserver
     }
     
     public func makeTargetActionProperty<T>(key: String,

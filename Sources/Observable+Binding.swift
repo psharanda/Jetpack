@@ -13,14 +13,14 @@ public protocol Bindable: class {
 public extension Observable {
     
     @discardableResult
-    public func bind<U: Bindable>(_ bindable: U) -> Disposable where U.ValueType == ValueType {
+    public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType {
         return subscribe {[weak bindable] result in
             bindable?.update(result)
         }
     }
     
     @discardableResult
-    public func bind<U: Bindable>(_ bindable: U) -> Disposable where U.ValueType == ValueType? {
+    public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType? {
         
         return subscribe {[weak bindable] result in
             bindable?.update(result)
