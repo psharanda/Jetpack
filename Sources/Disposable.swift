@@ -86,3 +86,21 @@ public final class MultiDisposable: Disposable {
         disposables.removeAll()
     }
 }
+
+public final class DisposableBag {
+    private let multi = MultiDisposable()
+    
+    public func add(_ disposable: Disposable) {
+        multi.add(disposable)
+    }
+    
+    deinit {
+        multi.dispose()
+    }
+}
+
+extension Disposable {
+    public func add(toDisposableBag bag: DisposableBag) {
+        bag.add(self)
+    }
+}
