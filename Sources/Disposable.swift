@@ -87,8 +87,11 @@ public final class MultiDisposable: Disposable {
     }
 }
 
-public final class DisposableBag {
+public final class AutodisposePool {
     private let multi = MultiDisposable()
+    
+    public init() {
+    }
     
     public func add(_ disposable: Disposable) {
         multi.add(disposable)
@@ -100,7 +103,7 @@ public final class DisposableBag {
 }
 
 extension Disposable {
-    public func add(toDisposableBag bag: DisposableBag) {
-        bag.add(self)
+    public func autodispose(_ pool: AutodisposePool) {
+        pool.add(self)
     }
 }
