@@ -9,7 +9,7 @@ extension Jetpack where Base: UIControl {
     public func signalControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Observer<T> {
         let key = controlEventsKey(controlEvents)
     
-        return makeTargetActionObservable(key: key, setup: { base, target, action in
+        return makeTargetActionObserver(key: key, setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
             print(target, action, controlEvents)
         }, cleanup: { base, target, action in

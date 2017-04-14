@@ -3,7 +3,7 @@ import UIKit
 extension Jetpack where Base: UIBarButtonItem {
     
     public var clicked: Observer<Void> {
-        return makeTargetActionObservable(key: #function, setup: { base, target, action in
+        return makeTargetActionObserver(key: #function, setup: { base, target, action in
             base.target = target
             base.action = action
         }, cleanup: { base, _, _ in

@@ -41,7 +41,7 @@ extension NSObject {
 
 extension Jetpack where Base: NSObject {
     
-    public func makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
+    func makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
         return base.jx_lazyObject(key: key) {[unowned base] in
             return Receiver { value in
                 action(base, value)
@@ -49,7 +49,7 @@ extension Jetpack where Base: NSObject {
         }
     }
     
-    public func makeTargetActionObservable<U>(key: String,
+    func makeTargetActionObserver<U>(key: String,
                                            setup: (Base, AnyObject, Selector)->Void,
                                            cleanup: @escaping (Base, AnyObject, Selector)->Void,
                                            getter: @escaping (Base)->U) -> Observer<U> {
@@ -60,7 +60,7 @@ extension Jetpack where Base: NSObject {
         }.signal.asObserver
     }
     
-    public func makeTargetActionProperty<T>(key: String,
+    func makeTargetActionProperty<T>(key: String,
                                          setup: (Base, AnyObject, Selector)->Void,
                                          cleanup: @escaping (Base, AnyObject, Selector)->Void,
                                          getter: @escaping (Base)->T) -> Property<T> {
