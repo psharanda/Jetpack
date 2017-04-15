@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UISlider {
+extension JetpackExtensions where Base: UISlider {
 
 	public var value: Receiver<Float> {
         return makeReceiver(key: #function) { $0.value = $1 }

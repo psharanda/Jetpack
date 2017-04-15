@@ -10,13 +10,13 @@ public protocol JetpackExtensionsProvider: class {}
 
 extension JetpackExtensionsProvider {
 	/// A proxy which hosts reactive extensions for `self`.
-	public var jx: Jetpack<Self> {
-		return Jetpack(self)
+	public var jx: JetpackExtensions<Self> {
+		return JetpackExtensions(self)
 	}
 }
 
 /// A proxy which hosts reactive extensions of `Base`.
-public struct Jetpack<Base> {
+public struct JetpackExtensions<Base> {
 	/// The `Base` instance the extensions would be invoked with.
 	public let base: Base
 

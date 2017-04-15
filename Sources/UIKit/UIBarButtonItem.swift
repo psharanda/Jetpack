@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIBarButtonItem {
+extension JetpackExtensions where Base: UIBarButtonItem {
     
     public var clicked: Observer<Void> {
         return makeTargetActionObserver(key: #function, setup: { base, target, action in

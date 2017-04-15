@@ -6,7 +6,7 @@
 import Foundation
 
 
-extension Jetpack where Base: NotificationCenter {
+extension JetpackExtensions where Base: NotificationCenter {
     
     public func observer(forName name: NSNotification.Name) -> Observer<[AnyHashable: Any]?> {
         return base.jx_lazyObject(key: name.rawValue) { () -> NotificationHandler in

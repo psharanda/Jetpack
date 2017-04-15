@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIBarItem {
+extension JetpackExtensions where Base: UIBarItem {
 	
 	public var isEnabled: Receiver<Bool> {
 		return makeReceiver(key: #function) { $0.isEnabled = $1 }

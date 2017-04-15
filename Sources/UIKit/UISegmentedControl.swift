@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UISegmentedControl {
+extension JetpackExtensions where Base: UISegmentedControl {
 
 	public var selectedSegmentIndex: Receiver<Int> {
         return makeReceiver(key: #function) { $0.selectedSegmentIndex = $1 }

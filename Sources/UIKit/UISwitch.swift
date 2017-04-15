@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UISwitch {
+extension JetpackExtensions where Base: UISwitch {
 
 	public var isOn: Receiver<Bool> {
         return makeReceiver(key: #function) { $0.isOn = $1 }

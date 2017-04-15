@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UITextField {
+extension JetpackExtensions where Base: UITextField {
 	
 	public var text: Receiver<String?> {
         return makeReceiver(key: #function) { $0.text = $1 }

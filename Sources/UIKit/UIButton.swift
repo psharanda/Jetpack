@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIButton {
+extension JetpackExtensions where Base: UIButton {
     
     public var clicked: Observer<Void> {
         return signalControlEvents(.touchUpInside) {_ in }

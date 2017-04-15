@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIRefreshControl {
+extension JetpackExtensions where Base: UIRefreshControl {
 	
 	public var isRefreshing: Receiver<Bool> {
         return makeReceiver(key: #function) { $1 ? $0.beginRefreshing() : $0.endRefreshing() }

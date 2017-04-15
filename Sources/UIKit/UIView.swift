@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIView {
+extension JetpackExtensions where Base: UIView {
     
 	public var alpha: Receiver<CGFloat> {
         return makeReceiver(key: #function) { $0.alpha = $1 }

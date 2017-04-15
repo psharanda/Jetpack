@@ -39,7 +39,7 @@ extension NSObject {
     }
 }
 
-extension Jetpack where Base: NSObject {
+extension JetpackExtensions where Base: NSObject {
     
     func makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
         return base.jx_lazyObject(key: key) {[unowned base] in

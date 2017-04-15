@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UIStepper {
+extension JetpackExtensions where Base: UIStepper {
 
 	public var value: Receiver<Double> {
         return makeReceiver(key: #function) { $0.value = $1 }

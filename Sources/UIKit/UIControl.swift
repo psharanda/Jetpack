@@ -4,7 +4,7 @@ fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
     return "\(#function) \(controlEvents.rawValue)"
 }
 
-extension Jetpack where Base: UIControl {
+extension JetpackExtensions where Base: UIControl {
 
     public func signalControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Observer<T> {
         let key = controlEventsKey(controlEvents)

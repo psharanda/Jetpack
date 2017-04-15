@@ -1,6 +1,6 @@
 import UIKit
 
-extension Jetpack where Base: UILabel {
+extension JetpackExtensions where Base: UILabel {
 	
 	public var text: Receiver<String?> {
 		return makeReceiver(key: #function) { $0.text = $1 }

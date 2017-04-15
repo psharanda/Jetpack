@@ -1,7 +1,7 @@
 import UIKit
 
 
-extension Jetpack where Base: UIGestureRecognizer {
+extension JetpackExtensions where Base: UIGestureRecognizer {
     
     public var stateChanged: Observer<(CGPoint, UIGestureRecognizerState)> {        
         return makeTargetActionObserver(key: #function, setup: { base, target, action in
