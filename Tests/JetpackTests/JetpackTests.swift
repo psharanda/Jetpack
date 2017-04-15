@@ -72,11 +72,11 @@ class JetpackTests: XCTestCase {
         class Test {
             private let state = State(0)
             var stateProperty: Property<Int> {
-                return state.property
+                return state.asProperty
             }
             
             var receiver: Receiver<Int> {
-                return state.receiver
+                return state.asReceiver
             }
         }
         
@@ -691,8 +691,78 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(firedTimes, 1)
     }
+    
+    
+    func testMemory() {
+        
+        numberOfDeinits = 0
+        
+        class View {
+            private let name = State<String>("John")
+            deinit {
+                numberOfDeinits += 1
+            }
+            
+            var nameChanged: Observer<String> {
+                return name.asObserver
+            }
+            
+            private let value = State<String>("FRP")
+            
+            var valueReceiver: Receiver<String> {
+                return value.asReceiver
+            }
+            
+            private var increment = 0
+            private let signal = Signal<Void>()
+            
+            var signalReceiver: Receiver<Void> {
+                return signal.asReceiver
+            }
+            
+            init() {
+                signal.subscribe { [weak self] in
+                    self?.increment += 1
+                }
+            }
+        }
+        
+        class Model {
+            private let name = State<String>("John")
+            deinit {
+                numberOfDeinits += 1
+            }
+            
+            var nameReceiver: Receiver<String> {
+                return name.asReceiver
+            }
+            
+            private let value = State<String>("FRP")
+            
+            var valueChanged: Observer<String> {
+                return value.asObserver
+            }
+        }
+        
+        func scope() {
+            let view = View()
+            
+            let model = Model()
+
+            view.nameChanged.bind(model.nameReceiver)
+            model.valueChanged.bind(view.valueReceiver)
+            view.nameChanged.bind(view.valueReceiver)
+            
+            view.nameChanged.just.bind(view.signalReceiver)
+        }
+        
+        scope()
+        
+        XCTAssertEqual(numberOfDeinits, 2)
+    }
 }
 
+var numberOfDeinits = 0
 
 #if os(Linux)
 extension JetpackTests {

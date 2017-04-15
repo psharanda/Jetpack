@@ -50,3 +50,11 @@ private struct TaggedObserver<T> {
     let token: UInt
     let observer: (T)->Void
 }
+
+extension Signal {
+    public var asReceiver: Receiver<ValueType> {
+        return Receiver {
+            self.update($0)
+        }
+    }
+}

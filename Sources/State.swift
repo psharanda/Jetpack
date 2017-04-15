@@ -15,8 +15,8 @@ public final class State<T>: Observable, Bindable {
         return property.value
     }
     
-    public let property: Property<T>
-    public let receiver: Receiver<T>
+    private let property: Property<T>
+    private let variable: Variable<T>
     
     public init(_ value: T, onChange: @escaping (T, T)->Void) {
         
@@ -26,11 +26,13 @@ public final class State<T>: Observable, Bindable {
         property = Property(signal: signal) {
             return v
         }
-        receiver = Receiver {
+        variable = Variable(setter: {
             onChange(v, $0)
             v = $0
             signal.update(v)
-        }
+        }, getter: {
+            return v
+        })
     }
     
     public convenience init(_ value: T) {
@@ -42,9 +44,22 @@ public final class State<T>: Observable, Bindable {
     }
     
     public func update(_ newValue: T) {
-        receiver.update(newValue)
+        variable.update(newValue)
     }
-
+    
+    public var asReceiver: Receiver<ValueType> {
+        return variable.asReceiver
+    }
+    
+    public var asProperty: Property<ValueType> {
+        return property
+    }
+    
+    public var asVariable: Variable<ValueType> {
+        return variable
+    }
 }
+
+
 
 

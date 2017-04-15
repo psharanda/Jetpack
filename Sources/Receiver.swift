@@ -8,7 +8,7 @@ import Foundation
 /**
  Wrapper around some state which provides interface for binding
  */
-public class Receiver<T>: Bindable {
+public struct Receiver<T>: Bindable {
     
     private let setter: (T)->Void
     
@@ -20,3 +20,5 @@ public class Receiver<T>: Bindable {
         setter(newValue)
     }
 }
+
+

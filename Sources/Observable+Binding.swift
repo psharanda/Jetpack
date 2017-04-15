@@ -5,7 +5,7 @@
 
 import Foundation
 
-public protocol Bindable: class {
+public protocol Bindable {
     associatedtype ValueType
     func update(_ newValue: ValueType)
 }
@@ -14,16 +14,16 @@ public extension Observable {
     
     @discardableResult
     public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType {
-        return subscribe {[weak bindable] result in
-            bindable?.update(result)
+        return subscribe {result in
+            bindable.update(result)
         }
     }
     
     @discardableResult
     public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType? {
         
-        return subscribe {[weak bindable] result in
-            bindable?.update(result)
+        return subscribe { result in
+            bindable.update(result)
         }
     }
 }

@@ -6,7 +6,7 @@ extension Jetpack where Base: UISegmentedControl {
         return makeReceiver(key: #function) { $0.selectedSegmentIndex = $1 }
 	}
 
-	public var selectedSegmentValues: Property<Int> {
+	public var selectedSegmentIndexValues: Property<Int> {
 		return propertyControlEvents(.valueChanged) { $0.selectedSegmentIndex }
 	}
 }

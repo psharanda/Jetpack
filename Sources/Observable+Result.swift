@@ -5,19 +5,19 @@
 
 import Foundation
 
-public protocol Errorable {
+public protocol ErrorConvertible {
     var error: Error? {get}
 }
 
-public protocol Valueable {
+public protocol ValueConvertible {
     associatedtype ValueType
     var value: ValueType? {get}
 }
 
-extension Result: Errorable, Valueable { }
-extension TaskResult: Errorable, Valueable { }
+extension Result: ErrorConvertible, ValueConvertible { }
+extension TaskResult: ErrorConvertible, ValueConvertible { }
 
-public extension Observable where ValueType: Errorable {
+public extension Observable where ValueType: ErrorConvertible {
     
     public var error: Observer<Error> {
         return flatMap { result in
@@ -26,7 +26,7 @@ public extension Observable where ValueType: Errorable {
     }
 }
 
-public extension Observable where ValueType: Valueable {
+public extension Observable where ValueType: ValueConvertible {
     
     public var value: Observer<ValueType.ValueType> {
         return flatMap { result in

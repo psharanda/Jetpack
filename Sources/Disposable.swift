@@ -103,7 +103,7 @@ public final class AutodisposePool {
 }
 
 extension Disposable {
-    public func autodispose(_ pool: AutodisposePool) {
+    public func autodispose(in pool: AutodisposePool) {
         pool.add(self)
     }
 }
