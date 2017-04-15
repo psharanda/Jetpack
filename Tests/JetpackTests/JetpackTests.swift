@@ -632,7 +632,7 @@ class JetpackTests: XCTestCase {
         
         _ = buttonClick
             .flatMapLatest {
-                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).delay(timeInterval: 1)
+                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).asObserver
             }
             .subscribe {
                 XCTAssertEqual($0.isEqual(expectedValue), true)

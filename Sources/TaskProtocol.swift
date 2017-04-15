@@ -10,5 +10,13 @@ import Foundation
 
 public protocol TaskProtocol {
     associatedtype ResultValueType
-    func subscribe(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable
+    func start(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable
+}
+
+extension TaskProtocol {
+    public var asObserver: Observer<Result<ResultValueType>> {
+        return Observer { observer in
+            return self.start(observer)
+        }
+    }
 }

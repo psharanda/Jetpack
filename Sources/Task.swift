@@ -5,9 +5,7 @@
 
 import Foundation
 
-public struct Task<T>: Observable, TaskProtocol {
-    
-    public typealias ValueType = Result<T>
+public struct Task<T>: TaskProtocol {
     public typealias ResultValueType = T
     
     private let worker: (@escaping (Result<T>) -> Void) -> Disposable
@@ -18,10 +16,12 @@ public struct Task<T>: Observable, TaskProtocol {
     public init(worker: @escaping (@escaping (Result<T>) -> Void) -> Disposable) {
         self.worker = worker
     }
-
-    public func subscribe(_ observer: @escaping (Result<T>) -> Void) -> Disposable {
-        return worker(observer)
+    
+    @discardableResult
+    public func start(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable {
+        return worker(completion)
     }
+    
 }
 
 

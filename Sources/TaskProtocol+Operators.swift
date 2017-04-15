@@ -15,12 +15,6 @@ extension TaskProtocol {
         return start { _ in }
     }
     
-    
-    @discardableResult
-    public func start(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable {
-        return subscribe(completion)
-    }
-    
     /**
      Perform one task after another - in fact this is flatMapValueLatest
      */

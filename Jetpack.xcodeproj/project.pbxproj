@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B1407E81EA26DB000758E8E /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */; };
 		1B4939671E9E34100005452A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
 		1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
@@ -225,6 +226,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressiveTask.swift; path = Sources/ProgressiveTask.swift; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 				1B6E88371E9E17180063D5EB /* Task.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
 				1B6E88521E9E18B40063D5EB /* Either.swift */,
+				1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */,
 			);
 			name = Tasks;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */,
 				1BA2EF731E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
+				1B1407E81EA26DB000758E8E /* ProgressiveTask.swift in Sources */,
 				1B6E88411E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
