@@ -18,7 +18,7 @@ extension Result: ErrorConvertible, ValueConvertible { }
 
 public extension Observable where ValueType: ErrorConvertible {
     
-    public var error: Observer<Error> {
+    public var errorOnly: Observer<Error> {
         return flatMap { result in
             result.error
         }
@@ -27,7 +27,7 @@ public extension Observable where ValueType: ErrorConvertible {
 
 public extension Observable where ValueType: ValueConvertible {
     
-    public var value: Observer<ValueType.ValueType> {
+    public var valueOnly: Observer<ValueType.ValueType> {
         return flatMap { result in
             result.value
         }

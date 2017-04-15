@@ -36,7 +36,7 @@ extension TaskProtocol {
     /**
      Transform task success value to value
      */
-    public func mapValue<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
+    public func map<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
                 completion(result.map(transform))
@@ -47,7 +47,7 @@ extension TaskProtocol {
     /**
      Transform task success value  to result
      */
-    public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
+    public func flatMap<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
                 completion(result.flatMap(transform))
@@ -58,8 +58,8 @@ extension TaskProtocol {
     /**
      Transform task success value  to static value
      */
-    public func justValue<U>(_ value: U) -> Task<U> {
-        return mapValue { _ -> U in
+    public func just<U>(_ value: U) -> Task<U> {
+        return map { _ -> U in
             return value
         }
     }
@@ -67,8 +67,8 @@ extension TaskProtocol {
     /**
      Transform task success value to void value
      */
-    public var justValue: Task<Void> {
-        return justValue(())
+    public var just: Task<Void> {
+        return just(())
     }
     
     /**
@@ -137,12 +137,12 @@ extension TaskProtocol {
                 }
             }
             
-            leftTask = left.mapValue{.left($0)}.start(handler(other: rightTask))
+            leftTask = left.map{.left($0)}.start(handler(other: rightTask))
             
             // Note that left could immediately return result (or just fail)
             // We don't need to start the right one in that case
             if !done {
-                rightTask = right.mapValue{.right($0)}.start(handler(other: leftTask))
+                rightTask = right.map{.right($0)}.start(handler(other: leftTask))
             }
             
             return DelegateDisposable {
@@ -228,7 +228,7 @@ extension TaskProtocol {
         let empty = Task<[ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.then { result in
-                right.mapValue { t in
+                right.map { t in
                     result + [t]
                 }
             }
@@ -241,7 +241,7 @@ extension TaskProtocol {
     public static func concurrently<R: TaskProtocol>(_ tasks: [R]) -> Task<[ResultValueType]>  where R.ResultValueType == ResultValueType {
         let empty = Task<[ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
-            left.concurrently(right).mapValue { (result, t) in
+            left.concurrently(right).map { (result, t) in
                 result + [t]
             }
         }
