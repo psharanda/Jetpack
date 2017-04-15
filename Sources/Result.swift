@@ -79,12 +79,12 @@ extension Result where T: Equatable {
             case .failure:
                 return false
             }
-        case .failure:
+        case .failure(let e1):
             switch rhs {
             case .success:
                 return false
-            case .failure:
-                return true
+            case .failure(let e2):
+                return e1.localizedDescription == e2.localizedDescription
             }
         }
     }

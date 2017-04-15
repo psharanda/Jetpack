@@ -15,7 +15,6 @@ public protocol ValueConvertible {
 }
 
 extension Result: ErrorConvertible, ValueConvertible { }
-extension TaskResult: ErrorConvertible, ValueConvertible { }
 
 public extension Observable where ValueType: ErrorConvertible {
     

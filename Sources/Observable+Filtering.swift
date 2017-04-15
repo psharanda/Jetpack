@@ -26,7 +26,7 @@ extension Observable {
         var lastUpdateTime = Date.distantPast
         var lastIgnoredValue: ValueType? = nil
         
-        var lastAfterCancel: (()->Void)? = nil
+        var lastAfterCancel: Disposable? = nil
         
         return Observer { observer in
             return self.subscribe { result in
@@ -38,31 +38,31 @@ extension Observable {
                     observer(result)
                     
                     if latest {
-                        lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) {
+                        lastAfterCancel = queue.after(timeInterval: timeInterval) {
                             guard let lastIgnoredValue = lastIgnoredValue  else { return }
                             observer(lastIgnoredValue)
                         }
                     }
                 }
             }.with(disposable: DelegateDisposable {
-                lastAfterCancel?()
+                lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })
         }
     }
 
     public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {                
-        var lastAfterCancel: (()->Void)? = nil
+        var lastAfterCancel: Disposable? = nil
         
         return Observer { observer in
             return self.subscribe { result in
-                lastAfterCancel?()
+                lastAfterCancel?.dispose()
                 
-                lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) {
+                lastAfterCancel = queue.after(timeInterval: timeInterval) {
                     observer(result)
                 }
             }.with(disposable: DelegateDisposable {
-                lastAfterCancel?()
+                lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })
         }

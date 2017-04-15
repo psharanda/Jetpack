@@ -7,43 +7,27 @@ import Foundation
 import XCTest
 import Jetpack
 
-func requestHello(completion: @escaping (TaskResult<String>) -> Void)->(Disposable) {
+func requestHello(completion: @escaping (Result<String>) -> Void)->(Disposable) {
     return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-        if cancelled {
-            completion(.cancelled)
-        } else {
-            completion(.success("Hello"))
-        }
+        completion(.success("Hello"))
     }
 }
 
-func requestError(completion: @escaping (TaskResult<String>) -> Void)->(Disposable) {
+func requestError(completion: @escaping (Result<String>) -> Void)->(Disposable) {
     return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-        if cancelled {
-            completion(.cancelled)
-        } else {
-            completion(.failure(NSError(domain: "request", code: -1, userInfo: nil)))
-        }
+        completion(.failure(NSError(domain: "request", code: -1, userInfo: nil)))
     }
 }
 
-func requestWorld(head: String, completion: @escaping (TaskResult<String>) -> Void)->(Disposable) {
+func requestWorld(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
     return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-        if cancelled {
-            completion(.cancelled)
-        } else {
-            completion(.success(head + "World"))
-        }
+        completion(.success(head + "World"))
     }
 }
 
-func requestPunctuation(head: String, completion: @escaping (TaskResult<String>) -> Void)->(Disposable) {
+func requestPunctuation(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
     return DispatchQueue.main.after(timeInterval: 1) { cancelled in
-        if cancelled {
-            completion(.cancelled)
-        } else {
-            completion(.success(head + "!!!"))
-        }
+        completion(.success(head + "!!!"))
     }
 }
 
@@ -59,8 +43,6 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("Hello", value)
-            case .cancelled:
-                XCTFail("should not be cancelled")
             case .failure(_):
                 XCTFail("should not error")
             }
@@ -81,8 +63,6 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
-            case .cancelled:
-                XCTFail("should not be cancelled")
             case .failure(let error):
                 XCTAssertEqual(-1, (error as NSError).code)
             }
@@ -104,16 +84,17 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
-            case .cancelled:
-                break
             case .failure(_):
                 XCTFail("should not error")
             }
-            expect.fulfill()
+            
         }
         
         c.dispose()
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            expect.fulfill()
+        }
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -140,8 +121,6 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("HelloWorld!!!", value)
-            case .cancelled:
-                XCTFail("should not be cancelled")
             case .failure(_):
                 XCTFail("should not error")
             }
@@ -171,8 +150,6 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
-            case .cancelled:
-                XCTFail("should not be cancelled")
             case .failure(let error):
                 XCTAssertEqual(-1, (error as NSError).code)
             }
@@ -204,16 +181,17 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
-            case .cancelled:
-                break
             case .failure(_):
                 XCTFail("should not error")
             }
-            expect.fulfill()
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             c.dispose()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            expect.fulfill()
         }
         
         self.waitForExpectations(timeout: 5) { error in
@@ -228,9 +206,6 @@ class TaskTests: XCTestCase {
         let r = Task(worker: requestHello)
             .onSuccess {
                 XCTAssertEqual("Hello", $0)
-                expect.fulfill()
-            }.onCancelled {
-                XCTFail("should not be cancelled")
                 expect.fulfill()
             }.onFailure { _ in
                 XCTFail("error")
@@ -252,9 +227,6 @@ class TaskTests: XCTestCase {
             .onSuccess { _ in
                 XCTFail("should not have value")
                 expect.fulfill()
-            }.onCancelled {
-                XCTFail("should not be cancelled")
-                expect.fulfill()
             }.onFailure { error in
                 XCTAssertEqual(-1, (error as NSError).code)
                 expect.fulfill()
@@ -275,17 +247,16 @@ class TaskTests: XCTestCase {
         let r = Task(worker: requestHello)
             .onSuccess { _ in
                 XCTFail("should not have value")
-                expect.fulfill()
-            }.onCancelled {
-                expect.fulfill()
             }.onFailure { _ in
                 XCTFail("should not error")
-                expect.fulfill()
         }
         let c = r.start()
         
         c.dispose()
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            expect.fulfill()
+        }
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -297,39 +268,30 @@ class TaskTests: XCTestCase {
 
         let left = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("Hello"))
-                }
+                completion(.success("Hello"))
             }
         }
 
         let right = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("Hello"))
-                }
+                completion(.success("Hello"))
             }
         }
 
         let r = left.race(right)
             .onSuccess { _ in
                 XCTFail("shoud not succeed")
-                expect.fulfill()
             }
             .onFailure { _ in
                 XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-            .onCancelled {
-                expect.fulfill()
             }
             .start()
 
         r.dispose()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            expect.fulfill()
+        }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -341,22 +303,14 @@ class TaskTests: XCTestCase {
 
         let left = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    let error = NSError(domain: "test", code: 0, userInfo: [:])
-                    completion(.failure(error))
-                }
+                let error = NSError(domain: "test", code: 0, userInfo: [:])
+                completion(.failure(error))
             }
         }
 
         let right = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 1) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("Hello"))
-                }
+                completion(.success("Hello"))
             }
         }
 
@@ -366,10 +320,6 @@ class TaskTests: XCTestCase {
                 expect.fulfill()
             }
             .onFailure { _ in
-                expect.fulfill()
-            }
-            .onCancelled {
-                XCTFail("shoud not be cancelled 1")
                 expect.fulfill()
             }
             .start()
@@ -384,21 +334,13 @@ class TaskTests: XCTestCase {
 
         let left = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("left"))
-                }
+                completion(.success("left"))
             }
         }
 
         let right = Task<Int> { completion in
             return DispatchQueue.main.after(timeInterval: 1) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success(5))
-                }
+                completion(.success(5))
             }
         }
 
@@ -416,10 +358,6 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .onCancelled {
-                XCTFail("shoud not be cancelled 2")
-                expect.fulfill()
-            }
             .start()
 
         self.waitForExpectations(timeout: 5) { error in
@@ -432,21 +370,13 @@ class TaskTests: XCTestCase {
 
         let left = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 1) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("left"))
-                }
+                completion(.success("left"))
             }
         }
 
         let right = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("right"))
-                }
+                completion(.success("right"))
             }
         }
 
@@ -464,10 +394,6 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .onCancelled {
-                XCTFail("shoud not be cancelled 3")
-                expect.fulfill()
-            }
             .start()
 
         self.waitForExpectations(timeout: 5) { error in
@@ -483,11 +409,7 @@ class TaskTests: XCTestCase {
 
         let right = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("right"))
-                }
+                completion(.success("right"))
             }
         }
 
@@ -505,10 +427,6 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .onCancelled {
-                XCTFail("shoud not be cancelled 3")
-                expect.fulfill()
-            }
             .start()
 
         self.waitForExpectations(timeout: 5) { error in
@@ -521,31 +439,19 @@ class TaskTests: XCTestCase {
 
         let r1 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r1"))
-                }
+                completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.4) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r2"))
-                }
+                completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r3"))
-                }
+                completion(.success("r3"))
             }
         }
 
@@ -556,10 +462,6 @@ class TaskTests: XCTestCase {
             }
             .onFailure { _ in
                 XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-            .onCancelled {
-                XCTFail("shoud not be cancelled")
                 expect.fulfill()
             }
             .start()
@@ -574,32 +476,20 @@ class TaskTests: XCTestCase {
 
         let r1 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r1"))
-                }
+                completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.4) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    let error = NSError(domain: "test", code: 0, userInfo: [:])
-                    completion(.failure(error))
-                }
+                let error = NSError(domain: "test", code: 0, userInfo: [:])
+                completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r3"))
-                }
+                completion(.success("r3"))
             }
         }
 
@@ -609,10 +499,6 @@ class TaskTests: XCTestCase {
                 expect.fulfill()
             }
             .onFailure { _ in
-                expect.fulfill()
-            }
-            .onCancelled {
-                XCTFail("should not be cancelled")
                 expect.fulfill()
             }
             .start()
@@ -627,31 +513,19 @@ class TaskTests: XCTestCase {
 
         let r1 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r1"))
-                }
+                completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.4) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r2"))
-                }
+                completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r3"))
-                }
+                completion(.success("r3"))
             }
         }
 
@@ -662,10 +536,6 @@ class TaskTests: XCTestCase {
             }
             .onFailure { _ in
                 XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-            .onCancelled {
-                XCTFail("shoud not be cancelled")
                 expect.fulfill()
             }
             .start()
@@ -680,32 +550,20 @@ class TaskTests: XCTestCase {
 
         let r1 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r1"))
-                }
+                completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.4) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    let error = NSError(domain: "test", code: 0, userInfo: [:])
-                    completion(.failure(error))
-                }
+                let error = NSError(domain: "test", code: 0, userInfo: [:])
+                completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
-                if cancelled {
-                    completion(.cancelled)
-                } else {
-                    completion(.success("r3"))
-                }
+                completion(.success("r3"))
             }
         }
 
@@ -717,94 +575,8 @@ class TaskTests: XCTestCase {
             .onFailure { _ in
                 expect.fulfill()
             }
-            .onCancelled {
-                XCTFail("should not be cancelled")
-                expect.fulfill()
-            }
             .start()
 
-        self.waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testDelayCancelled() {
-        
-        let expect = expectation(description: "result")
-        
-        let r = Task<Int>.cancelled.delay(timeInterval: 1)
-        
-        let cancelable = r.start { result in
-            switch result {
-            case .cancelled:
-                expect.fulfill()
-            case .success:
-                XCTFail("should not succeed")
-                expect.fulfill()
-            case .failure:
-                XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-        }
-        
-        _ = DispatchQueue.main.after(timeInterval: 0.5) { _ in
-            cancelable.dispose()
-        }
-        
-        self.waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testDelayCancelImmediately() {
-        
-        let expect = expectation(description: "result")
-        
-        let some = 100
-        let r = Task.from(value: some).delay(timeInterval: 1)
-        
-        let c = r.start { result in
-            switch result {
-            case .cancelled:
-                XCTFail("should not cancel")
-                expect.fulfill()
-            case .success(let value):
-                XCTAssertEqual(some, value)
-                expect.fulfill()
-            case .failure:
-                XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-        }
-        
-        c.dispose()
-        
-        self.waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testDelaySuccess() {
-        
-        let expect = expectation(description: "result")
-        
-        let some = 100
-        let r = Task.from(value: some).delay(timeInterval: 1)
-        
-        _ = r.start { result in
-            switch result {
-            case .cancelled:
-                XCTFail("should not cancel")
-                expect.fulfill()
-            case .success(let value):
-                XCTAssertEqual(some, value)
-                expect.fulfill()
-            case .failure:
-                XCTFail("shoud not fail")
-                expect.fulfill()
-            }
-        }
-        
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
         }
@@ -825,8 +597,6 @@ class TaskTests: XCTestCase {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
-            case .cancelled:
-                XCTFail("should not be cancelled")
             case .failure:
                 XCTAssertEqual(numberOfFailures, 4)
             }
@@ -851,69 +621,22 @@ class TaskTests: XCTestCase {
         
         let cancelable = r.start { result in
             switch result {
-            case .cancelled:
-                XCTAssertEqual(numberOfFailures, 1)
             case .success(_):
                 XCTFail("should not have value")
             case .failure:
                 XCTFail("shoud not fail")
             }
-            expect.fulfill()
         }
         
         _ = DispatchQueue.main.after(timeInterval: 0.6) { _ in
             cancelable.dispose()
         }
         
-        self.waitForExpectations(timeout: 5) { error in
-            XCTAssertNil(error)
-        }
-    }
-    
-    func testProgressiveTask() {
-        
-        let expect = expectation(description: "result")
-        
-        var progress = [Double]()
-        
-        let r = Task(worker: requestHello)
-            .then { result in
-                return Task {
-                    return requestWorld(head: result, completion: $0)
-                }
-            }
-            .then { result in
-                return ProgressiveTask<String, Double> { progress, completion in
-                    progress(0.0)
-                    progress(0.2)
-                    progress(0.4)
-                    progress(0.6)
-                    progress(0.8)
-                    progress(1.0)
-                    completion(.success(result+"!!!"))
-
-                    
-                    return EmptyDisposable()
-                }
-                .onProgress { progressValue in
-                    progress.append(progressValue)
-                }.asTask
-            }
-        
-        _ = r.start {
-            switch $0 {
-            case .success(let value):
-                XCTAssertEqual("HelloWorld!!!", value)
-            case .cancelled:
-                XCTFail("should not be cancelled")
-            case .failure(_):
-                XCTFail("should not error")
-            }
+        _ = DispatchQueue.main.after(timeInterval: 0.65) { _ in
             expect.fulfill()
         }
         
         self.waitForExpectations(timeout: 5) { error in
-            XCTAssertEqual(progress, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0])
             XCTAssertNil(error)
         }
     }

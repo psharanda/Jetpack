@@ -8,37 +8,41 @@ import Foundation
 extension TaskProtocol {
     
     /**
-     Start task
+     Start task, actually just typealias for subscribe.
      */
     @discardableResult
     public func start() -> Disposable {
         return start { _ in }
     }
     
+    
+    @discardableResult
+    public func start(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable {
+        return subscribe(completion)
+    }
+    
     /**
-     Perform one task after another
+     Perform one task after another - in fact this is flatMapValueLatest
      */
-    public func then<U>(_ task: @escaping (ValueType)->Task<U>) -> Task<U>  {
+    public func then<U>(_ task: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
         return Task<U> { completion  in
-            let serial = SerialDisposable()
-            serial.swap(with: self.start { result in
+            let disposable = SwapableDisposable()
+            disposable.swap(parent: self.start { result in
                 switch result {
                 case .success(let value):
-                    serial.swap(with: task(value).start(completion))
+                    disposable.swap(child: task(value).start(completion))
                 case .failure(let error):
                     completion(.failure(error))
-                case .cancelled:
-                    completion(.cancelled)
                 }
             })
-            return serial
+            return disposable
         }
     }
     
     /**
      Transform task success value to value
      */
-    public func map<U>(_ transform: @escaping (ValueType)-> U) -> Task<U> {
+    public func mapValue<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
                 completion(result.map(transform))
@@ -49,7 +53,7 @@ extension TaskProtocol {
     /**
      Transform task success value  to result
      */
-    public func flatMap<U>(_ transform: @escaping (ValueType)-> TaskResult<U>) -> Task<U> {
+    public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
                 completion(result.flatMap(transform))
@@ -60,8 +64,8 @@ extension TaskProtocol {
     /**
      Transform task success value  to static value
      */
-    public func just<U>(_ value: U) -> Task<U> {
-        return map { _ -> U in
+    public func justValue<U>(_ value: U) -> Task<U> {
+        return mapValue { _ -> U in
             return value
         }
     }
@@ -69,14 +73,14 @@ extension TaskProtocol {
     /**
      Transform task success value to void value
      */
-    public var just: Task<Void> {
-        return just(())
+    public var justValue: Task<Void> {
+        return justValue(())
     }
     
     /**
      Add handler to perform specific action if task was successful
      */
-    public func onSuccess(_ handler:  @escaping(ValueType) -> Void) -> Task<ValueType> {
+    public func onSuccess(_ handler:  @escaping(ResultValueType) -> Void) -> Task<ResultValueType> {
         return Task { completion in
             return self.start { result in
                 if case let .success(value) = result {
@@ -90,7 +94,7 @@ extension TaskProtocol {
     /**
      Add handler to perform specific action if task failed
      */
-    public func onFailure(_ handler:  @escaping(Error) -> Void) -> Task<ValueType> {
+    public func onFailure(_ handler:  @escaping(Error) -> Void) -> Task<ResultValueType> {
         return Task { completion in
             return self.start { result in
                 if case let .failure(error) = result {
@@ -102,37 +106,11 @@ extension TaskProtocol {
     }
     
     /**
-     Add handler to perform specific action on task cancellation
-     */
-    public func onCancelled(_ handler:  @escaping() -> Void) -> Task<ValueType> {
-        return Task { completion in
-            return self.start { result in
-                if case .cancelled = result {
-                    handler()
-                }
-                completion(result)
-            }
-        }
-    }
-    
-    /**
-     Add handler to perform specific action on result
-     */
-    public func onResult(_ handler:  @escaping(TaskResult<ValueType>) -> Void) -> Task<ValueType> {
-        return Task { completion in
-            return self.start { result in
-                handler(result)
-                completion(result)
-            }
-        }
-    }
-    
-    /**
      Run two tasks concurrently, return the result of the first successfull one, other one will be cancelled. When one of them fails, other one is cancelled. On cancel, it cancelles both children.
      */
-    public func race<U, R: TaskProtocol>(_ right: R) -> Task<Either<ValueType,U>>  where R.ValueType == U {
+    public func race<U, R: TaskProtocol>(_ right: R) -> Task<Either<ResultValueType,U>>  where R.ResultValueType == U {
         let left = self
-        return Task<Either<ValueType,U>> { completion in
+        return Task<Either<ResultValueType,U>> { completion in
             var leftTask: Disposable?
             var rightTask: Disposable?
             
@@ -141,7 +119,7 @@ extension TaskProtocol {
             // number of childred exited so far
             var exited = 0
             
-            func handler(other: Disposable?) -> ((TaskResult<Either<ValueType,U>>) -> Void) {
+            func handler(other: Disposable?) -> ((Result<Either<ResultValueType,U>>) -> Void) {
                 return { result in
                     exited += 1
                     
@@ -161,22 +139,16 @@ extension TaskProtocol {
                         done = true
                         other?.dispose()
                         completion(.failure(error))
-                    case .cancelled:
-                        if exited == 2 {
-                            // we are the last cancelled child, lets notify parent
-                            done = true
-                            completion(.cancelled)
-                        }
                     }
                 }
             }
             
-            leftTask = left.map{.left($0)}.start(handler(other: rightTask))
+            leftTask = left.mapValue{.left($0)}.start(handler(other: rightTask))
             
             // Note that left could immediately return result (or just fail)
             // We don't need to start the right one in that case
             if !done {
-                rightTask = right.map{.right($0)}.start(handler(other: leftTask))
+                rightTask = right.mapValue{.right($0)}.start(handler(other: leftTask))
             }
             
             return DelegateDisposable {
@@ -188,9 +160,9 @@ extension TaskProtocol {
     
     /** Run two tasks concurrently, wait for both to succeed and return both results. If one fails, then other one will be cancelled.
      */
-    public func concurrently<U, R: TaskProtocol>(_ right: R) -> Task<(ValueType, U)>  where R.ValueType == U {
+    public func concurrently<U, R: TaskProtocol>(_ right: R) -> Task<(ResultValueType, U)>  where R.ResultValueType == U {
         let left = self
-        return Task<(ValueType,U)> { completion in
+        return Task<(ResultValueType,U)> { completion in
             var leftTask: Disposable?
             var rightTask: Disposable?
             
@@ -199,7 +171,7 @@ extension TaskProtocol {
             // number of childred exited so far
             var exited = 0
             
-            func handler<R>(other: Disposable?, block: @escaping (R)->Void) -> ((TaskResult<R>) -> Void) {
+            func handler<R>(other: Disposable?, block: @escaping (R)->Void) -> ((Result<R>) -> Void) {
                 return { result in
                     exited += 1
                     
@@ -215,17 +187,11 @@ extension TaskProtocol {
                         done = true
                         other?.dispose()
                         completion(.failure(error))
-                    case .cancelled:
-                        if exited == 2 {
-                            // we are the last cancelled child, lets notify parent
-                            done = true
-                            completion(.cancelled)
-                        }
                     }
                 }
             }
             
-            var t: ValueType?
+            var t: ResultValueType?
             var u: U?
             
             func onResult() {
@@ -264,11 +230,11 @@ extension TaskProtocol {
     /**
      Run a number of tasks one by one in a sequence
      */
-    public static func sequence(_ tasks: [Task<ValueType>]) -> Task<[ValueType]> {
-        let empty = Task<[ValueType]>.from(value: [])
+    public static func sequence(_ tasks: [Task<ResultValueType>]) -> Task<[ResultValueType]> {
+        let empty = Task<[ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.then { result in
-                right.map { t in
+                right.mapValue { t in
                     result + [t]
                 }
             }
@@ -278,38 +244,12 @@ extension TaskProtocol {
     /**
      Run a number of tasks concurrently
      */
-    public static func concurrently<R: TaskProtocol>(_ tasks: [R]) -> Task<[ValueType]>  where R.ValueType == ValueType {
-        let empty = Task<[ValueType]>.from(value: [])
+    public static func concurrently<R: TaskProtocol>(_ tasks: [R]) -> Task<[ResultValueType]>  where R.ResultValueType == ResultValueType {
+        let empty = Task<[ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
-            left.concurrently(right).map { (result, t) in
+            left.concurrently(right).mapValue { (result, t) in
                 result + [t]
             }
-        }
-    }
-    
-    /**
-     Deliver value after delay
-     */
-    public func delay(timeInterval: TimeInterval, queue: DispatchQueue = .main) -> Task<ValueType> {
-        
-        return Task { completion  in
-            let serial = SerialDisposable()
-            serial.swap(with: self.start { result in
-                
-                if  case .cancelled = result {
-                    completion(.cancelled)
-                    return
-                }
-                
-                serial.swap(with: queue.after(timeInterval: timeInterval) { cancelled in
-                    if cancelled {
-                        completion(.cancelled)
-                    } else {
-                        completion(result)
-                    }
-                })
-            })
-            return serial
         }
     }
     
@@ -328,12 +268,12 @@ extension TaskProtocol {
      
      - returns: new task
      */
-    public func retry(numberOfTimes: Int, timeout: TimeInterval, nextTimeout: @escaping (TimeInterval)->TimeInterval = { $0 }, queue: DispatchQueue = .main, until: @escaping (Error)->(Bool) = {_ in true }) -> Task<ValueType> {
+    public func retry(numberOfTimes: Int, timeout: TimeInterval, nextTimeout: @escaping (TimeInterval)->TimeInterval = { $0 }, queue: DispatchQueue = .main, until: @escaping (Error)->(Bool) = {_ in true }) -> Task<ResultValueType> {
         
         var currentTimeout = timeout
         var numberOfRetries = 0
         
-        return Task<ValueType> { completion  in
+        return Task<ResultValueType> { completion  in
             let serial = SerialDisposable()
             
             func retryImpl() -> Disposable {
@@ -344,19 +284,13 @@ extension TaskProtocol {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
-                            serial.swap(with: queue.after(timeInterval: currentTimeout) { cancelled in
-                                if cancelled {
-                                    completion(.cancelled)
-                                } else {
-                                    serial.swap(with: retryImpl())
-                                }
+                            serial.swap(with: queue.after(timeInterval: currentTimeout) {
+                                serial.swap(with: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)
                         } else {
                             completion(.failure(error))
                         }
-                    case .cancelled:
-                        completion(.cancelled)
                     }
                 }
             }

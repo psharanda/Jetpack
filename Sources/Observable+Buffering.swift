@@ -9,13 +9,13 @@ extension Observable {
     
     public func buffer(timeInterval: TimeInterval, maxSize: Int = Int.max, queue: DispatchQueue = DispatchQueue.main) -> Observer<[ValueType]> {
         var buf = [ValueType]()
-        var lastAfterCancel: (()->Void)? = nil
+        var lastAfterCancel: Disposable? = nil
         
         return Observer { observer in
             
             func after() {
-                lastAfterCancel?()
-                lastAfterCancel = JetPackUtils.after(timeInterval, queue: queue) {
+                lastAfterCancel?.dispose()
+                lastAfterCancel = queue.after(timeInterval: timeInterval) {
                     if buf.count > 0 {
                         observer(buf)
                         buf.removeAll()
@@ -34,7 +34,7 @@ extension Observable {
                     after()
                 }
             }.with(disposable: DelegateDisposable {
-                lastAfterCancel?()
+                lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })
         }

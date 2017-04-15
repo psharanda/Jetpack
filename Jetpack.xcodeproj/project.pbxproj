@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1B4939671E9E34100005452A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
-		1B6E870E1E9ADB540063D5EB /* JetpackUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */; };
 		1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
 		1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
@@ -59,11 +58,8 @@
 		1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
 		1B6E875F1E9ADC1E0063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
 		1B6E87671E9ADC220063D5EB /* Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Jetpack.swift */; };
-		1B6E87681E9ADC220063D5EB /* JetpackUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */; };
 		1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
-		1B6E876A1E9ADC230063D5EB /* JetpackUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */; };
 		1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
-		1B6E876C1E9ADC230063D5EB /* JetpackUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */; };
 		1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E876E1E9ADC270063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
@@ -145,9 +141,6 @@
 		1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E882D1E9E170B0063D5EB /* Disposable.swift */; };
 		1B6E88341E9E170B0063D5EB /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E882D1E9E170B0063D5EB /* Disposable.swift */; };
 		1B6E88351E9E170B0063D5EB /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E882D1E9E170B0063D5EB /* Disposable.swift */; };
-		1B6E88381E9E17180063D5EB /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */; };
-		1B6E88391E9E17180063D5EB /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */; };
-		1B6E883B1E9E17180063D5EB /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */; };
 		1B6E883C1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1B6E883D1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1B6E883F1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
@@ -158,9 +151,6 @@
 		1B6E88451E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88461E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88471E9E17860063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
-		1B6E88491E9E18760063D5EB /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88481E9E18760063D5EB /* TaskResult.swift */; };
-		1B6E884A1E9E18760063D5EB /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88481E9E18760063D5EB /* TaskResult.swift */; };
-		1B6E884C1E9E18760063D5EB /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88481E9E18760063D5EB /* TaskResult.swift */; };
 		1B6E88531E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1B6E88541E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1B6E88561E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
@@ -169,9 +159,9 @@
 		1B6E885B1E9E18CE0063D5EB /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
 		1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
-		1BA2EF731E9E412400B92618 /* Task+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Task+Operators.swift */; };
-		1BA2EF741E9E412400B92618 /* Task+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Task+Operators.swift */; };
-		1BA2EF761E9E412400B92618 /* Task+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Task+Operators.swift */; };
+		1BA2EF731E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
+		1BA2EF741E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
+		1BA2EF761E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
 		1BF014711EA208230061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014721EA208280061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
 		1BF014731EA208280061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
@@ -182,9 +172,7 @@
 		1BF014781EA208340061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF0147A1EA208360061B4D9 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
 		1BF0147B1EA208360061B4D9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
-		1BF0147C1EA208360061B4D9 /* Task+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Task+Operators.swift */; };
-		1BF0147D1EA208360061B4D9 /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */; };
-		1BF0147E1EA208360061B4D9 /* TaskResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88481E9E18760063D5EB /* TaskResult.swift */; };
+		1BF0147C1EA208360061B4D9 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
 		1BF0147F1EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF014801EA208360061B4D9 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1BF014811EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
@@ -239,7 +227,6 @@
 /* Begin PBXFileReference section */
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
-		1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JetpackUtils.swift; path = Sources/JetpackUtils.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
 		1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Binding.swift"; path = "Sources/Observable+Binding.swift"; sourceTree = "<group>"; };
 		1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Buffering.swift"; path = "Sources/Observable+Buffering.swift"; sourceTree = "<group>"; };
@@ -284,15 +271,13 @@
 		1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Task.swift"; sourceTree = "<group>"; };
 		1B6E88271E9E16FC0063D5EB /* TaskTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTests.swift; path = Tests/JetpackTests/TaskTests.swift; sourceTree = "<group>"; };
 		1B6E882D1E9E170B0063D5EB /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = Sources/Disposable.swift; sourceTree = "<group>"; };
-		1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressiveTask.swift; path = Sources/ProgressiveTask.swift; sourceTree = "<group>"; };
 		1B6E88371E9E17180063D5EB /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Task.swift; sourceTree = "<group>"; };
 		1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Requester.swift"; path = "Sources/DispatchQueue+Requester.swift"; sourceTree = "<group>"; };
-		1B6E88481E9E18760063D5EB /* TaskResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskResult.swift; path = Sources/TaskResult.swift; sourceTree = "<group>"; };
 		1B6E88521E9E18B40063D5EB /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Either.swift; path = Sources/Either.swift; sourceTree = "<group>"; };
 		1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskProtocol.swift; path = Sources/TaskProtocol.swift; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
-		1BA2EF721E9E412400B92618 /* Task+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Task+Operators.swift"; path = "Sources/Task+Operators.swift"; sourceTree = "<group>"; };
+		1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskProtocol+Operators.swift"; path = "Sources/TaskProtocol+Operators.swift"; sourceTree = "<group>"; };
 		1BF014701EA208230061B4D9 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Sources/Variable.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Jetpack-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jetpack-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -415,7 +400,6 @@
 			children = (
 				1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */,
 				52D6D9961BEFF375002C0205 /* Jetpack.swift */,
-				1B6E86E01E9ADB540063D5EB /* JetpackUtils.swift */,
 				1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */,
 			);
 			name = Utils;
@@ -473,10 +457,8 @@
 			isa = PBXGroup;
 			children = (
 				1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */,
+				1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
-				1BA2EF721E9E412400B92618 /* Task+Operators.swift */,
-				1B6E88361E9E17180063D5EB /* ProgressiveTask.swift */,
-				1B6E88481E9E18760063D5EB /* TaskResult.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
 				1B6E88521E9E18B40063D5EB /* Either.swift */,
 			);
@@ -887,18 +869,16 @@
 				1B6E871B1E9ADB540063D5EB /* Observable+Result.swift in Sources */,
 				1B6E872B1E9ADB540063D5EB /* UIButton.swift in Sources */,
 				1B6E87BB1E9CEA950063D5EB /* Observer.swift in Sources */,
-				1B6E88381E9E17180063D5EB /* ProgressiveTask.swift in Sources */,
 				1B6E87321E9ADB540063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E871E1E9ADB540063D5EB /* Property.swift in Sources */,
 				1B6E872C1E9ADB540063D5EB /* UIControl.swift in Sources */,
 				1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */,
-				1BA2EF731E9E412400B92618 /* Task+Operators.swift in Sources */,
+				1BA2EF731E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
 				1B6E88411E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
 				1B6E88531E9E18B40063D5EB /* Either.swift in Sources */,
-				1B6E870E1E9ADB540063D5EB /* JetpackUtils.swift in Sources */,
 				1B6E87141E9ADB540063D5EB /* Observable+Dispatch.swift in Sources */,
 				1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */,
 				1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */,
@@ -921,7 +901,6 @@
 				1B6E87341E9ADB540063D5EB /* UIStepper.swift in Sources */,
 				1B6E87301E9ADB540063D5EB /* UIProgressView.swift in Sources */,
 				1B4939671E9E34100005452A /* Result.swift in Sources */,
-				1B6E88491E9E18760063D5EB /* TaskResult.swift in Sources */,
 				52D6D9981BEFF375002C0205 /* Jetpack.swift in Sources */,
 				1B6E87181E9ADB540063D5EB /* Observable+Logging.swift in Sources */,
 				1B6E883C1E9E17180063D5EB /* Task.swift in Sources */,
@@ -958,14 +937,12 @@
 				1B6E87F71E9E15F10063D5EB /* UISlider.swift in Sources */,
 				1B6E87F31E9E15F10063D5EB /* UILabel.swift in Sources */,
 				1B6E87801E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
-				1B6E876A1E9ADC230063D5EB /* JetpackUtils.swift in Sources */,
 				1B6E87EA1E9E15E90063D5EB /* UIView.swift in Sources */,
 				1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */,
 				1B6E87EE1E9E15F10063D5EB /* UIBarItem.swift in Sources */,
 				1B6E87F01E9E15F10063D5EB /* UIButton.swift in Sources */,
 				1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
-				1BF0147D1EA208360061B4D9 /* ProgressiveTask.swift in Sources */,
 				1B6E87511E9ADC1E0063D5EB /* Observable.swift in Sources */,
 				1B6E87F61E9E15F10063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E87FB1E9E15F10063D5EB /* UITextView.swift in Sources */,
@@ -977,11 +954,10 @@
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87F11E9E15F10063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87F91E9E15F10063D5EB /* UISwitch.swift in Sources */,
-				1BF0147C1EA208360061B4D9 /* Task+Operators.swift in Sources */,
+				1BF0147C1EA208360061B4D9 /* TaskProtocol+Operators.swift in Sources */,
 				1B6E87EF1E9E15F10063D5EB /* UIControl.swift in Sources */,
 				1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
 				1B6E87851E9ADC270063D5EB /* Observable+Result.swift in Sources */,
-				1BF0147E1EA208360061B4D9 /* TaskResult.swift in Sources */,
 				1B6E87FA1E9E15F10063D5EB /* UITextField.swift in Sources */,
 				1B6E87541E9ADC1E0063D5EB /* State.swift in Sources */,
 				1B6E87E81E9E15E30063D5EB /* UIView+Task.swift in Sources */,
@@ -1016,8 +992,6 @@
 				1B6E88071E9E15F20063D5EB /* UISlider.swift in Sources */,
 				1B6E88031E9E15F20063D5EB /* UILabel.swift in Sources */,
 				1B6E878D1E9ADC280063D5EB /* Observable+FlatMap.swift in Sources */,
-				1B6E884C1E9E18760063D5EB /* TaskResult.swift in Sources */,
-				1B6E876C1E9ADC230063D5EB /* JetpackUtils.swift in Sources */,
 				1B6E87EB1E9E15E90063D5EB /* UIView.swift in Sources */,
 				1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */,
 				1B6E87FE1E9E15F20063D5EB /* UIBarItem.swift in Sources */,
@@ -1026,7 +1000,6 @@
 				1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E875C1E9ADC1E0063D5EB /* Observable.swift in Sources */,
 				1B6E88061E9E15F20063D5EB /* UISegmentedControl.swift in Sources */,
-				1B6E883B1E9E17180063D5EB /* ProgressiveTask.swift in Sources */,
 				1B6E880B1E9E15F20063D5EB /* UITextView.swift in Sources */,
 				1B6E88051E9E15F20063D5EB /* UIRefreshControl.swift in Sources */,
 				1B6E88441E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
@@ -1049,7 +1022,7 @@
 				1B6E87891E9ADC280063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E88041E9E15F20063D5EB /* UIProgressView.swift in Sources */,
 				1BF014771EA208290061B4D9 /* Variable.swift in Sources */,
-				1BA2EF761E9E412400B92618 /* Task+Operators.swift in Sources */,
+				1BA2EF761E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
 				52D6DA091BF00081002C0205 /* Jetpack.swift in Sources */,
 				1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				1B6E883F1E9E17180063D5EB /* Task.swift in Sources */,
@@ -1061,7 +1034,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B6E88391E9E17180063D5EB /* ProgressiveTask.swift in Sources */,
 				1B6E877A1E9ADC270063D5EB /* Observable+Transforming.swift in Sources */,
 				1BF014731EA208280061B4D9 /* Variable.swift in Sources */,
 				1B6E87771E9ADC270063D5EB /* Observable+Optional.swift in Sources */,
@@ -1071,7 +1043,6 @@
 				1BF014721EA208280061B4D9 /* Observer.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E88591E9E18CE0063D5EB /* TaskProtocol.swift in Sources */,
-				1B6E87681E9ADC220063D5EB /* JetpackUtils.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
 				1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
@@ -1079,7 +1050,6 @@
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
-				1B6E884A1E9E18760063D5EB /* TaskResult.swift in Sources */,
 				1B6E87711E9ADC270063D5EB /* Observable+Dispatch.swift in Sources */,
 				1B6E88541E9E18B40063D5EB /* Either.swift in Sources */,
 				1B6E88421E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
@@ -1089,7 +1059,7 @@
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
-				1BA2EF741E9E412400B92618 /* Task+Operators.swift in Sources */,
+				1BA2EF741E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
 				1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E87671E9ADC220063D5EB /* Jetpack.swift in Sources */,
 				1B6E87751E9ADC270063D5EB /* Observable+Logging.swift in Sources */,

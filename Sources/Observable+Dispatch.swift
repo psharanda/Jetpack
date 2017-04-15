@@ -16,4 +16,19 @@ extension Observable {
             }
         }
     }
+    
+    /**
+     Deliver value after delay
+     */
+    public func delay(timeInterval: TimeInterval, queue: DispatchQueue = .main) -> Observer<ValueType> {        
+        return Observer { completion  in
+            let serial = SerialDisposable()
+            serial.swap(with: self.subscribe { result in
+                serial.swap(with: queue.after(timeInterval: timeInterval) {
+                    completion(result)
+                })
+            })
+            return serial
+        }
+    }
 }

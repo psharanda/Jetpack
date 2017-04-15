@@ -9,30 +9,6 @@
 import Foundation
 
 public protocol TaskProtocol {
-    associatedtype ValueType
-    func start(_ completion: @escaping (TaskResult<ValueType>) -> Void) -> Disposable
-}
-
-extension TaskProtocol {
-    public var asObserver: Observer<Result<ValueType>> {
-        return Observer { observer in
-            return self.start { result in
-                if let r = result.result {
-                    observer(r)
-                }
-            }
-        }
-    }
-    
-    public var asTaskObserver: Observer<TaskResult<ValueType>> {
-        return Observer { observer in
-            return self.start(observer)
-        }
-    }
-    
-    public var asTask: Task<ValueType> {
-        return Task { completion in
-            return self.start(completion)
-        }
-    }
+    associatedtype ResultValueType
+    func subscribe(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable
 }
