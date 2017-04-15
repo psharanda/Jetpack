@@ -219,7 +219,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Run a number of tasks one by one in a sequence
      */
-    public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible {
+    public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
         let empty = Task<[R.ResultValueType]>.from(resultValue: [])
         return tasks.reduce(empty) { left, right in
             left.then { result in
@@ -233,7 +233,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Run a number of tasks concurrently
      */
-    public static func concurrently<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible {
+    public static func concurrently<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
         let empty = Task<[R.ResultValueType]>.from(resultValue: [])
         return tasks.reduce(empty) { left, right in
             left.concurrently(right).mapValue { (result, t) in

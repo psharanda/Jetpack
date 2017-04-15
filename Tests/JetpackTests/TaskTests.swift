@@ -455,7 +455,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task<String>.sequence([r1, r2, r3])
+        let _ = Task.sequence([r1, r2, r3])
             .onSuccess { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -493,7 +493,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task<String>.sequence([r1, r2, r3])
+        let _ = Task.sequence([r1, r2, r3])
             .onSuccess { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
@@ -529,7 +529,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task<String>.concurrently([r1, r2, r3])
+        let _ = Task.concurrently([r1, r2, r3])
             .onSuccess { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -567,7 +567,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task<String>.concurrently([r1, r2, r3])
+        let _ = Task.concurrently([r1, r2, r3])
             .onSuccess { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
