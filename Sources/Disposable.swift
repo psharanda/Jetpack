@@ -69,6 +69,33 @@ public final class SerialDisposable: Disposable {
     }
 }
 
+public final class SwapableDisposable: Disposable {
+    private var parentDisposable: Disposable?
+    private var childDisposable: Disposable?
+    
+    public init() {
+
+    }
+    
+    public func swap(parent disposable: Disposable) {
+        self.parentDisposable?.dispose()
+        self.parentDisposable = disposable
+    }
+    
+    public func swap(child disposable: Disposable) {
+        self.childDisposable?.dispose()
+        self.childDisposable = disposable
+    }
+    
+    public func dispose() {
+        parentDisposable?.dispose()
+        parentDisposable = nil
+        
+        childDisposable?.dispose()
+        childDisposable = nil
+    }
+}
+
 public final class MultiDisposable: Disposable {
     private var disposables: [Disposable] = []
     

@@ -10,11 +10,9 @@ extension Observable {
     
     public func flatMapLatest<U>(_ f: @escaping ((ValueType) -> Observer<U>)) -> Observer<U> {
         return Observer<U> { observer in
-            let serial = SerialDisposable()
-            
-            serial.swap(with: self.subscribe { result in
-                serial.dispose()
-                serial.swap(with: f(result).subscribe(observer))
+            let serial = SwapableDisposable()
+            serial.swap(parent: self.subscribe { result in
+                serial.swap(child: f(result).subscribe(observer))
             })
             return serial
         }

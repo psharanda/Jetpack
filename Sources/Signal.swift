@@ -26,8 +26,8 @@ public final class Signal<T>: Observable, Bindable {
         let token = lastToken
         observers.append(TaggedObserver<T>(token: token, observer: observer))
         
-        return DelegateDisposable {
-            self.unsubscribe(token)
+        return DelegateDisposable { [weak self] in
+            self?.unsubscribe(token)
         }
     }
     

@@ -11,7 +11,6 @@ extension Jetpack where Base: UIControl {
     
         return makeTargetActionObserver(key: key, setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
-            print(target, action, controlEvents)
         }, cleanup: { base, target, action in
             base.removeTarget(target, action: action, for: controlEvents)
         }, getter: getter)

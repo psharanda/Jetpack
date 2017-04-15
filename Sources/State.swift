@@ -39,6 +39,7 @@ public final class State<T>: Observable, Bindable {
         self.init(value, onChange: {_, _ in })
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return property.subscribe(observer)
     }

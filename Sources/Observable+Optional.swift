@@ -48,3 +48,9 @@ extension Observable where ValueType: Sequence, ValueType.Iterator.Element: Opti
     }
 }
 
+extension Observable {
+    var optionalized: Observer<ValueType?> {
+        return map { Optional.some($0) }
+    }
+}
+

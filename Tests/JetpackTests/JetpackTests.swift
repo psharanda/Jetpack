@@ -760,6 +760,44 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(numberOfDeinits, 2)
     }
+
+    
+    func testButtonFlatMap() {
+        
+        let voidSignal = Signal<Void>()
+        let stringSignal = Signal<String>()
+        var firedTimes = 0
+        
+        let d = voidSignal
+            .flatMapLatest {[unowned stringSignal] _ in
+                return stringSignal.asObserver
+            }
+            .subscribe { _ in 
+                firedTimes += 1
+            }
+        
+        voidSignal.update()
+        
+        XCTAssertEqual(firedTimes, 0)
+        
+        stringSignal.update("1")
+        
+        XCTAssertEqual(firedTimes, 1)
+        
+        voidSignal.update()
+        
+        XCTAssertEqual(firedTimes, 1)
+        
+        stringSignal.update("2")
+        
+        XCTAssertEqual(firedTimes, 2)
+        
+        d.dispose()
+        
+        stringSignal.update("3")
+        
+        XCTAssertEqual(firedTimes, 2)
+    }
 }
 
 var numberOfDeinits = 0
