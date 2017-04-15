@@ -20,3 +20,17 @@ extension TaskProtocol {
         }
     }
 }
+
+extension Observable where ValueType: ErrorConvertible & ValueConvertible {
+    public var asTask: Task<ValueType.ValueType> {
+        return Task { completion in
+            return self.subscribe { result in
+                if let value = result.value {
+                    completion(.success(value))
+                } else if let error = result.error {
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+}

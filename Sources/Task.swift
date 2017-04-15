@@ -21,9 +21,7 @@ public struct Task<T>: TaskProtocol {
     public func start(_ completion: @escaping (Result<ResultValueType>) -> Void) -> Disposable {
         return worker(completion)
     }
-    
 }
-
 
 extension Task {
     
