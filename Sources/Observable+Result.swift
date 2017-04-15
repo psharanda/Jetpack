@@ -5,18 +5,13 @@
 
 import Foundation
 
-public protocol ErrorConvertible {
-    var error: Error? {get}
-}
-
-public protocol ValueConvertible {
-    associatedtype ValueType
-    var value: ValueType? {get}
-}
-
-extension Result: ErrorConvertible, ValueConvertible { }
-
-public extension Observable where ValueType: ErrorConvertible {
+public extension Observable where ValueType: ResultConvertible {
+    
+    public var valueOnly: Observer<ValueType.ValueType> {
+        return flatMap { result in
+            result.value
+        }
+    }
     
     public var errorOnly: Observer<Error> {
         return flatMap { result in
@@ -24,14 +19,4 @@ public extension Observable where ValueType: ErrorConvertible {
         }
     }
 }
-
-public extension Observable where ValueType: ValueConvertible {
-    
-    public var valueOnly: Observer<ValueType.ValueType> {
-        return flatMap { result in
-            result.value
-        }
-    }
-}
-
 

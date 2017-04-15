@@ -5,7 +5,9 @@
 
 import Foundation
 
-extension TaskProtocol {
+extension Observable where ValueType: ResultConvertible {
+    
+    public typealias ResultValueType = ValueType.ValueType
     
     /**
      Start task, actually just typealias for subscribe.
@@ -15,14 +17,19 @@ extension TaskProtocol {
         return start { _ in }
     }
     
+    @discardableResult
+    public func start(_ completion: @escaping (ValueType) -> Void) -> Disposable {
+        return subscribe(completion)
+    }
+    
     /**
-     Perform one task after another - in fact this is flatMapValueLatest
+     Perform one task after another
      */
     public func then<U>(_ task: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
         return Task<U> { completion  in
             let disposable = SwapableDisposable()
             disposable.swap(parent: self.start { result in
-                switch result {
+                switch result.result {
                 case .success(let value):
                     disposable.swap(child: task(value).start(completion))
                 case .failure(let error):
@@ -36,10 +43,10 @@ extension TaskProtocol {
     /**
      Transform task success value to value
      */
-    public func map<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
+    public func mapValue<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
-                completion(result.map(transform))
+                completion(result.result.map(transform))
             }
         }
     }
@@ -47,10 +54,10 @@ extension TaskProtocol {
     /**
      Transform task success value  to result
      */
-    public func flatMap<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
+    public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
         return Task<U> { completion in
             return self.start { result in
-                completion(result.flatMap(transform))
+                completion(result.result.flatMap(transform))
             }
         }
     }
@@ -58,8 +65,8 @@ extension TaskProtocol {
     /**
      Transform task success value  to static value
      */
-    public func just<U>(_ value: U) -> Task<U> {
-        return map { _ -> U in
+    public func justValue<U>(_ value: U) -> Task<U> {
+        return mapValue { _ -> U in
             return value
         }
     }
@@ -67,8 +74,8 @@ extension TaskProtocol {
     /**
      Transform task success value to void value
      */
-    public var just: Task<Void> {
-        return just(())
+    public var justValue: Task<Void> {
+        return justValue(())
     }
     
     /**
@@ -77,10 +84,10 @@ extension TaskProtocol {
     public func onSuccess(_ handler:  @escaping(ResultValueType) -> Void) -> Task<ResultValueType> {
         return Task { completion in
             return self.start { result in
-                if case let .success(value) = result {
+                if case let .success(value) = result.result {
                     handler(value)
                 }
-                completion(result)
+                completion(result.result)
             }
         }
     }
@@ -91,10 +98,10 @@ extension TaskProtocol {
     public func onFailure(_ handler:  @escaping(Error) -> Void) -> Task<ResultValueType> {
         return Task { completion in
             return self.start { result in
-                if case let .failure(error) = result {
+                if case let .failure(error) = result.result {
                     handler(error)
                 }
-                completion(result)
+                completion(result.result)
             }
         }
     }
@@ -102,9 +109,9 @@ extension TaskProtocol {
     /**
      Run two tasks concurrently, return the result of the first successfull one, other one will be cancelled. When one of them fails, other one is cancelled. On cancel, it cancelles both children.
      */
-    public func race<U, R: TaskProtocol>(_ right: R) -> Task<Either<ResultValueType,U>>  where R.ResultValueType == U {
+    public func race<R: Observable>(_ right: R) -> Task<Either<ResultValueType, R.ResultValueType>>  where R.ValueType: ResultConvertible {
         let left = self
-        return Task<Either<ResultValueType,U>> { completion in
+        return Task<Either<ResultValueType,R.ResultValueType>> { completion in
             var leftTask: Disposable?
             var rightTask: Disposable?
             
@@ -113,7 +120,7 @@ extension TaskProtocol {
             // number of childred exited so far
             var exited = 0
             
-            func handler(other: Disposable?) -> ((Result<Either<ResultValueType,U>>) -> Void) {
+            func handler(other: Disposable?) -> ((Result<Either<ResultValueType,R.ResultValueType>>) -> Void) {
                 return { result in
                     exited += 1
                     
@@ -122,7 +129,7 @@ extension TaskProtocol {
                         return
                     }
                     
-                    switch result {
+                    switch result.result {
                     case .success(let value):
                         // we are the winner!
                         done = true
@@ -137,12 +144,12 @@ extension TaskProtocol {
                 }
             }
             
-            leftTask = left.map{.left($0)}.start(handler(other: rightTask))
+            leftTask = left.mapValue{.left($0)}.start(handler(other: rightTask))
             
             // Note that left could immediately return result (or just fail)
             // We don't need to start the right one in that case
             if !done {
-                rightTask = right.map{.right($0)}.start(handler(other: leftTask))
+                rightTask = right.mapValue{.right($0)}.start(handler(other: leftTask))
             }
             
             return DelegateDisposable {
@@ -154,94 +161,82 @@ extension TaskProtocol {
     
     /** Run two tasks concurrently, wait for both to succeed and return both results. If one fails, then other one will be cancelled.
      */
-    public func concurrently<U, R: TaskProtocol>(_ right: R) -> Task<(ResultValueType, U)>  where R.ResultValueType == U {
-        let left = self
-        return Task<(ResultValueType,U)> { completion in
-            var leftTask: Disposable?
-            var rightTask: Disposable?
+   // public func combineLatest<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
+        
+    public func concurrently<R: Observable>(_ with: R) -> Task<(ResultValueType,R.ResultValueType)>  where R.ValueType: ResultConvertible {
+        
+        return Task { completion in
             
-            // done means that we already called the completion
+            var withValue: R.ResultValueType?
+            var selfValue: ResultValueType?
+            
+            var withDisposable: Disposable?
+            var selfDisposable: Disposable?
+            
             var done = false
-            // number of childred exited so far
-            var exited = 0
             
-            func handler<R>(other: Disposable?, block: @escaping (R)->Void) -> ((Result<R>) -> Void) {
-                return { result in
-                    exited += 1
-                    
-                    guard !done else {
-                        // other one already called completion, nothing to do here
-                        return
-                    }
-                    
-                    switch result {
+            withDisposable = with.subscribe { result in
+                
+                switch result.result {
+                case .success(let value):
+                    withValue = value
+                case .failure(let error):
+                    done = true
+                    completion(.failure(error))
+                    selfDisposable?.dispose()
+                }
+                if let left = selfValue, let right = withValue {
+                    done = true
+                    completion(.success((left,right)))
+                }
+            }
+            
+            if !done {
+                selfDisposable = self.subscribe { result in
+                    switch result.result {
                     case .success(let value):
-                        block(value)
+                        selfValue = value
                     case .failure(let error):
                         done = true
-                        other?.dispose()
                         completion(.failure(error))
+                        withDisposable?.dispose()
+                    }
+                    if let left = selfValue, let right = withValue {
+                        done = true
+                        completion(.success((left,right)))
                     }
                 }
-            }
-            
-            var t: ResultValueType?
-            var u: U?
-            
-            func onResult() {
-                guard let t = t else {
-                    return
-                }
-                guard let u = u else {
-                    return
-                }
-                // both results are available
-                done = true
-                completion(.success(t,u))
-            }
-            
-            leftTask = left.start(handler(other: rightTask) { value in
-                t = value
-                onResult()
-            })
-            
-            // Note that left could immediately fail
-            // We don't need to start the right one in that case
-            if !done {
-                rightTask = right.start(handler(other: leftTask) { value in
-                    u = value
-                    onResult()
-                })
             }
             
             return DelegateDisposable {
-                leftTask?.dispose()
-                rightTask?.dispose()
+                withDisposable?.dispose()
+                selfDisposable?.dispose()
             }
         }
     }
+
     
     /**
      Run a number of tasks one by one in a sequence
      */
-    public static func sequence(_ tasks: [Task<ResultValueType>]) -> Task<[ResultValueType]> {
-        let empty = Task<[ResultValueType]>.from(value: [])
+    public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible {
+        let empty = Task<[R.ResultValueType]>.from(resultValue: [])
         return tasks.reduce(empty) { left, right in
             left.then { result in
-                right.map { t in
+                right.mapValue { t in
                     result + [t]
                 }
             }
         }
     }
-    
+
     /**
      Run a number of tasks concurrently
      */
-    public static func concurrently<R: TaskProtocol>(_ tasks: [R]) -> Task<[ResultValueType]>  where R.ResultValueType == ResultValueType {
-        let empty = Task<[ResultValueType]>.from(value: [])
+    public static func concurrently<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible {
+        let empty = Task<[R.ResultValueType]>.from(resultValue: [])
         return tasks.reduce(empty) { left, right in
-            left.concurrently(right).map { (result, t) in
+            left.concurrently(right).mapValue { (result, t) in
                 result + [t]
             }
         }
@@ -272,7 +267,7 @@ extension TaskProtocol {
             
             func retryImpl() -> Disposable {
                 return self.start { result in
-                    switch result {
+                    switch result.result {
                     case .success(let value):
                         completion(.success(value))
                     case .failure(let error):

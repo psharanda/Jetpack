@@ -37,7 +37,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
         
         _ = r.start {
             switch $0 {
@@ -58,7 +58,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestError)
+        let r = Task(generator: requestError)
         _ = r.start {
             switch $0 {
             case .success(_):
@@ -78,7 +78,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
         
         let c = r.start {
             switch $0 {
@@ -105,7 +105,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
             .then { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
@@ -136,9 +136,9 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
             .then { result in
-                return Task(worker: requestError)
+                return Task(generator: requestError)
             }
             .then { result in
                 return Task {
@@ -165,7 +165,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
             .then { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
@@ -203,7 +203,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
             .onSuccess {
                 XCTAssertEqual("Hello", $0)
                 expect.fulfill()
@@ -223,7 +223,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestError)
+        let r = Task(generator: requestError)
             .onSuccess { _ in
                 XCTFail("should not have value")
                 expect.fulfill()
@@ -244,7 +244,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(worker: requestHello)
+        let r = Task(generator: requestHello)
             .onSuccess { _ in
                 XCTFail("should not have value")
             }.onFailure { _ in
@@ -405,7 +405,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         // left succeeds immediately
-        let left = Task.from(value: "left")
+        let left = Task.from(resultValue: "left")
 
         let right = Task<String> { completion in
             return DispatchQueue.main.after(timeInterval: 0.2) { cancelled in
@@ -455,7 +455,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.sequence([r1, r2, r3])
+        let _ = Task<String>.sequence([r1, r2, r3])
             .onSuccess { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -493,7 +493,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.sequence([r1, r2, r3])
+        let _ = Task<String>.sequence([r1, r2, r3])
             .onSuccess { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
@@ -529,7 +529,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.concurrently([r1, r2, r3])
+        let _ = Task<String>.concurrently([r1, r2, r3])
             .onSuccess { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -567,7 +567,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.concurrently([r1, r2, r3])
+        let _ = Task<String>.concurrently([r1, r2, r3])
             .onSuccess { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
@@ -587,7 +587,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         var numberOfFailures = 0
-        let r = Task(worker: requestError)
+        let r = Task(generator: requestError)
             .onFailure { _ in
                 numberOfFailures += 1
             }
@@ -613,7 +613,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         var numberOfFailures = 0
-        let r = Task(worker: requestError)
+        let r = Task(generator: requestError)
             .onFailure { _ in
                 numberOfFailures += 1
             }

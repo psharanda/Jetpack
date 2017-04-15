@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B1407E81EA26DB000758E8E /* ProgressiveTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */; };
 		1B4939671E9E34100005452A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
 		1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
@@ -155,14 +154,11 @@
 		1B6E88531E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1B6E88541E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1B6E88561E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
-		1B6E88581E9E18CE0063D5EB /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
-		1B6E88591E9E18CE0063D5EB /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
-		1B6E885B1E9E18CE0063D5EB /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
 		1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
-		1BA2EF731E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
-		1BA2EF741E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
-		1BA2EF761E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
+		1BA2EF731E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
+		1BA2EF741E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
+		1BA2EF761E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
 		1BF014711EA208230061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014721EA208280061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
 		1BF014731EA208280061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
@@ -171,9 +167,8 @@
 		1BF014761EA208290061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
 		1BF014771EA208290061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014781EA208340061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
-		1BF0147A1EA208360061B4D9 /* TaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */; };
 		1BF0147B1EA208360061B4D9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
-		1BF0147C1EA208360061B4D9 /* TaskProtocol+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */; };
+		1BF0147C1EA208360061B4D9 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
 		1BF0147F1EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF014801EA208360061B4D9 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1BF014811EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
@@ -226,7 +221,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressiveTask.swift; path = Sources/ProgressiveTask.swift; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
@@ -276,10 +270,9 @@
 		1B6E88371E9E17180063D5EB /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Task.swift; sourceTree = "<group>"; };
 		1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Requester.swift"; path = "Sources/DispatchQueue+Requester.swift"; sourceTree = "<group>"; };
 		1B6E88521E9E18B40063D5EB /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Either.swift; path = Sources/Either.swift; sourceTree = "<group>"; };
-		1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskProtocol.swift; path = Sources/TaskProtocol.swift; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
-		1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TaskProtocol+Operators.swift"; path = "Sources/TaskProtocol+Operators.swift"; sourceTree = "<group>"; };
+		1BA2EF721E9E412400B92618 /* Observable+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Task.swift"; path = "Sources/Observable+Task.swift"; sourceTree = "<group>"; };
 		1BF014701EA208230061B4D9 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Sources/Variable.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Jetpack-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jetpack-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +386,9 @@
 				1BF014701EA208230061B4D9 /* Variable.swift */,
 				1B6E86F01E9ADB540063D5EB /* Property.swift */,
 				1B6E86F41E9ADB540063D5EB /* State.swift */,
+				1B6E88371E9E17180063D5EB /* Task.swift */,
+				1B4939661E9E34100005452A /* Result.swift */,
+				1B6E88521E9E18B40063D5EB /* Either.swift */,
 			);
 			name = Observables;
 			sourceTree = "<group>";
@@ -421,6 +417,7 @@
 				1B6E86EC1E9ADB540063D5EB /* Observable+Optional.swift */,
 				1B6E86ED1E9ADB540063D5EB /* Observable+Result.swift */,
 				1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */,
+				1BA2EF721E9E412400B92618 /* Observable+Task.swift */,
 			);
 			name = Operators;
 			sourceTree = "<group>";
@@ -455,19 +452,6 @@
 			name = Disposables;
 			sourceTree = "<group>";
 		};
-		1B6E880F1E9E160C0063D5EB /* Tasks */ = {
-			isa = PBXGroup;
-			children = (
-				1B6E88571E9E18CE0063D5EB /* TaskProtocol.swift */,
-				1BA2EF721E9E412400B92618 /* TaskProtocol+Operators.swift */,
-				1B6E88371E9E17180063D5EB /* Task.swift */,
-				1B4939661E9E34100005452A /* Result.swift */,
-				1B6E88521E9E18B40063D5EB /* Either.swift */,
-				1B1407E71EA26DB000758E8E /* ProgressiveTask.swift */,
-			);
-			name = Tasks;
-			sourceTree = "<group>";
-		};
 		1B8649A11EA0DC9000D30004 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,7 +474,6 @@
 			isa = PBXGroup;
 			children = (
 				1B6E873A1E9ADB680063D5EB /* Observables */,
-				1B6E880F1E9E160C0063D5EB /* Tasks */,
 				1B6E873C1E9ADB820063D5EB /* Operators */,
 				1B6E87C11E9CEAF40063D5EB /* Disposables */,
 				1B6E873B1E9ADB7A0063D5EB /* Utils */,
@@ -877,8 +860,7 @@
 				1B6E872C1E9ADB540063D5EB /* UIControl.swift in Sources */,
 				1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */,
-				1BA2EF731E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
-				1B1407E81EA26DB000758E8E /* ProgressiveTask.swift in Sources */,
+				1BA2EF731E9E412400B92618 /* Observable+Task.swift in Sources */,
 				1B6E88411E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
@@ -893,7 +875,6 @@
 				1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87161E9ADB540063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */,
-				1B6E88581E9E18CE0063D5EB /* TaskProtocol.swift in Sources */,
 				1B6E87131E9ADB540063D5EB /* Observable+Combining.swift in Sources */,
 				1B6E87371E9ADB540063D5EB /* UITextView.swift in Sources */,
 				1B6E87291E9ADB540063D5EB /* UIBarButtonItem.swift in Sources */,
@@ -936,7 +917,6 @@
 				1B6E87F81E9E15F10063D5EB /* UIStepper.swift in Sources */,
 				1B6E88341E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E877B1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
-				1BF0147A1EA208360061B4D9 /* TaskProtocol.swift in Sources */,
 				1B6E877F1E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
 				1B6E87F71E9E15F10063D5EB /* UISlider.swift in Sources */,
 				1B6E87F31E9E15F10063D5EB /* UILabel.swift in Sources */,
@@ -958,7 +938,7 @@
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87F11E9E15F10063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87F91E9E15F10063D5EB /* UISwitch.swift in Sources */,
-				1BF0147C1EA208360061B4D9 /* TaskProtocol+Operators.swift in Sources */,
+				1BF0147C1EA208360061B4D9 /* Observable+Task.swift in Sources */,
 				1B6E87EF1E9E15F10063D5EB /* UIControl.swift in Sources */,
 				1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
 				1B6E87851E9ADC270063D5EB /* Observable+Result.swift in Sources */,
@@ -988,7 +968,6 @@
 				1B6E87FD1E9E15F20063D5EB /* UIBarButtonItem.swift in Sources */,
 				1B6E87911E9ADC280063D5EB /* Observable+Optional.swift in Sources */,
 				1B6E88081E9E15F20063D5EB /* UIStepper.swift in Sources */,
-				1B6E885B1E9E18CE0063D5EB /* TaskProtocol.swift in Sources */,
 				1B6E88351E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1BF014811EA208360061B4D9 /* Result.swift in Sources */,
 				1B6E87881E9ADC280063D5EB /* Observable+Binding.swift in Sources */,
@@ -1026,7 +1005,7 @@
 				1B6E87891E9ADC280063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E88041E9E15F20063D5EB /* UIProgressView.swift in Sources */,
 				1BF014771EA208290061B4D9 /* Variable.swift in Sources */,
-				1BA2EF761E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
+				1BA2EF761E9E412400B92618 /* Observable+Task.swift in Sources */,
 				52D6DA091BF00081002C0205 /* Jetpack.swift in Sources */,
 				1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				1B6E883F1E9E17180063D5EB /* Task.swift in Sources */,
@@ -1046,7 +1025,6 @@
 				1BF014781EA208340061B4D9 /* Result.swift in Sources */,
 				1BF014721EA208280061B4D9 /* Observer.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
-				1B6E88591E9E18CE0063D5EB /* TaskProtocol.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
 				1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
@@ -1063,7 +1041,7 @@
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
-				1BA2EF741E9E412400B92618 /* TaskProtocol+Operators.swift in Sources */,
+				1BA2EF741E9E412400B92618 /* Observable+Task.swift in Sources */,
 				1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E87671E9ADC220063D5EB /* Jetpack.swift in Sources */,
 				1B6E87751E9ADC270063D5EB /* Observable+Logging.swift in Sources */,

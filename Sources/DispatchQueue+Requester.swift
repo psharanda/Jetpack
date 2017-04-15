@@ -38,7 +38,7 @@ extension DispatchQueue {
     }
     
     @discardableResult
-    public func run<T>(worker: @escaping ()->Result<T>, completionQueue: DispatchQueue = .main, completion: @escaping (Result<T>)->Void) -> Disposable {
+    public func run<T>(worker: @escaping ()->T, completionQueue: DispatchQueue = .main, completion: @escaping (T)->Void) -> Disposable {
         var cancelled = false
         
         let cancelableClosure = {

@@ -5,7 +5,35 @@
 
 import Foundation
 
-public enum Result<T> {
+public protocol ResultConvertible {
+    associatedtype ValueType
+    var result: Result<ValueType> {get}
+}
+
+extension ResultConvertible {
+    public var value: ValueType? {
+        switch result {
+        case .success(let v):
+            return v
+        case .failure:
+            return nil
+        }
+    }
+    
+    public var error: Error? {
+        switch result {
+        case .success:
+            return nil
+        case .failure(let e):
+            return e
+        }
+    }
+}
+
+
+public enum Result<T>: ResultConvertible {
+    public typealias ValueType = T
+    
     case success(T) //contains value
     case failure(Error) //contains error
     
@@ -16,27 +44,13 @@ public enum Result<T> {
     public init(error: Error) {
         self = .failure(error)
     }
+    
+    public var result: Result<T> {
+        return self
+    }
 }
 
-extension Result {
-    public var value: T? {
-        switch self {
-        case .success(let v):
-            return v
-        case .failure:
-            return nil
-        }
-    }
-    
-    public var error: Error? {
-        switch self {
-        case .success:
-            return nil
-        case .failure(let e):
-            return e
-        }
-    }
-}
+
 
 extension Result {
     public func map<U>(_ transform: (T) throws -> U) rethrows -> Result<U> {
