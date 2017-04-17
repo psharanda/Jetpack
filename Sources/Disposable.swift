@@ -53,22 +53,6 @@ public final class CompositeDisposable: Disposable {
     }
 }
 
-public final class SerialDisposable: Disposable {
-    private var disposable: Disposable?
-    
-    public init() {
-    }
-    
-    public func swap(with: Disposable) {
-        disposable = with
-    }
-    
-    public func dispose() {
-        disposable?.dispose()
-        disposable = nil
-    }
-}
-
 public final class SwapableDisposable: Disposable {
     private var parentDisposable: Disposable?
     private var childDisposable: Disposable?

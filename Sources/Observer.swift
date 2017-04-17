@@ -25,6 +25,27 @@ public struct Observer<T>: Observable {
 }
 
 extension Observer {
+    
+    /**
+     Create task with worker which will be run in workerQueue and send result to completionQueue. Worker can produce value or error.
+     */
+    public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> ValueType) {
+        self.init { completion in
+            return workerQueue.run(worker: worker, completionQueue: completionQueue) { (value: ValueType) in
+                completion(value)
+            }
+        }
+    }
+    
+    public static func delay(timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observer<Void> {
+        return Observer<Void> { observer in
+            return queue.after(timeInterval: timeInterval) {
+                observer(())
+            }
+        }
+    }
+    
+    
     public static func from(value: T) -> Observer<T> {
         return Observer<T> { observer in
             observer(value)

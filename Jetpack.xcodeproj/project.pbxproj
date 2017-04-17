@@ -13,7 +13,6 @@
 		1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
 		1B6E87131E9ADB540063D5EB /* Observable+Combining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */; };
-		1B6E87141E9ADB540063D5EB /* Observable+Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */; };
 		1B6E87151E9ADB540063D5EB /* Observable+Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */; };
 		1B6E87161E9ADB540063D5EB /* Observable+FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */; };
 		1B6E87181E9ADB540063D5EB /* Observable+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */; };
@@ -57,14 +56,13 @@
 		1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
 		1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
 		1B6E875F1E9ADC1E0063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
-		1B6E87671E9ADC220063D5EB /* Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Jetpack.swift */; };
+		1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
 		1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E876E1E9ADC270063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
 		1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */; };
-		1B6E87711E9ADC270063D5EB /* Observable+Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */; };
 		1B6E87721E9ADC270063D5EB /* Observable+Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */; };
 		1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */; };
 		1B6E87751E9ADC270063D5EB /* Observable+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */; };
@@ -75,7 +73,6 @@
 		1B6E877B1E9ADC270063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E877C1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
 		1B6E877D1E9ADC270063D5EB /* Observable+Combining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */; };
-		1B6E877E1E9ADC270063D5EB /* Observable+Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */; };
 		1B6E877F1E9ADC270063D5EB /* Observable+Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */; };
 		1B6E87801E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */; };
 		1B6E87821E9ADC270063D5EB /* Observable+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */; };
@@ -86,7 +83,6 @@
 		1B6E87881E9ADC280063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E87891E9ADC280063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
 		1B6E878A1E9ADC280063D5EB /* Observable+Combining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */; };
-		1B6E878B1E9ADC280063D5EB /* Observable+Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */; };
 		1B6E878C1E9ADC280063D5EB /* Observable+Filtering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */; };
 		1B6E878D1E9ADC280063D5EB /* Observable+FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */; };
 		1B6E878F1E9ADC280063D5EB /* Observable+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */; };
@@ -122,10 +118,10 @@
 		1B6E883C1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1B6E883D1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1B6E883F1E9E17180063D5EB /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
-		1B6E88411E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */; };
-		1B6E88421E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */; };
-		1B6E88431E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */; };
-		1B6E88441E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */; };
+		1B6E88411E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */; };
+		1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */; };
+		1B6E88431E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */; };
+		1B6E88441E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */; };
 		1B6E88451E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88461E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88471E9E17860063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
@@ -161,10 +157,10 @@
 		1BF014861EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
 		1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		52D6D9871BEFF229002C0205 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Jetpack.framework */; };
-		52D6D9981BEFF375002C0205 /* Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Jetpack.swift */; };
+		52D6D9981BEFF375002C0205 /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
 		52D6D99B1BEFF375002C0205 /* JetpackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* JetpackTests.swift */; };
-		52D6D9EA1BEFFFA4002C0205 /* Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Jetpack.swift */; };
-		52D6DA091BF00081002C0205 /* Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* Jetpack.swift */; };
+		52D6D9EA1BEFFFA4002C0205 /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
+		52D6DA091BF00081002C0205 /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
 		DD7502861C68FDDC006590AF /* JetpackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9971BEFF375002C0205 /* JetpackTests.swift */; };
 		DD7502881C68FEDE006590AF /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6DA0F1BF000BD002C0205 /* Jetpack.framework */; };
 		DD7502921C690C7A006590AF /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D9F01BEFFFBE002C0205 /* Jetpack.framework */; };
@@ -209,7 +205,6 @@
 		1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Binding.swift"; path = "Sources/Observable+Binding.swift"; sourceTree = "<group>"; };
 		1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Buffering.swift"; path = "Sources/Observable+Buffering.swift"; sourceTree = "<group>"; };
 		1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Combining.swift"; path = "Sources/Observable+Combining.swift"; sourceTree = "<group>"; };
-		1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Dispatch.swift"; path = "Sources/Observable+Dispatch.swift"; sourceTree = "<group>"; };
 		1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Filtering.swift"; path = "Sources/Observable+Filtering.swift"; sourceTree = "<group>"; };
 		1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+FlatMap.swift"; path = "Sources/Observable+FlatMap.swift"; sourceTree = "<group>"; };
 		1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Logging.swift"; path = "Sources/Observable+Logging.swift"; sourceTree = "<group>"; };
@@ -250,7 +245,7 @@
 		1B6E88271E9E16FC0063D5EB /* TaskTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTests.swift; path = Tests/JetpackTests/TaskTests.swift; sourceTree = "<group>"; };
 		1B6E882D1E9E170B0063D5EB /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = Sources/Disposable.swift; sourceTree = "<group>"; };
 		1B6E88371E9E17180063D5EB /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Task.swift; sourceTree = "<group>"; };
-		1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Requester.swift"; path = "Sources/DispatchQueue+Requester.swift"; sourceTree = "<group>"; };
+		1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Jetpack.swift"; path = "Sources/DispatchQueue+Jetpack.swift"; sourceTree = "<group>"; };
 		1B6E88521E9E18B40063D5EB /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Either.swift; path = Sources/Either.swift; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
@@ -259,7 +254,7 @@
 		1BF014701EA208230061B4D9 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Sources/Variable.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Jetpack-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jetpack-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		52D6D9961BEFF375002C0205 /* Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Jetpack.swift; path = Sources/Jetpack.swift; sourceTree = "<group>"; };
+		52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JetpackExtensions.swift; path = Sources/JetpackExtensions.swift; sourceTree = "<group>"; };
 		52D6D9971BEFF375002C0205 /* JetpackTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JetpackTests.swift; path = Tests/JetpackTests/JetpackTests.swift; sourceTree = "<group>"; };
 		52D6D9E21BEFFF6E002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9F01BEFFFBE002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -379,8 +374,8 @@
 		1B6E873B1E9ADB7A0063D5EB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				1B6E88401E9E17250063D5EB /* DispatchQueue+Requester.swift */,
-				52D6D9961BEFF375002C0205 /* Jetpack.swift */,
+				1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */,
+				52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */,
 				1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */,
 			);
 			name = Utils;
@@ -392,7 +387,6 @@
 				1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */,
 				1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */,
 				1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */,
-				1B6E86E61E9ADB540063D5EB /* Observable+Dispatch.swift */,
 				1B6E86E71E9ADB540063D5EB /* Observable+Filtering.swift */,
 				1B6E86E81E9ADB540063D5EB /* Observable+FlatMap.swift */,
 				1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */,
@@ -845,11 +839,10 @@
 				1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */,
 				1BA2EF731E9E412400B92618 /* Observable+Task.swift in Sources */,
-				1B6E88411E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
+				1B6E88411E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
 				1B6E88531E9E18B40063D5EB /* Either.swift in Sources */,
-				1B6E87141E9ADB540063D5EB /* Observable+Dispatch.swift in Sources */,
 				1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */,
 				1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E88321E9E170B0063D5EB /* Disposable.swift in Sources */,
@@ -871,7 +864,7 @@
 				1B6E87341E9ADB540063D5EB /* UIStepper.swift in Sources */,
 				1B6E87301E9ADB540063D5EB /* UIProgressView.swift in Sources */,
 				1B4939671E9E34100005452A /* Result.swift in Sources */,
-				52D6D9981BEFF375002C0205 /* Jetpack.swift in Sources */,
+				52D6D9981BEFF375002C0205 /* JetpackExtensions.swift in Sources */,
 				1B6E87181E9ADB540063D5EB /* Observable+Logging.swift in Sources */,
 				1B6E883C1E9E17180063D5EB /* Task.swift in Sources */,
 				1B6E871A1E9ADB540063D5EB /* Observable+Optional.swift in Sources */,
@@ -906,9 +899,8 @@
 				1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E87511E9ADC1E0063D5EB /* Observable.swift in Sources */,
-				1B6E88431E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
+				1B6E88431E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E877D1E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
-				1B6E877E1E9ADC270063D5EB /* Observable+Dispatch.swift in Sources */,
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1BF0147C1EA208360061B4D9 /* Observable+Task.swift in Sources */,
 				1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
@@ -923,7 +915,7 @@
 				1BF014751EA208290061B4D9 /* Variable.swift in Sources */,
 				1BF0147B1EA208360061B4D9 /* Task.swift in Sources */,
 				1BF014851EA208460061B4D9 /* NotificationCenter.swift in Sources */,
-				52D6D9EA1BEFFFA4002C0205 /* Jetpack.swift in Sources */,
+				52D6D9EA1BEFFFA4002C0205 /* JetpackExtensions.swift in Sources */,
 				1B6E87821E9ADC270063D5EB /* Observable+Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -950,11 +942,10 @@
 				1B6E875C1E9ADC1E0063D5EB /* Observable.swift in Sources */,
 				1B6E88061E9E15F20063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E880B1E9E15F20063D5EB /* UITextView.swift in Sources */,
-				1B6E88441E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
+				1B6E88441E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E878A1E9ADC280063D5EB /* Observable+Combining.swift in Sources */,
 				1BF014861EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E88021E9E15F20063D5EB /* UIImageView.swift in Sources */,
-				1B6E878B1E9ADC280063D5EB /* Observable+Dispatch.swift in Sources */,
 				1B6E88011E9E15F20063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87FF1E9E15F20063D5EB /* UIControl.swift in Sources */,
 				1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
@@ -971,7 +962,7 @@
 				1B6E88041E9E15F20063D5EB /* UIProgressView.swift in Sources */,
 				1BF014771EA208290061B4D9 /* Variable.swift in Sources */,
 				1BA2EF761E9E412400B92618 /* Observable+Task.swift in Sources */,
-				52D6DA091BF00081002C0205 /* Jetpack.swift in Sources */,
+				52D6DA091BF00081002C0205 /* JetpackExtensions.swift in Sources */,
 				1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				1B6E883F1E9E17180063D5EB /* Task.swift in Sources */,
 				1B6E878F1E9ADC280063D5EB /* Observable+Logging.swift in Sources */,
@@ -998,9 +989,8 @@
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
-				1B6E87711E9ADC270063D5EB /* Observable+Dispatch.swift in Sources */,
 				1B6E88541E9E18B40063D5EB /* Either.swift in Sources */,
-				1B6E88421E9E17250063D5EB /* DispatchQueue+Requester.swift in Sources */,
+				1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */,
 				1B6E87781E9ADC270063D5EB /* Observable+Result.swift in Sources */,
 				1B6E87491E9ADC1D0063D5EB /* State.swift in Sources */,
@@ -1009,7 +999,7 @@
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
 				1BA2EF741E9E412400B92618 /* Observable+Task.swift in Sources */,
 				1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */,
-				1B6E87671E9ADC220063D5EB /* Jetpack.swift in Sources */,
+				1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */,
 				1B6E87751E9ADC270063D5EB /* Observable+Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

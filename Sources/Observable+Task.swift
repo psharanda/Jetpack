@@ -263,7 +263,7 @@ extension Observable where ValueType: ResultConvertible {
         var numberOfRetries = 0
         
         return Task<ResultValueType> { completion  in
-            let serial = SerialDisposable()
+            let serial = SwapableDisposable()
             
             func retryImpl() -> Disposable {
                 return self.start { result in
@@ -273,8 +273,8 @@ extension Observable where ValueType: ResultConvertible {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
-                            serial.swap(with: queue.after(timeInterval: currentTimeout) {
-                                serial.swap(with: retryImpl())
+                            serial.swap(child: queue.after(timeInterval: currentTimeout) {
+                                serial.swap(parent: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)
                         } else {
@@ -284,7 +284,7 @@ extension Observable where ValueType: ResultConvertible {
                 }
             }
             
-            serial.swap(with: retryImpl())
+            serial.swap(parent: retryImpl())
             return serial
         }
     }
