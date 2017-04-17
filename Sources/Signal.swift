@@ -59,15 +59,3 @@ extension Signal {
     }
 }
 
-extension Observable {
-    public var asSignal: (Signal<ValueType>, Disposable) {
-        let signal = Signal<ValueType>()
-        return (signal, bind(signal))
-    }
-    
-    public func asSignal(autodisposeIn pool: AutodisposePool) -> Signal<ValueType> {
-        let (signal, d) = asSignal
-        pool.add(d)
-        return signal
-    }
-}

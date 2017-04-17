@@ -124,6 +124,10 @@ public final class AutodisposePool {
         multi.add(disposable)
     }
     
+    public func drain() {
+        multi.dispose()
+    }
+    
     deinit {
         multi.dispose()
     }
