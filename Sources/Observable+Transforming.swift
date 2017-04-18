@@ -45,6 +45,18 @@ extension Observable {
     public var just: Observer<Void> {
         return just(())
     }
+    
+    public var diff: Observer<(old: ValueType, new: ValueType)> {
+        
+        var prevValue: ValueType?
+        
+        return Observer<(old: ValueType, new: ValueType)> { observer in
+            return self.subscribe { result in
+                observer((prevValue ?? result, result))
+                prevValue = result
+            }
+        }
+    }
 }
 
 

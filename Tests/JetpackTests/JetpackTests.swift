@@ -798,6 +798,24 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(firedTimes, 2)
     }
+    
+    func testDiffSubscribe() {
+        let state = State(10)
+        
+        var initial = true
+        
+        _ = state.diff.subscribe { (oldValue, newValue) in
+            if initial {
+                XCTAssertEqual(oldValue, 10)
+                XCTAssertEqual(newValue, 10)
+            } else {
+                XCTAssertEqual(oldValue, 10)
+                XCTAssertEqual(newValue, 20)
+            }
+        }
+        initial = false
+        state.update(20)
+    }
 }
 
 var numberOfDeinits = 0

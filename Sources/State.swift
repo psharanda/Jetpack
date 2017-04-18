@@ -18,7 +18,7 @@ public final class State<T>: Observable, Bindable {
     private let property: Property<T>
     private let variable: Variable<T>
     
-    public init(_ value: T, onChange: @escaping (T, T)->Void) {
+    public init(_ value: T) {
         
         let signal = Signal<T>()
         var v = value
@@ -27,16 +27,11 @@ public final class State<T>: Observable, Bindable {
             return v
         }
         variable = Variable(setter: {
-            onChange(v, $0)
             v = $0
             signal.update(v)
         }, getter: {
             return v
         })
-    }
-    
-    public convenience init(_ value: T) {
-        self.init(value, onChange: {_, _ in })
     }
     
     @discardableResult
