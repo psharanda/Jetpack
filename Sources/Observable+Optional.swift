@@ -7,6 +7,7 @@ import Foundation
 
 public protocol Optionable {
     associatedtype Wrapped
+    init(_ some: Wrapped)
     func flatMap<U>(_ f: (Wrapped) throws -> U?) rethrows -> U?
 }
 

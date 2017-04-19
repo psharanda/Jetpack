@@ -21,4 +21,16 @@ public struct Receiver<T>: Bindable {
     }
 }
 
+extension Receiver where ValueType: Optionable {
+    
+    /**
+     Convert Receiver that accepts optional values into Receiver which accepts non optional values
+     */
+    public var unwrapped: Receiver<ValueType.Wrapped> {
+        return Receiver<ValueType.Wrapped> {
+            self.update(ValueType.init($0))
+        }
+    }
+}
+
 
