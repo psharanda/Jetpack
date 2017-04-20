@@ -38,7 +38,7 @@ extension Observable {
                     observer(result)
                     
                     if latest {
-                        lastAfterCancel = queue.after(timeInterval: timeInterval) {
+                        lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
                             guard let lastIgnoredValue = lastIgnoredValue  else { return }
                             observer(lastIgnoredValue)
                         }
@@ -58,7 +58,7 @@ extension Observable {
             return self.subscribe { result in
                 lastAfterCancel?.dispose()
                 
-                lastAfterCancel = queue.after(timeInterval: timeInterval) {
+                lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
                     observer(result)
                 }
             }.with(disposable: DelegateDisposable {

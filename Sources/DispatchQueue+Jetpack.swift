@@ -22,8 +22,7 @@ extension DispatchQueue {
         }
     }
     
-    @discardableResult
-    public func after(timeInterval: TimeInterval, action: @escaping ()->Void) ->  Disposable {
+    func jx_after(timeInterval: TimeInterval, action: @escaping ()->Void) ->  Disposable {
         var closure = Optional.some(action)
         
         let cancelableClosure = {
@@ -37,8 +36,21 @@ extension DispatchQueue {
         return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
     }
     
-    @discardableResult
-    public func run<T>(worker: @escaping ()->T, completionQueue: DispatchQueue = .main, completion: @escaping (T)->Void) -> Disposable {
+    func jx_async(action: @escaping ()->Void) ->  Disposable {
+        var closure = Optional.some(action)
+        
+        let cancelableClosure = {
+            closure = nil
+        }
+        
+        async {
+            closure?()
+        }
+        
+        return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
+    }
+    
+    func jx_execute<T>(worker: @escaping ()->T, completionQueue: DispatchQueue = .main, completion: @escaping (T)->Void) -> Disposable {
         var cancelled = false
         
         let cancelableClosure = {

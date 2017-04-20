@@ -16,7 +16,7 @@ class JetpackTests: XCTestCase {
     func testFromValueObservable() {
         
         let value = 10
-        let o = Observer.from(value: value)
+        let o = Observer.from(value)
         
         var fired = false
         
@@ -604,7 +604,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapLatest {
-                return Observer.from(value: genValue)
+                return Observer.from(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)
@@ -653,7 +653,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapMerge {
-                return Observer.from(value: genValue)
+                return Observer.from(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)

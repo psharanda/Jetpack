@@ -15,7 +15,7 @@ extension Task {
      */
     public init<U>(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> Result<U>) where ValueType == Result<U> {
         self.init { completion in
-            return workerQueue.run(worker: worker, completionQueue: completionQueue) { (value: Result<U>) in
+            return workerQueue.jx_execute(worker: worker, completionQueue: completionQueue) { (value: Result<U>) in
                 completion(value)
             }
         }
@@ -43,15 +43,15 @@ extension Task {
     /**
      Create task which immediately completes with value
      */
-    public static func from<U>(resultValue: U) -> Task<U>  where ValueType == Result<U> {
-        return from(result: .success(resultValue))
+    public static func from<U>(value: U) -> Task<U>  where ValueType == Result<U> {
+        return from(result: .success(value))
     }
     
     /**
      Create task which immediately completes with error
      */
-    public static func from<U>(resultError: Error) -> Task<U>  where ValueType == Result<U> {
-        return from(result: .failure(resultError))
+    public static func from<U>(error: Error) -> Task<U>  where ValueType == Result<U> {
+        return from(result: .failure(error))
     }
 }
 

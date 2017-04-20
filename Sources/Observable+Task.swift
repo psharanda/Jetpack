@@ -10,7 +10,7 @@ extension Observable where ValueType: ResultConvertible {
     public typealias ResultValueType = ValueType.ValueType
     
     /**
-     Start task, actually just typealias for subscribe.
+     Start task, actually just name alias for subscribe.
      */
     @discardableResult
     public func start() -> Disposable {
@@ -23,20 +23,20 @@ extension Observable where ValueType: ResultConvertible {
     }
     
     /**
-     Perform one task after another
+     Perform one task after another. name alias to flatMapLatestValue
      */
-    public func then<U>(_ task: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
-        return Task<U> { completion  in
-            let disposable = SwapableDisposable()
-            disposable.swap(parent: self.start { result in
-                switch result.result {
-                case .success(let value):
-                    disposable.swap(child: task(value).start(completion))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            })
-            return disposable
+    public func then<U>(_ f: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
+        return flatMapLatestValue(f)
+    }
+    
+    public func flatMapLatestValue<U>(_ f: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
+        return flatMapLatest { result in
+            switch result.result {
+            case .success(let value):
+                return f(value)
+            case .failure(let error):
+                return Task.from(error: error)
+            }
         }
     }
     
@@ -44,31 +44,21 @@ extension Observable where ValueType: ResultConvertible {
      Transform task success value to value
      */
     public func mapValue<U>(_ transform: @escaping (ResultValueType)-> U) -> Task<U> {
-        return Task<U> { completion in
-            return self.start { result in
-                completion(result.result.map(transform))
-            }
-        }
+        return map { $0.result.map(transform) }
     }
     
     /**
      Transform task success value  to result
      */
     public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
-        return Task<U> { completion in
-            return self.start { result in
-                completion(result.result.flatMap(transform))
-            }
-        }
+        return flatMap { $0.result.flatMap(transform) }
     }
     
     /**
      Transform task success value  to static value
      */
     public func justValue<U>(_ value: U) -> Task<U> {
-        return mapValue { _ -> U in
-            return value
-        }
+        return mapValue { _ in value }
     }
     
     /**
@@ -220,7 +210,7 @@ extension Observable where ValueType: ResultConvertible {
      Run a number of tasks one by one in a sequence
      */
     public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
-        let empty = Task<[R.ResultValueType]>.from(resultValue: [])
+        let empty = Task<[R.ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.then { result in
                 right.mapValue { t in
@@ -234,7 +224,7 @@ extension Observable where ValueType: ResultConvertible {
      Run a number of tasks concurrently
      */
     public static func concurrently<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
-        let empty = Task<[R.ResultValueType]>.from(resultValue: [])
+        let empty = Task<[R.ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.concurrently(right).mapValue { (result, t) in
                 result + [t]
@@ -273,7 +263,7 @@ extension Observable where ValueType: ResultConvertible {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
-                            serial.swap(child: queue.after(timeInterval: currentTimeout) {
+                            serial.swap(child: queue.jx_after(timeInterval: currentTimeout) {
                                 serial.swap(parent: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)
