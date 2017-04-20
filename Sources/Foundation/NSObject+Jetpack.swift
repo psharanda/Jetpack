@@ -117,7 +117,7 @@ fileprivate class PropertyActionHandler<Base: AnyObject, T>: NSObject {
         self.getter = getter
         self.base = base
         self.cleanup = cleanup
-        property = Property(signal: signal) {
+        property = Property(signal.asObserver) {
             getter(base)
         }
     }

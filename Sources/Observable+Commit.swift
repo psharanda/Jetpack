@@ -19,7 +19,7 @@ extension Observable {
         }
         
         if immediateResult != nil {
-            let prop = Property<ValueType>(signal: signal) {
+            let prop = Property<ValueType>(signal.asObserver) {
                 return immediateResult!
             }
             return (prop.asObserver, disposable)

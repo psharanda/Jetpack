@@ -11,22 +11,32 @@ import Foundation
 public final class Property<T>: Observable {
     public typealias ValueType = T
     
-    private let signal: Signal<T>
+    private let observer: Observer<T>
     private let getter: ()->T
     
     public var value: T {
         return getter()
     }
     
-    public init(signal: Signal<T>, getter: @escaping ()->T) {
+    public init(_ observer: Observer<T>, getter: @escaping ()->T) {
         self.getter = getter
-        self.signal = signal
+        self.observer = observer
+    }
+    
+    public convenience init(constant: T) {
+        self.init(Observer.from(constant), getter: { constant })
     }
     
     @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         observer(value)
-        return signal.subscribe(observer)
+        return self.observer.subscribe(observer)
+    }
+    
+    public func map<U>(_ transform: @escaping (T) -> U) -> Property<U> {
+        return Property<U>(observer.map(transform)) {
+            transform(self.getter())
+        }
     }
 }
 

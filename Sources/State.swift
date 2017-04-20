@@ -23,7 +23,7 @@ public final class State<T>: Observable, Bindable {
         let signal = Signal<T>()
         var v = value
         
-        property = Property(signal: signal) {
+        property = Property(signal.asObserver) {
             return v
         }
         variable = Variable(setter: {
