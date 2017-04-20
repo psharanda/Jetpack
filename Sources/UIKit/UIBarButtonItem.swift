@@ -18,11 +18,11 @@ extension JetpackExtensions where Base: UIBarButtonItem {
 
 extension UIBarButtonItem {
     
-    public convenience init(title: String) {
+    public convenience init(title: String?) {
         self.init(title: title, style: .plain, target: nil, action: nil)
     }
     
-    public convenience init(image: UIImage) {
+    public convenience init(image: UIImage?) {
         self.init(image: image, style: .plain, target: nil, action: nil)
     }
     
