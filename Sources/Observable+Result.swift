@@ -20,3 +20,13 @@ public extension Observable where ValueType: ResultConvertible {
     }
 }
 
+public extension Observable where ValueType: Error {
+
+    public var localizedDescription: Observer<String> {
+        return map { $0.localizedDescription }
+    }
+}
+
+
+
+

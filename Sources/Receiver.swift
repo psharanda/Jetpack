@@ -21,6 +21,14 @@ public struct Receiver<T>: Bindable {
     }
 }
 
+extension Receiver {
+    public func map<U>(_ transform: @escaping (U) -> T) -> Receiver<U> {
+        return Receiver<U> {
+            self.update(transform($0))
+        }
+    }
+}
+
 extension Receiver where ValueType: Optionable {
     
     /**
