@@ -68,6 +68,11 @@ extension Observable where ValueType: ResultConvertible {
         return justValue(())
     }
     
+    public var optionalizedValue: Task<ResultValueType?> {
+        return mapValue { Optional.some($0) }
+    }
+
+    
     /**
      Add handler to perform specific action if task was successful
      */
@@ -279,3 +284,4 @@ extension Observable where ValueType: ResultConvertible {
         }
     }
 }
+
