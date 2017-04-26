@@ -31,13 +31,12 @@ extension Observable {
             return self.subscribe { result in
                 let newDate = Date()
                 lastIgnoredValue = result
+                lastAfterCancel?.dispose()
+                lastAfterCancel = nil
                 if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
-                    lastAfterCancel?.dispose()
-                    lastAfterCancel = nil
                     lastUpdateTime = newDate
                     lastIgnoredValue = nil
-                    observer(result)
-                    
+                    observer(result)                    
                     if latest {
                         lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
                             guard let lastIgnoredValue = lastIgnoredValue  else { return }
