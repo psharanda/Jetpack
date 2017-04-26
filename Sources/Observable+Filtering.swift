@@ -25,7 +25,6 @@ extension Observable {
     public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
         var lastUpdateTime = Date.distantPast
         var lastIgnoredValue: ValueType? = nil
-        
         var lastAfterCancel: Disposable? = nil
         
         return Observer { observer in
@@ -33,6 +32,8 @@ extension Observable {
                 let newDate = Date()
                 lastIgnoredValue = result
                 if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
+                    lastAfterCancel?.dispose()
+                    lastAfterCancel = nil
                     lastUpdateTime = newDate
                     lastIgnoredValue = nil
                     observer(result)
