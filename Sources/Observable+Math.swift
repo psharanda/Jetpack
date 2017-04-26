@@ -8,9 +8,8 @@ import Foundation
 extension Observable where ValueType: Comparable {
     
     public var min: Observer<ValueType> {
-        var minValue: ValueType? = nil
-        
         return Observer { observer in
+            var minValue: ValueType? = nil
             return self.subscribe { result in
                 if let minValueNonNil = minValue {
                     if result < minValueNonNil {
@@ -26,9 +25,8 @@ extension Observable where ValueType: Comparable {
     }
     
     public var max: Observer<ValueType> {
-        var maxValue: ValueType? = nil
-        
         return Observer { observer in
+            var maxValue: ValueType? = nil
             return self.subscribe { result in
                 if let minValueNonNil = maxValue {
                     if result > minValueNonNil {
@@ -51,9 +49,8 @@ extension Observable {
     }
     
     public func count(_ f: @escaping (ValueType)->Bool) -> Observer<Int> {
-        var count = 0
-        
         return Observer { observer in
+            var count = 0
             return self.subscribe { result in
                 if f(result) {
                     count += 1

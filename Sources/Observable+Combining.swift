@@ -10,10 +10,11 @@ import Foundation
 public extension Observable {
     
     public func combine<T: Observable>(_ with: T) -> Observer<(ValueType?,T.ValueType?)> {
-        var left: ValueType?
-        var right: T.ValueType?
-        
         return Observer { observer in
+            
+            var left: ValueType?
+            var right: T.ValueType?
+            
             let disposable = with.subscribe { result in
                 right = result
                 observer((left,right))
@@ -56,10 +57,10 @@ public extension Observable {
 public extension Observable {
     
     public func combineLatest<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        var left: ValueType?
-        var right: T.ValueType?
-        
         return Observer { observer in
+            var left: ValueType?
+            var right: T.ValueType?
+            
             let disposable = with.subscribe { result in
                 right = result
                 if let left = left, let right = right {
@@ -103,14 +104,14 @@ public extension Observable {
 public extension Observable {
     
     public func zip<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        
-        var left: ValueType?
-        var right: T.ValueType?
-        
-        var leftIsNewValue = false
-        var rightIsNewValue = false
-        
         return Observer { observer in
+            
+            var left: ValueType?
+            var right: T.ValueType?
+            
+            var leftIsNewValue = false
+            var rightIsNewValue = false
+            
             let disposable = with.subscribe { result in
                 right = result
                 rightIsNewValue = true
@@ -163,7 +164,6 @@ public extension Observable {
     }
     
     public func merge<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
-        
         return Observer { observer in
     
             let disposable = observables.reduce(EmptyDisposable() as Disposable) {
@@ -180,9 +180,9 @@ public extension Observable {
 
     
     public func sample<T: Observable>(_ with: T) -> Observer<ValueType> {
-        var value: ValueType?
-        
         return Observer { observer in
+            
+            var value: ValueType?
             
             let disposable = with.subscribe { _ in
                 if let v = value {
@@ -198,9 +198,8 @@ public extension Observable {
     }
 
     public func withLatestFrom<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        var lastValue: T.ValueType?
-        
         return Observer { observer in
+            var lastValue: T.ValueType?
             
             let disposable = with.subscribe { result in
                 lastValue = result
@@ -220,9 +219,8 @@ public extension Observable {
     
     //emit events only from observable which emitted the very first event
     public func amb<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
-        var config = (0..<(observables.count + 1)).map { _ in  false }
-        
         return Observer { observer in
+            var config = (0..<(observables.count + 1)).map { _ in  false }
             let all = [self.asObserver] + observables.map { $0.asObserver }
             var c = 0
             

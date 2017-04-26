@@ -26,8 +26,8 @@ extension Observable {
     }
     
     public func reduce<U>(_ initial: U, f: @escaping (U, ValueType) -> U) -> Observer<U> {
-        var reduced: U = initial
         return Observer<U> { observer in
+            var reduced: U = initial
             return self.subscribe { result in
                 reduced = f(reduced, result)
                 observer(reduced)
@@ -47,10 +47,8 @@ extension Observable {
     }
     
     public var diff: Observer<(old: ValueType, new: ValueType)> {
-        
-        var prevValue: ValueType?
-        
         return Observer<(old: ValueType, new: ValueType)> { observer in
+            var prevValue: ValueType?
             return self.subscribe { result in
                 observer((prevValue ?? result, result))
                 prevValue = result

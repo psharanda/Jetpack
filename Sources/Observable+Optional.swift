@@ -58,15 +58,23 @@ extension Observable {
 public extension Observable where ValueType: Optionable, ValueType.Wrapped: Equatable  {
     
     public var distinct: Observer<ValueType> {
-        var lastValue: ValueType?
         
-        return flatMap { result in
+        return Observer<ValueType> { observer in
+            var lastValue: ValueType?
             
-            if let lv = lastValue {
-                return (lv.flatMap { $0 } == result.flatMap { $0 }) ? nil : lv
-            } else {
-                lastValue = result
-                return result
+            func test(_ result: ValueType) -> ValueType? {
+                if let lv = lastValue {
+                    return (lv.flatMap { $0 } == result.flatMap { $0 }) ? nil : lv
+                } else {
+                    lastValue = result
+                    return result
+                }
+            }
+            
+            return self.subscribe { result in
+                if let newValue = test(result) {
+                    observer(newValue)
+                }
             }
         }
     }

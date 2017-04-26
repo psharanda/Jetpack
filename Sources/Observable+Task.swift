@@ -253,11 +253,10 @@ extension Observable where ValueType: ResultConvertible {
      - returns: new task
      */
     public func retry(numberOfTimes: Int, timeout: TimeInterval, nextTimeout: @escaping (TimeInterval)->TimeInterval = { $0 }, queue: DispatchQueue = .main, until: @escaping (Error)->(Bool) = {_ in true }) -> Task<ResultValueType> {
-        
-        var currentTimeout = timeout
-        var numberOfRetries = 0
-        
         return Task<ResultValueType> { completion  in
+            var currentTimeout = timeout
+            var numberOfRetries = 0
+            
             let serial = SwapableDisposable()
             
             func retryImpl() -> Disposable {

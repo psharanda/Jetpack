@@ -8,10 +8,10 @@ import Foundation
 extension Observable {
     
     public func buffer(timeInterval: TimeInterval, maxSize: Int = Int.max, queue: DispatchQueue = DispatchQueue.main) -> Observer<[ValueType]> {
-        var buf = [ValueType]()
-        var lastAfterCancel: Disposable? = nil
-        
         return Observer { observer in
+            
+            var buf = [ValueType]()
+            var lastAfterCancel: Disposable? = nil
             
             func after() {
                 lastAfterCancel?.dispose()

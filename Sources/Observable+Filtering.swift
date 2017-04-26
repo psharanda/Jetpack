@@ -23,24 +23,28 @@ extension Observable {
     }
 
     public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
-        var lastUpdateTime = Date.distantPast
-        var lastIgnoredValue: ValueType? = nil
-        var lastAfterCancel: Disposable? = nil
-        
         return Observer { observer in
+            
+            var lastUpdateTime = Date.distantPast
+            var lastIgnoredValue: ValueType? = nil
+            var lastAfterCancel: Disposable? = nil
+            
             return self.subscribe { result in
                 let newDate = Date()
                 lastIgnoredValue = result
-                lastAfterCancel?.dispose()
-                lastAfterCancel = nil
                 if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
                     lastUpdateTime = newDate
                     lastIgnoredValue = nil
+                    lastAfterCancel?.dispose()
+                    lastAfterCancel = nil
                     observer(result)                    
                     if latest {
                         lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
-                            guard let lastIgnoredValue = lastIgnoredValue  else { return }
-                            observer(lastIgnoredValue)
+                            if let lastIgnoredValue = lastIgnoredValue {
+                                observer(lastIgnoredValue)
+                                lastUpdateTime = Date()
+                            }
+                            lastIgnoredValue = nil
                         }
                     }
                 }
@@ -51,10 +55,9 @@ extension Observable {
         }
     }
 
-    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {                
-        var lastAfterCancel: Disposable? = nil
-        
+    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
         return Observer { observer in
+            var lastAfterCancel: Disposable? = nil
             return self.subscribe { result in
                 lastAfterCancel?.dispose()
                 
@@ -70,8 +73,8 @@ extension Observable {
 
     
     public func skip(x: Int) -> Observer<ValueType> {
-        var total = 0
         return Observer { observer in
+            var total = 0
             return self.subscribe { result in
                 if total >= x {
                     observer(result)
@@ -82,8 +85,8 @@ extension Observable {
     }
     
     public func skip(last x: Int) -> Observer<ValueType> {
-        var buffer: [ValueType] = []
         return Observer { observer in
+            var buffer: [ValueType] = []
             return self.subscribe { result in
                 buffer.append(result)
                 
@@ -96,13 +99,12 @@ extension Observable {
     }
     
     public func skip<T: Observable>(until: T) -> Observer<ValueType> {
-        var canEmit = false
-        
-        let disposable = until.subscribe { _ in
-            canEmit = true
-        }
-        
         return Observer { observer in
+            var canEmit = false
+            
+            let disposable = until.subscribe { _ in
+                canEmit = true
+            }
             return self.subscribe { result in
                 if canEmit {
                     observer(result)
@@ -112,9 +114,8 @@ extension Observable {
     }
 
     public func skip(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
-        var canEmit = false
-        
         return Observer { observer in
+            var canEmit = false
             return self.subscribe { result in
                 if !canEmit {
                     canEmit = f(result)
@@ -132,9 +133,8 @@ extension Observable {
     }
     
     public func take(first: Int) -> Observer<ValueType> {
-        var counter = 0
-        
         return Observer { observer in
+            var counter = 0
             return self.subscribe { result in
                 if counter < first {
                     observer(result)
@@ -145,13 +145,12 @@ extension Observable {
     }
     
     public func take<T: Observable>(until: T) -> Observer<ValueType> {
-        var canEmit = true
-        
-        let disposable = until.subscribe { _ in
-            canEmit = false
-        }
-        
         return Observer { observer in
+            var canEmit = true
+            
+            let disposable = until.subscribe { _ in
+                canEmit = false
+            }
             return self.subscribe { result in
                 if canEmit {
                     observer(result)
@@ -161,9 +160,8 @@ extension Observable {
     }
 
     public func take(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
-        var canEmit = true
-        
         return Observer { observer in
+            var canEmit = true
             return self.subscribe { result in
                 if !canEmit {
                     canEmit = f(result)
@@ -177,9 +175,8 @@ extension Observable {
     }
     
     public func find(_ f: @escaping (ValueType) -> Bool) -> Observer<ValueType> {
-        var found = false
-
         return Observer { observer in
+            var found = false
             return self.subscribe { result in
                 if f(result) && !found {
                     found = true
@@ -190,8 +187,8 @@ extension Observable {
     }
 
     public func element(at index: Int) -> Observer<ValueType> {
-        var currentIndex = 0
         return Observer { observer in
+            var currentIndex = 0
             return self.subscribe { result in
                 if currentIndex == index {
                     observer(result)
@@ -202,13 +199,12 @@ extension Observable {
     }
     
     public func pausable<T: Observable>(_ controller: T) -> Observer<ValueType> where T.ValueType == Bool {
-        var canEmit = false
-        
-        let disposable = controller.subscribe { result in
-            canEmit = result
-        }
-        
         return Observer { observer in
+            var canEmit = false
+            
+            let disposable = controller.subscribe { result in
+                canEmit = result
+            }
             return self.subscribe { result in
                 if canEmit {
                     observer(result)
@@ -218,14 +214,13 @@ extension Observable {
     }
 
     public func pausableBuffered<T: Observable>(_ controller:T) -> Observer<ValueType> where T.ValueType == Bool {
-        var canEmit = false
-        var buffer: [ValueType] = []
-        
-        let disposable = controller.subscribe { result in
-            canEmit = result
-        }
-        
         return Observer { observer in
+            var canEmit = false
+            var buffer: [ValueType] = []
+            
+            let disposable = controller.subscribe { result in
+                canEmit = result
+            }
             return self.subscribe { result in
                 if canEmit {
                     buffer.forEach {observer($0)}
@@ -243,14 +238,23 @@ extension Observable {
 public extension Observable where ValueType: Equatable {
     
     public var distinct: Observer<ValueType> {
-        var lastValue: ValueType?
-        
-        return flatMap { result in
-            if let lv = lastValue {
-                return (lv != result) ? lv : nil
-            } else {
-                lastValue = result
-                return result
+    
+        return Observer<ValueType> { observer in
+            var lastValue: ValueType?
+            
+            func test(_ result: ValueType) -> ValueType? {
+                if let lv = lastValue {
+                    return (lv != result) ? lv : nil
+                } else {
+                    lastValue = result
+                    return result
+                }
+            }
+            
+            return self.subscribe { result in
+                if let newValue = test(result) {
+                    observer(newValue)
+                }
             }
         }
     }
@@ -262,9 +266,8 @@ public extension Observable where ValueType: Equatable {
     }
     
     public func contains(where f: @escaping (ValueType)->Bool) -> Observer<Bool> {
-        var val = false
-        
         return Observer<Bool> { observer in
+            var val = false
             return self.subscribe { result in
                 if !val && f(result) {
                     val = true
@@ -279,9 +282,8 @@ public extension Observable where ValueType: Equatable {
     }
     
     public func findIndex(of value: ValueType) -> Observer<Int> {
-        var idx = 0
-        
         return Observer<Int> { observer in
+            var idx = 0
             return self.subscribe { result in
                 if  result == value {
                     observer(idx)
@@ -295,9 +297,8 @@ public extension Observable where ValueType: Equatable {
 extension Observable where ValueType: Hashable {
     
     public var unique: Observer<ValueType> {
-        var set = Set<ValueType>()
-        
         return Observer { observer in
+            var set = Set<ValueType>()
             return self.subscribe { result in
                 if !set.contains(result) {
                     observer(result)
@@ -311,9 +312,9 @@ extension Observable where ValueType: Hashable {
 extension Observable {
     
     public func findIndex(_ f: @escaping ((ValueType) -> Bool)) -> Observer<Int> {
-        var idx = 0
-        
+    
         return Observer { observer in
+            var idx = 0
             return self.subscribe { result in
                 if  f(result) {
                     observer(idx)
