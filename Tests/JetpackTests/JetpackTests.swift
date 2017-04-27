@@ -679,7 +679,7 @@ class JetpackTests: XCTestCase {
         
         let disposable = NotificationCenter.default.jx.observer(forName: .UIApplicationDidEnterBackground).subscribe { value in
             firedTimes += 1
-            XCTAssertEqual(value?["hello"] as! String, "world")
+            XCTAssertEqual(value.userInfo?["hello"] as! String, "world")
         }
         
         NotificationCenter.default.post(name: .UIApplicationDidEnterBackground, object: nil, userInfo: ["hello": "world"])

@@ -12,11 +12,12 @@ extension JetpackExtensions where Base: UITextView {
 	}
 
     public var textValues: Property<String?> {
-        fatalError("Not implemented")
+        return makeNotificationProperty(key: #function, name: .UITextViewTextDidChange) { $0.text }
     }
     
     public var attributedTextValues: Property<NSAttributedString?> {
-        fatalError("Not implemented")
+        return makeNotificationProperty(key: #function, name: .UITextViewTextDidChange) { $0.attributedText }
     }
     
 }
+

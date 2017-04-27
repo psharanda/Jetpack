@@ -70,6 +70,14 @@ extension JetpackExtensions where Base: NSObject {
             return controlHandler
         }.property
     }
+    
+    func makeNotificationProperty<T>(key: String,
+                                  name: Notification.Name,
+                                  getter: @escaping (Base)->T) -> Property<T> {
+        return base.jx_lazyObject(key: key) { () -> PropertyNotificationHandler<Base, T> in
+            return PropertyNotificationHandler(base: base, name: name, getter: getter)
+        }.property
+    }
 }
 
 extension NSObject: JetpackExtensionsProvider {}
@@ -87,6 +95,7 @@ fileprivate class SignalActionHandler<Base: AnyObject, T>: NSObject {
         self.getter = getter
         self.base = base
         self.cleanup = cleanup
+        super.init()
     }
     
     @objc func jx_handleAction() {
@@ -120,6 +129,7 @@ fileprivate class PropertyActionHandler<Base: AnyObject, T>: NSObject {
         property = Property(signal.asObserver) {
             getter(base)
         }
+        super.init()
     }
     
     @objc func jx_handleAction() {
@@ -132,5 +142,41 @@ fileprivate class PropertyActionHandler<Base: AnyObject, T>: NSObject {
         if let base = base {
             cleanup(base, self, #selector(jx_handleAction))
         }
+    }
+}
+
+private class PropertyNotificationHandler<Base: AnyObject, T>: NSObject {
+    
+    let signal = Signal<T>()
+    let property: Property<T>
+    let getter: (Base) ->T
+    weak var base: Base?
+    
+    init(base: Base, name: Notification.Name ,getter: @escaping (Base)->T) {
+        self.getter = getter
+        self.base = base
+        
+        property = Property(signal.asObserver) {
+            getter(base)
+        }
+        
+        super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(jx_handleNotification), name: name, object: nil)
+    }
+    
+    @objc func jx_handleNotification(notification: Notification) {
+        guard let base = base else {
+            NotificationCenter.default.removeObserver(self)
+            return
+        }
+        
+        if let any = notification.object, let object = any as? Base, base === object {
+            signal.update(getter(base))
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
