@@ -267,7 +267,9 @@ extension Observable where ValueType: ResultConvertible {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
+                            serial.disposeChild()
                             serial.swap(child: queue.jx_after(timeInterval: currentTimeout) {
+                                serial.disposeParent()
                                 serial.swap(parent: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)

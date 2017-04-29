@@ -12,6 +12,7 @@ extension Observable {
         return Observer<U> { observer in
             let serial = SwapableDisposable()
             serial.swap(parent: self.subscribe { result in
+                serial.disposeChild()
                 serial.swap(child: f(result).subscribe(observer))
             })
             return serial

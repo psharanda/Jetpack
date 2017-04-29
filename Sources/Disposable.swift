@@ -61,22 +61,27 @@ public final class SwapableDisposable: Disposable {
 
     }
     
+    public func disposeParent() {
+        parentDisposable?.dispose()
+        parentDisposable = nil
+    }
+    
     public func swap(parent disposable: Disposable) {
-        self.parentDisposable?.dispose()
         self.parentDisposable = disposable
     }
     
+    public func disposeChild() {
+        childDisposable?.dispose()
+        childDisposable = nil
+    }
+    
     public func swap(child disposable: Disposable) {
-        self.childDisposable?.dispose()
         self.childDisposable = disposable
     }
     
     public func dispose() {
-        parentDisposable?.dispose()
-        parentDisposable = nil
-        
-        childDisposable?.dispose()
-        childDisposable = nil
+        disposeParent()
+        disposeChild()
     }
 }
 
