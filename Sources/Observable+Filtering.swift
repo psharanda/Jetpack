@@ -244,7 +244,7 @@ public extension Observable where ValueType: Equatable {
             
             func test(_ result: ValueType) -> ValueType? {
                 if let lv = lastValue {
-                    return (lv != result) ? lv : nil
+                    return (lv != result) ? result : nil
                 } else {
                     lastValue = result
                     return result

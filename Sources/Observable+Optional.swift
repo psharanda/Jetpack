@@ -64,7 +64,7 @@ public extension Observable where ValueType: Optionable, ValueType.Wrapped: Equa
             
             func test(_ result: ValueType) -> ValueType? {
                 if let lv = lastValue {
-                    return (lv.flatMap { $0 } == result.flatMap { $0 }) ? nil : lv
+                    return (lv.flatMap { $0 } == result.flatMap { $0 }) ? nil : result
                 } else {
                     lastValue = result
                     return result

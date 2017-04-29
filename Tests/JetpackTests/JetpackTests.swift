@@ -816,6 +816,37 @@ class JetpackTests: XCTestCase {
         initial = false
         state.update(20)
     }
+    
+    func testDistinct() {
+        let state = State(10)
+        
+        var ref = 10
+        state.distinct.subscribe {
+            XCTAssertEqual(ref, $0)
+        }
+        
+        ref = 20
+        state.update(10)
+        
+        state.update(20)
+    }
+    
+    func testDistinctOptional() {
+        let state = State(Optional.some(10))
+        
+        var ref: Int? = 10
+        state.distinct.subscribe {
+            XCTAssertEqual(ref, $0)
+        }
+        
+        ref = 20
+        state.update(10)
+        
+        state.update(20)
+        
+        ref = nil
+        state.update(nil)
+    }
 }
 
 var numberOfDeinits = 0
