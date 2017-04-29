@@ -1,8 +1,3 @@
-//
-//  Created by Pavel Sharanda on 20.09.16.
-//  Copyright © 2016 SnipSnap. All rights reserved.
-//
-
 import Foundation
 
 

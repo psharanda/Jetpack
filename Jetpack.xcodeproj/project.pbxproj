@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1B4939671E9E34100005452A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
 		1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
@@ -203,6 +204,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CADisplayLink+Task.swift"; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				1B6E870A1E9ADB540063D5EB /* UITextView.swift */,
 				1B6E870C1E9ADB540063D5EB /* UIView.swift */,
 				1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */,
+				1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */,
 			);
 			name = UIKit;
 			path = Sources/UIKit;
@@ -842,6 +845,7 @@
 				1B6E87BB1E9CEA950063D5EB /* Observer.swift in Sources */,
 				1B6E87321E9ADB540063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E871E1E9ADB540063D5EB /* Property.swift in Sources */,
+				1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */,
 				1B6E872C1E9ADB540063D5EB /* UIControl.swift in Sources */,
 				1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */,
