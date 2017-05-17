@@ -265,6 +265,12 @@ public extension Observable where ValueType: Equatable {
         }
     }
     
+    public func only(_ value: ValueType) -> Observer<Void> {
+        return filter {
+            ($0 == value)
+        }.just
+    }
+    
     public func contains(where f: @escaping (ValueType)->Bool) -> Observer<Bool> {
         return Observer<Bool> { observer in
             var val = false
