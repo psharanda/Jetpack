@@ -20,7 +20,7 @@ class JetpackTests: XCTestCase {
         
         var fired = false
         
-        o.subscribe {
+        _ = o.subscribe {
             fired = true
             XCTAssertEqual(value, $0)
         }
@@ -86,7 +86,7 @@ class JetpackTests: XCTestCase {
         var fired = false
         var value = 0
         
-        t.stateProperty.map { $0 * 10 }.subscribe {
+        _ = t.stateProperty.map { $0 * 10 }.subscribe {
             fired = true
             XCTAssertEqual(value, $0)
         }
@@ -139,7 +139,7 @@ class JetpackTests: XCTestCase {
         let button = UIButton()
         var firedTimes = 0
         
-        button.jx.clicked.subscribe {
+        _ = button.jx.clicked.subscribe {
             firedTimes += 1
         }
         
@@ -721,7 +721,7 @@ class JetpackTests: XCTestCase {
             }
             
             init() {
-                signal.subscribe { [weak self] in
+                _ = signal.subscribe { [weak self] in
                     self?.increment += 1
                 }
             }
@@ -749,11 +749,11 @@ class JetpackTests: XCTestCase {
             
             let model = Model()
 
-            view.nameChanged.bind(model.nameReceiver)
-            model.valueChanged.bind(view.valueReceiver)
-            view.nameChanged.bind(view.valueReceiver)
+            _ = view.nameChanged.bind(model.nameReceiver)
+            _ = model.valueChanged.bind(view.valueReceiver)
+            _ = view.nameChanged.bind(view.valueReceiver)
             
-            view.nameChanged.just.bind(view.signalReceiver)
+            _ = view.nameChanged.just.bind(view.signalReceiver)
         }
         
         scope()
@@ -821,7 +821,7 @@ class JetpackTests: XCTestCase {
         let state = State(10)
         
         var ref = 10
-        state.distinct.subscribe {
+        _ = state.distinct.subscribe {
             XCTAssertEqual(ref, $0)
         }
         
@@ -835,7 +835,7 @@ class JetpackTests: XCTestCase {
         let state = State(Optional.some(10))
         
         var ref: Int? = 10
-        state.distinct.subscribe {
+        _ = state.distinct.subscribe {
             XCTAssertEqual(ref, $0)
         }
         

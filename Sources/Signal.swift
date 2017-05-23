@@ -19,7 +19,6 @@ public final class Signal<T>: Observable, Bindable {
     public init() {
     }
     
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         lastToken += 1
         

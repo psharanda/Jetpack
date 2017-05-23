@@ -3,7 +3,7 @@ import UIKit
 extension JetpackExtensions where Base: UIStepper {
 
 	public var value: Receiver<Double> {
-        return makeReceiver(key: #function) { $0.value = $1 }
+        return jx_makeReceiver(key: #function) { $0.value = $1 }
 	}
 
 	public var values: Property<Double> {

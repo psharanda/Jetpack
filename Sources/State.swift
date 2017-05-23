@@ -34,7 +34,6 @@ public final class State<T>: Observable, Bindable {
         })
     }
     
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return property.subscribe(observer)
     }

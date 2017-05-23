@@ -138,6 +138,7 @@
 		1BA2EF731E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
 		1BA2EF741E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
 		1BA2EF761E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
+		1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1BE3CD181EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD191EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD1A1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
@@ -208,7 +209,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CADisplayLink+Task.swift"; sourceTree = "<group>"; };
+		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CADisplayLink+Task.swift"; path = "Sources/UIKit/CADisplayLink+Task.swift"; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
@@ -361,7 +362,6 @@
 				1B6E870A1E9ADB540063D5EB /* UITextView.swift */,
 				1B6E870C1E9ADB540063D5EB /* UIView.swift */,
 				1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */,
-				1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */,
 			);
 			name = UIKit;
 			path = Sources/UIKit;
@@ -387,8 +387,8 @@
 		1B6E873B1E9ADB7A0063D5EB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */,
 				52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */,
+				1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */,
 				1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */,
 			);
 			name = Utils;
@@ -459,6 +459,7 @@
 				1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */,
 				1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */,
 				1B971EB91ECC9BF3004077F1 /* Timer+Jetpack.swift */,
+				1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -980,6 +981,7 @@
 				1BF014761EA208290061B4D9 /* Observer.swift in Sources */,
 				1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87901E9ADC280063D5EB /* Observable+Math.swift in Sources */,
+				1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */,
 				1B6E87891E9ADC280063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E88041E9E15F20063D5EB /* UIProgressView.swift in Sources */,
 				1BF014771EA208290061B4D9 /* Variable.swift in Sources */,

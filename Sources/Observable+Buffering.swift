@@ -15,7 +15,7 @@ extension Observable {
             
             func after() {
                 lastAfterCancel?.dispose()
-                lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
+                lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
                     if buf.count > 0 {
                         observer(buf)
                         buf.removeAll()

@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension Observer where T == Void {
+extension JetpackExtensions where Base: Timer {
     public static func repeated(timeInterval: TimeInterval) -> Observer<Void> {
         return Observer<Void> { observer in
             let timerOwner = TimerOwner(observer: observer)

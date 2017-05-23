@@ -27,7 +27,6 @@ public final class Property<T>: Observable {
         self.init(Observer.from(constant), getter: { constant })
     }
     
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         observer(value)
         return self.observer.subscribe(observer)

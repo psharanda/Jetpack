@@ -8,25 +8,25 @@ import XCTest
 @testable import Jetpack
 
 func requestHello(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
         completion(.success("Hello"))
     }
 }
 
 func requestError(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
         completion(.failure(NSError(domain: "request", code: -1, userInfo: nil)))
     }
 }
 
 func requestWorld(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
         completion(.success(head + "World"))
     }
 }
 
 func requestPunctuation(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx_after(timeInterval: 1) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
         completion(.success(head + "!!!"))
     }
 }
@@ -39,7 +39,7 @@ class TaskTests: XCTestCase {
         
         let r = Task(generator: requestHello)
         
-        _ = r.start {
+        _ = r.subscribe {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("Hello", value)
@@ -59,7 +59,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestError)
-        _ = r.start {
+        _ = r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -80,7 +80,7 @@ class TaskTests: XCTestCase {
         
         let r = Task(generator: requestHello)
         
-        let c = r.start {
+        let c = r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -106,18 +106,18 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestHello)
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
                 }
             }
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task {
                     return requestPunctuation(head: result, completion: $0)
                 }
             }
         
-        _ = r.start {
+        _ = r.subscribe {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("HelloWorld!!!", value)
@@ -137,16 +137,16 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestHello)
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task(generator: requestError)
             }
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task {
                     return requestPunctuation(head: result, completion: $0)
                 }
             }
         
-        _ = r.start {
+        _ = r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -166,18 +166,18 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestHello)
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
                 }
             }
-            .then { result in
+            .flatMapLatestValue { result in
                 return Task {
                     return requestPunctuation(head: result, completion: $0)
                 }
             }
         
-        let c = r.start {
+        let c = r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -204,15 +204,15 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestHello)
-            .onSuccess {
+            .forEachValue {
                 XCTAssertEqual("Hello", $0)
                 expect.fulfill()
-            }.onFailure { _ in
+            }.forEachError { _ in
                 XCTFail("error")
                 expect.fulfill()
             }
         
-        _ = r.start()
+        _ = r.subscribe { _ in }
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -224,16 +224,16 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestError)
-            .onSuccess { _ in
+            .forEachValue { _ in
                 XCTFail("should not have value")
                 expect.fulfill()
-            }.onFailure { error in
+            }.forEachError { error in
                 XCTAssertEqual(-1, (error as NSError).code)
                 expect.fulfill()
             }
         
         
-        _ = r.start()
+        _ = r.subscribe { _ in }
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -245,12 +245,12 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestHello)
-            .onSuccess { _ in
+            .forEachValue { _ in
                 XCTFail("should not have value")
-            }.onFailure { _ in
+            }.forEachError { _ in
                 XCTFail("should not error")
         }
-        let c = r.start()
+        let c = r.subscribe { _ in }
         
         c.dispose()
         
@@ -267,25 +267,25 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("Hello"))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("Hello"))
             }
         }
 
         let r = left.race(right)
-            .onSuccess { _ in
+            .forEachValue { _ in
                 XCTFail("shoud not succeed")
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
             }
-            .start()
+            .subscribe { _ in }
 
         r.dispose()
         
@@ -302,27 +302,27 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
                 completion(.success("Hello"))
             }
         }
 
         let _ = left.race(right)
-            .onSuccess { _ in
+            .forEachValue { _ in
                 XCTFail("shoud not succeed")
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -333,19 +333,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("left"))
             }
         }
 
         let right = Task<Int> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
                 completion(.success(5))
             }
         }
 
         let _ = left.race(right)
-            .onSuccess { value in
+            .forEachValue { value in
                 switch value {
                 case .left(let v):
                     XCTAssertEqual(v, "left")
@@ -354,11 +354,11 @@ class TaskTests: XCTestCase {
                 }
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -369,19 +369,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
                 completion(.success("left"))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("right"))
             }
         }
 
         let _ = left.race(right)
-            .onSuccess { value in
+            .forEachValue { value in
                 switch value {
                 case .left(_):
                     XCTFail("should be right")
@@ -390,11 +390,11 @@ class TaskTests: XCTestCase {
                 }
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -408,13 +408,13 @@ class TaskTests: XCTestCase {
         let left = Task.from(value: "left")
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("right"))
             }
         }
 
         let _ = left.race(right)
-            .onSuccess { value in
+            .forEachValue { value in
                 switch value {
                 case .left(let v):
                     XCTAssertEqual(v, "left")
@@ -423,11 +423,11 @@ class TaskTests: XCTestCase {
                 }
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -438,33 +438,33 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r3"))
             }
         }
 
         let _ = Task.sequence([r1, r2, r3])
-            .onSuccess { value in
+            .forEachValue { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -475,33 +475,33 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r3"))
             }
         }
 
         let _ = Task.sequence([r1, r2, r3])
-            .onSuccess { value in
+            .forEachValue { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -512,33 +512,33 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r3"))
             }
         }
 
         let _ = Task.concurrently([r1, r2, r3])
-            .onSuccess { value in
+            .forEachValue { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -549,33 +549,33 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx_after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
                 completion(.success("r3"))
             }
         }
 
         let _ = Task.concurrently([r1, r2, r3])
-            .onSuccess { value in
+            .forEachValue { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
             }
-            .onFailure { _ in
+            .forEachError { _ in
                 expect.fulfill()
             }
-            .start()
+            .subscribe { _ in }
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -588,12 +588,12 @@ class TaskTests: XCTestCase {
         
         var numberOfFailures = 0
         let r = Task(generator: requestError)
-            .onFailure { _ in
+            .forEachError { _ in
                 numberOfFailures += 1
             }
             .retry(numberOfTimes: 3, timeout: 0.1)
         
-        _ = r.start {
+        _ = r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -614,12 +614,12 @@ class TaskTests: XCTestCase {
         
         var numberOfFailures = 0
         let r = Task(generator: requestError)
-            .onFailure { _ in
+            .forEachError { _ in
                 numberOfFailures += 1
             }
             .retry(numberOfTimes: 3, timeout: 1)
         
-        let cancelable = r.start { result in
+        let cancelable = r.subscribe { result in
             switch result {
             case .success(_):
                 XCTFail("should not have value")
@@ -628,11 +628,11 @@ class TaskTests: XCTestCase {
             }
         }
         
-        _ = DispatchQueue.main.jx_after(timeInterval: 0.6) { _ in
+        _ = DispatchQueue.main.jx.after(timeInterval: 0.6) { _ in
             cancelable.dispose()
         }
         
-        _ = DispatchQueue.main.jx_after(timeInterval: 0.65) { _ in
+        _ = DispatchQueue.main.jx.after(timeInterval: 0.65) { _ in
             expect.fulfill()
         }
         

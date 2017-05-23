@@ -18,7 +18,6 @@ public struct Observer<T>: Observable {
         self.generator = generator
     }
     
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return generator(observer)
     }
@@ -31,7 +30,7 @@ extension Observer {
      */
     public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> ValueType) {
         self.init { completion in
-            return workerQueue.jx_execute(worker: worker, completionQueue: completionQueue) { (value: ValueType) in
+            return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: ValueType) in
                 completion(value)
             }
         }
@@ -39,7 +38,7 @@ extension Observer {
     
     public static func delayed(_ value: T, timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observer<T> {
         return Observer<T> { observer in
-            return queue.jx_after(timeInterval: timeInterval) {
+            return queue.jx.after(timeInterval: timeInterval) {
                 observer(value)
             }
         }
@@ -47,7 +46,7 @@ extension Observer {
     
     public static func dispatched(_ value: T, in queue: DispatchQueue) ->  Observer<T> {
         return Observer<T> { observer in
-            return queue.jx_async {
+            return queue.jx.async {
                 observer(value)
             }
         }

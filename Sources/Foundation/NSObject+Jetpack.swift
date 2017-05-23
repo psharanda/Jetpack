@@ -41,7 +41,7 @@ extension NSObject {
 
 extension JetpackExtensions where Base: NSObject {
     
-    func makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
+    func jx_makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
         return base.jx_lazyObject(key: key) {[unowned base] in
             return Receiver { value in
                 action(base, value)
@@ -49,7 +49,7 @@ extension JetpackExtensions where Base: NSObject {
         }
     }
     
-    func makeTargetActionObserver<U>(key: String,
+    func jx_makeTargetActionObserver<U>(key: String,
                                            setup: (Base, AnyObject, Selector)->Void,
                                            cleanup: @escaping (Base, AnyObject, Selector)->Void,
                                            getter: @escaping (Base)->U) -> Observer<U> {
@@ -60,7 +60,7 @@ extension JetpackExtensions where Base: NSObject {
         }.signal.asObserver
     }
     
-    func makeTargetActionProperty<T>(key: String,
+    func jx_makeTargetActionProperty<T>(key: String,
                                          setup: (Base, AnyObject, Selector)->Void,
                                          cleanup: @escaping (Base, AnyObject, Selector)->Void,
                                          getter: @escaping (Base)->T) -> Property<T> {
@@ -71,7 +71,7 @@ extension JetpackExtensions where Base: NSObject {
         }.property
     }
     
-    func makeNotificationProperty<T>(key: String,
+    func jx_makeNotificationProperty<T>(key: String,
                                   name: Notification.Name,
                                   getter: @escaping (Base)->T) -> Property<T> {
         return base.jx_lazyObject(key: key) { () -> PropertyNotificationHandler<Base, T> in

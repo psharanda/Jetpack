@@ -15,7 +15,7 @@ extension Task {
      */
     public init<U>(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> Result<U>) where ValueType == Result<U> {
         self.init { completion in
-            return workerQueue.jx_execute(worker: worker, completionQueue: completionQueue) { (value: Result<U>) in
+            return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: Result<U>) in
                 completion(value)
             }
         }

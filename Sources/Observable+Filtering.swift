@@ -39,7 +39,7 @@ extension Observable {
                     lastAfterCancel = nil
                     observer(result)                    
                     if latest {
-                        lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
+                        lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
                             if let lastIgnoredValue = lastIgnoredValue {
                                 observer(lastIgnoredValue)
                                 lastUpdateTime = Date()
@@ -61,7 +61,7 @@ extension Observable {
             return self.subscribe { result in
                 lastAfterCancel?.dispose()
                 
-                lastAfterCancel = queue.jx_after(timeInterval: timeInterval) {
+                lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
                     observer(result)
                 }
             }.with(disposable: DelegateDisposable {

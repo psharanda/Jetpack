@@ -9,26 +9,6 @@ extension Observable where ValueType: ResultConvertible {
     
     public typealias ResultValueType = ValueType.ValueType
     
-    /**
-     Start task, actually just name alias for subscribe.
-     */
-    @discardableResult
-    public func start() -> Disposable {
-        return start { _ in }
-    }
-    
-    @discardableResult
-    public func start(_ completion: @escaping (ValueType) -> Void) -> Disposable {
-        return subscribe(completion)
-    }
-    
-    /**
-     Perform one task after another. name alias to flatMapLatestValue
-     */
-    public func then<U>(_ f: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
-        return flatMapLatestValue(f)
-    }
-    
     public func flatMapLatestValue<U>(_ f: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
         return flatMapLatest { result in
             switch result.result {
@@ -76,13 +56,10 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Add handler to perform specific action if task was successful
      */
-    public func onSuccess(_ handler:  @escaping(ResultValueType) -> Void) -> Task<ResultValueType> {
-        return Task { completion in
-            return self.start { result in
-                if case let .success(value) = result.result {
-                    handler(value)
-                }
-                completion(result.result)
+    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observer<ValueType> {
+        return forEach { result in
+            if case let .success(value) = result.result {
+                handler(value)
             }
         }
     }
@@ -90,13 +67,10 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Add handler to perform specific action if task failed
      */
-    public func onFailure(_ handler:  @escaping(Error) -> Void) -> Task<ResultValueType> {
-        return Task { completion in
-            return self.start { result in
-                if case let .failure(error) = result.result {
-                    handler(error)
-                }
-                completion(result.result)
+    public func forEachError(_ handler:  @escaping(Error) -> Void) -> Observer<ValueType> {
+        return forEach { result in
+            if case let .failure(error) = result.result {
+                handler(error)
             }
         }
     }
@@ -139,12 +113,12 @@ extension Observable where ValueType: ResultConvertible {
                 }
             }
             
-            leftTask = left.mapValue{.left($0)}.start(handler(other: rightTask))
+            leftTask = left.mapValue{.left($0)}.subscribe(handler(other: rightTask))
             
             // Note that left could immediately return result (or just fail)
             // We don't need to start the right one in that case
             if !done {
-                rightTask = right.mapValue{.right($0)}.start(handler(other: leftTask))
+                rightTask = right.mapValue{.right($0)}.subscribe(handler(other: leftTask))
             }
             
             return DelegateDisposable {
@@ -217,7 +191,7 @@ extension Observable where ValueType: ResultConvertible {
     public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
         let empty = Task<[R.ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
-            left.then { result in
+            left.flatMapLatestValue { result in
                 right.mapValue { t in
                     result + [t]
                 }
@@ -260,7 +234,7 @@ extension Observable where ValueType: ResultConvertible {
             let serial = SwapableDisposable()
             
             func retryImpl() -> Disposable {
-                return self.start { result in
+                return self.subscribe { result in
                     switch result.result {
                     case .success(let value):
                         completion(.success(value))
@@ -268,7 +242,7 @@ extension Observable where ValueType: ResultConvertible {
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
                             serial.disposeChild()
-                            serial.swap(child: queue.jx_after(timeInterval: currentTimeout) {
+                            serial.swap(child: queue.jx.after(timeInterval: currentTimeout) {
                                 serial.disposeParent()
                                 serial.swap(parent: retryImpl())
                             })

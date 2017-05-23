@@ -13,6 +13,10 @@ extension JetpackExtensionsProvider {
 	public var jx: JetpackExtensions<Self> {
 		return JetpackExtensions(self)
 	}
+    
+    public static var jx: JetpackExtensions<Self>.Type {
+        return JetpackExtensions<Self>.self
+    }
 }
 
 /// A proxy which hosts reactive extensions of `Base`.
