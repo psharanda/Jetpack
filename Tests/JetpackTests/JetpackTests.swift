@@ -632,7 +632,7 @@ class JetpackTests: XCTestCase {
         
         _ = buttonClick
             .flatMapLatest {
-                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).asObserver
+                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).asObservable
             }
             .subscribe {
                 XCTAssertEqual($0.isEqual(expectedValue), true)
@@ -704,7 +704,7 @@ class JetpackTests: XCTestCase {
             }
             
             var nameChanged: Observable<String> {
-                return name.asObserver
+                return name.asObservable
             }
             
             private let value = MutableProperty<String>("FRP")
@@ -740,7 +740,7 @@ class JetpackTests: XCTestCase {
             private let value = MutableProperty<String>("FRP")
             
             var valueChanged: Observable<String> {
-                return value.asObserver
+                return value.asObservable
             }
         }
         
@@ -770,7 +770,7 @@ class JetpackTests: XCTestCase {
         
         let d = voidSignal
             .flatMapLatest {[unowned stringSignal] _ in
-                return stringSignal.asObserver
+                return stringSignal.asObservable
             }
             .subscribe { _ in 
                 firedTimes += 1

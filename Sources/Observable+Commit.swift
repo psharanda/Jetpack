@@ -19,13 +19,13 @@ extension ObservableProtocol {
         }
         
         if immediateResult != nil {
-            let prop = Property<ValueType>(signal.asObserver) {
+            let prop = Property<ValueType>(signal.asObservable) {
                 return immediateResult!
             }
-            return (prop.asObserver, disposable)
+            return (prop.asObservable, disposable)
         } else {
             shouldSaveImmediateResult = false
-            return (signal.asObserver, disposable)
+            return (signal.asObservable, disposable)
         }
     }
     

@@ -67,7 +67,7 @@ extension Observable {
 }
 
 extension ObservableProtocol {
-    public var asObserver: Observable<ValueType> {
+    public var asObservable: Observable<ValueType> {
         return Observable { observer in
             return self.subscribe(observer)
         }

@@ -57,7 +57,7 @@ extension JetpackExtensions where Base: NSObject {
             let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
             setup(base, controlHandler, #selector(SignalActionHandler<Base, U>.jx_handleAction))
             return controlHandler
-        }.signal.asObserver
+        }.signal.asObservable
     }
     
     func jx_makeTargetActionProperty<T>(key: String,
@@ -126,7 +126,7 @@ fileprivate class PropertyActionHandler<Base: AnyObject, T>: NSObject {
         self.getter = getter
         self.base = base
         self.cleanup = cleanup
-        property = Property(signal.asObserver) {
+        property = Property(signal.asObservable) {
             getter(base)
         }
         super.init()
@@ -156,7 +156,7 @@ private class PropertyNotificationHandler<Base: AnyObject, T>: NSObject {
         self.getter = getter
         self.base = base
         
-        property = Property(signal.asObserver) {
+        property = Property(signal.asObservable) {
             getter(base)
         }
         

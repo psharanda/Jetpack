@@ -36,7 +36,7 @@ public extension ObservableProtocol {
 
     public func combine<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType?])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType?]> = map { [$0] }
-        let withAny = with.map { $0.asObserver }
+        let withAny = with.map { $0.asObservable }
         return withAny.reduce(initial) { left, right in
             left.combine(right).map { (result, t) in
                 if let result = result {
@@ -87,7 +87,7 @@ public extension ObservableProtocol {
     
     public func combineLatest<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType]> = map { [$0] }
-        let withAny = with.map { $0.asObserver }
+        let withAny = with.map { $0.asObservable }
         return withAny.reduce(initial) { left, right in
             left.combineLatest(right).map { (result, t) in
                 return result + [t]
@@ -143,7 +143,7 @@ public extension ObservableProtocol {
     
     public func zip<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType]> = map { [$0] }
-        let withAny = with.map { $0.asObserver }
+        let withAny = with.map { $0.asObservable }
         return withAny.reduce(initial) { left, right in
             left.zip(right).map { (result, t) in
                 return result + [t]
@@ -216,7 +216,7 @@ public extension ObservableProtocol {
     public func amb<T: ObservableProtocol>(_ observables: [T]) -> Observable<ValueType> where T.ValueType == ValueType {
         return Observable { observer in
             var config = (0..<(observables.count + 1)).map { _ in  false }
-            let all = [self.asObserver] + observables.map { $0.asObserver }
+            let all = [self.asObservable] + observables.map { $0.asObservable }
             var c = 0
             
             return all.reduce(EmptyDisposable() as Disposable) {

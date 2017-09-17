@@ -23,7 +23,7 @@ public final class MutableProperty<T>: ObservableProtocol, Bindable {
         let signal = Signal<T>()
         var v = value
         
-        property = Property(signal.asObserver) {
+        property = Property(signal.asObservable) {
             return v
         }
         variable = Variable(setter: {

@@ -11,7 +11,7 @@ extension JetpackExtensions where Base: NotificationCenter {
     public func observer(forName name: NSNotification.Name) -> Observable<(object: Any?, userInfo: [AnyHashable: Any]?)> {
         return base.jx_lazyObject(key: name.rawValue) { () -> NotificationHandler in
             return NotificationHandler(notificationCenter: base, notificationName: name)
-        }.signal.asObserver
+        }.signal.asObservable
     }
 }
 
