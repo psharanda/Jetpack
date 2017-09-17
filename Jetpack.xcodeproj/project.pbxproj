@@ -10,7 +10,7 @@
 		1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1B4939671E9E34100005452A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
-		1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
+		1B6E87101E9ADB540063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
 		1B6E87131E9ADB540063D5EB /* Observable+Combining.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */; };
@@ -23,7 +23,7 @@
 		1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */; };
 		1B6E871E1E9ADB540063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
 		1B6E87211E9ADB540063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
-		1B6E87221E9ADB540063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
+		1B6E87221E9ADB540063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E87281E9ADB540063D5EB /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */; };
 		1B6E87291E9ADB540063D5EB /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FC1E9ADB540063D5EB /* UIBarButtonItem.swift */; };
@@ -43,20 +43,20 @@
 		1B6E87371E9ADB540063D5EB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870A1E9ADB540063D5EB /* UITextView.swift */; };
 		1B6E87391E9ADB540063D5EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
 		1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
-		1B6E87461E9ADC1D0063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
+		1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
 		1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
-		1B6E87491E9ADC1D0063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
+		1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
-		1B6E87511E9ADC1E0063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
+		1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
 		1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
-		1B6E87541E9ADC1E0063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
+		1B6E87541E9ADC1E0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
-		1B6E875C1E9ADC1E0063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* Observable.swift */; };
+		1B6E875C1E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
 		1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
-		1B6E875F1E9ADC1E0063D5EB /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* State.swift */; };
+		1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
 		1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
@@ -96,7 +96,7 @@
 		1B6E87A41E9CD7C90063D5EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6E87A21E9CD7C90063D5EB /* Main.storyboard */; };
 		1B6E87A61E9CD7C90063D5EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B6E87A51E9CD7C90063D5EB /* Assets.xcassets */; };
 		1B6E87A91E9CD7C90063D5EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6E87A71E9CD7C90063D5EB /* LaunchScreen.storyboard */; };
-		1B6E87BB1E9CEA950063D5EB /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
+		1B6E87BB1E9CEA950063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
 		1B6E87E71E9E15E30063D5EB /* UIView+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */; };
 		1B6E87E91E9E15E30063D5EB /* UIView+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */; };
 		1B6E87EB1E9E15E90063D5EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
@@ -144,11 +144,11 @@
 		1BE3CD1A1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD1B1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BF014711EA208230061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
-		1BF014721EA208280061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
+		1BF014721EA208280061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
 		1BF014731EA208280061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
-		1BF014741EA208290061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
+		1BF014741EA208290061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
 		1BF014751EA208290061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
-		1BF014761EA208290061B4D9 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observer.swift */; };
+		1BF014761EA208290061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
 		1BF014771EA208290061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014781EA208340061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF0147B1EA208360061B4D9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
@@ -212,7 +212,7 @@
 		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CADisplayLink+Task.swift"; path = "Sources/UIKit/CADisplayLink+Task.swift"; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
-		1B6E86E21E9ADB540063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
+		1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableProtocol.swift; path = Sources/ObservableProtocol.swift; sourceTree = "<group>"; };
 		1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Binding.swift"; path = "Sources/Observable+Binding.swift"; sourceTree = "<group>"; };
 		1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Buffering.swift"; path = "Sources/Observable+Buffering.swift"; sourceTree = "<group>"; };
 		1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Combining.swift"; path = "Sources/Observable+Combining.swift"; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Transforming.swift"; path = "Sources/Observable+Transforming.swift"; sourceTree = "<group>"; };
 		1B6E86F01E9ADB540063D5EB /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Property.swift; path = Sources/Property.swift; sourceTree = "<group>"; };
 		1B6E86F31E9ADB540063D5EB /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = "<group>"; };
-		1B6E86F41E9ADB540063D5EB /* State.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = State.swift; path = Sources/State.swift; sourceTree = "<group>"; };
+		1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MutableProperty.swift; path = Sources/MutableProperty.swift; sourceTree = "<group>"; };
 		1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tuples+Repack.swift"; path = "Sources/Tuples+Repack.swift"; sourceTree = "<group>"; };
 		1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorView.swift; sourceTree = "<group>"; };
 		1B6E86FC1E9ADB540063D5EB /* UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBarButtonItem.swift; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 		1B6E87A51E9CD7C90063D5EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1B6E87A81E9CD7C90063D5EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B6E87AA1E9CD7C90063D5EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1B6E87BA1E9CEA950063D5EB /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observer.swift; path = Sources/Observer.swift; sourceTree = "<group>"; };
+		1B6E87BA1E9CEA950063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
 		1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Task.swift"; sourceTree = "<group>"; };
 		1B6E88271E9E16FC0063D5EB /* TaskTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTests.swift; path = Tests/JetpackTests/TaskTests.swift; sourceTree = "<group>"; };
 		1B6E882D1E9E170B0063D5EB /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = Sources/Disposable.swift; sourceTree = "<group>"; };
@@ -370,13 +370,13 @@
 		1B6E873A1E9ADB680063D5EB /* Observables */ = {
 			isa = PBXGroup;
 			children = (
-				1B6E86E21E9ADB540063D5EB /* Observable.swift */,
-				1B6E87BA1E9CEA950063D5EB /* Observer.swift */,
+				1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */,
+				1B6E87BA1E9CEA950063D5EB /* Observable.swift */,
 				1B6E86F31E9ADB540063D5EB /* Signal.swift */,
 				1B6E86DF1E9ADB540063D5EB /* Receiver.swift */,
 				1BF014701EA208230061B4D9 /* Variable.swift */,
 				1B6E86F01E9ADB540063D5EB /* Property.swift */,
-				1B6E86F41E9ADB540063D5EB /* State.swift */,
+				1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
 				1B6E88521E9E18B40063D5EB /* Either.swift */,
@@ -849,7 +849,7 @@
 				1B6E872A1E9ADB540063D5EB /* UIBarItem.swift in Sources */,
 				1B6E871B1E9ADB540063D5EB /* Observable+Result.swift in Sources */,
 				1B6E872B1E9ADB540063D5EB /* UIButton.swift in Sources */,
-				1B6E87BB1E9CEA950063D5EB /* Observer.swift in Sources */,
+				1B6E87BB1E9CEA950063D5EB /* Observable.swift in Sources */,
 				1B6E87321E9ADB540063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E871E1E9ADB540063D5EB /* Property.swift in Sources */,
 				1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */,
@@ -861,11 +861,11 @@
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
 				1B6E88531E9E18B40063D5EB /* Either.swift in Sources */,
-				1B6E87101E9ADB540063D5EB /* Observable.swift in Sources */,
+				1B6E87101E9ADB540063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E88321E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */,
-				1B6E87221E9ADB540063D5EB /* State.swift in Sources */,
+				1B6E87221E9ADB540063D5EB /* MutableProperty.swift in Sources */,
 				1B6E872E1E9ADB540063D5EB /* UIImageView.swift in Sources */,
 				1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87161E9ADB540063D5EB /* Observable+FlatMap.swift in Sources */,
@@ -917,7 +917,7 @@
 				1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */,
 				1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
-				1B6E87511E9ADC1E0063D5EB /* Observable.swift in Sources */,
+				1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E88431E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E877D1E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
@@ -926,9 +926,9 @@
 				1B6E87851E9ADC270063D5EB /* Observable+Result.swift in Sources */,
 				1BF66D491EA8DCF200689CAA /* Observable+DispatchQueue.swift in Sources */,
 				1BE3CD1A1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */,
-				1B6E87541E9ADC1E0063D5EB /* State.swift in Sources */,
+				1B6E87541E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
 				1BF0147F1EA208360061B4D9 /* Result.swift in Sources */,
-				1BF014741EA208290061B4D9 /* Observer.swift in Sources */,
+				1BF014741EA208290061B4D9 /* Observable.swift in Sources */,
 				1BF014801EA208360061B4D9 /* Either.swift in Sources */,
 				1B6E87831E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E877C1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
@@ -962,7 +962,7 @@
 				1B6E88001E9E15F20063D5EB /* UIButton.swift in Sources */,
 				1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */,
 				1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
-				1B6E875C1E9ADC1E0063D5EB /* Observable.swift in Sources */,
+				1B6E875C1E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E88061E9E15F20063D5EB /* UISegmentedControl.swift in Sources */,
 				1B6E880B1E9E15F20063D5EB /* UITextView.swift in Sources */,
 				1B6E88441E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
@@ -976,9 +976,9 @@
 				1BE3CD1B1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */,
 				1B6E88561E9E18B40063D5EB /* Either.swift in Sources */,
 				1B6E880A1E9E15F20063D5EB /* UITextField.swift in Sources */,
-				1B6E875F1E9ADC1E0063D5EB /* State.swift in Sources */,
+				1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87E91E9E15E30063D5EB /* UIView+Task.swift in Sources */,
-				1BF014761EA208290061B4D9 /* Observer.swift in Sources */,
+				1BF014761EA208290061B4D9 /* Observable.swift in Sources */,
 				1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87901E9ADC280063D5EB /* Observable+Math.swift in Sources */,
 				1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */,
@@ -1004,12 +1004,12 @@
 				1B6E876E1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87721E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
 				1BF014781EA208340061B4D9 /* Result.swift in Sources */,
-				1BF014721EA208280061B4D9 /* Observer.swift in Sources */,
+				1BF014721EA208280061B4D9 /* Observable.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
 				1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
-				1B6E87461E9ADC1D0063D5EB /* Observable.swift in Sources */,
+				1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
@@ -1018,7 +1018,7 @@
 				1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */,
 				1B6E87781E9ADC270063D5EB /* Observable+Result.swift in Sources */,
-				1B6E87491E9ADC1D0063D5EB /* State.swift in Sources */,
+				1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,

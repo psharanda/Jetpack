@@ -16,7 +16,7 @@ class JetpackTests: XCTestCase {
     func testFromValueObservable() {
         
         let value = 10
-        let o = Observer.from(value)
+        let o = Observable.from(value)
         
         var fired = false
         
@@ -70,7 +70,7 @@ class JetpackTests: XCTestCase {
     func testState() {
         
         class Test {
-            private let state = State(0)
+            private let state = MutableProperty(0)
             var stateProperty: Property<Int> {
                 return state.asProperty
             }
@@ -99,7 +99,7 @@ class JetpackTests: XCTestCase {
     
     func testFiredTimes() {
         
-        let state = State("Hello")
+        let state = MutableProperty("Hello")
         
         var observable = Optional.some(state.map { $0.uppercased() })
         
@@ -604,7 +604,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapLatest {
-                return Observer.from(genValue)
+                return Observable.from(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)
@@ -653,7 +653,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapMerge {
-                return Observer.from(genValue)
+                return Observable.from(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)
@@ -698,16 +698,16 @@ class JetpackTests: XCTestCase {
         numberOfDeinits = 0
         
         class View {
-            private let name = State<String>("John")
+            private let name = MutableProperty<String>("John")
             deinit {
                 numberOfDeinits += 1
             }
             
-            var nameChanged: Observer<String> {
+            var nameChanged: Observable<String> {
                 return name.asObserver
             }
             
-            private let value = State<String>("FRP")
+            private let value = MutableProperty<String>("FRP")
             
             var valueReceiver: Receiver<String> {
                 return value.asReceiver
@@ -728,7 +728,7 @@ class JetpackTests: XCTestCase {
         }
         
         class Model {
-            private let name = State<String>("John")
+            private let name = MutableProperty<String>("John")
             deinit {
                 numberOfDeinits += 1
             }
@@ -737,9 +737,9 @@ class JetpackTests: XCTestCase {
                 return name.asReceiver
             }
             
-            private let value = State<String>("FRP")
+            private let value = MutableProperty<String>("FRP")
             
-            var valueChanged: Observer<String> {
+            var valueChanged: Observable<String> {
                 return value.asObserver
             }
         }
@@ -800,7 +800,7 @@ class JetpackTests: XCTestCase {
     }
     
     func testDiffSubscribe() {
-        let state = State(10)
+        let state = MutableProperty(10)
         
         var initial = true
         
@@ -818,7 +818,7 @@ class JetpackTests: XCTestCase {
     }
     
     func testDistinct() {
-        let state = State(10)
+        let state = MutableProperty(10)
         
         var ref = 10
         _ = state.distinct.subscribe {
@@ -832,7 +832,7 @@ class JetpackTests: XCTestCase {
     }
     
     func testDistinctOptional() {
-        let state = State(Optional.some(10))
+        let state = MutableProperty(Optional.some(10))
         
         var ref: Int? = 10
         _ = state.distinct.subscribe {

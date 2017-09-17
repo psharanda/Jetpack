@@ -5,16 +5,16 @@
 
 import Foundation
 
-extension Observable {
+extension ObservableProtocol {
     
-    public func log(_ tag: String? = nil) -> Observer<ValueType> {
+    public func log(_ tag: String? = nil) -> Observable<ValueType> {
         let s = tag ?? "\(ValueType.self)"
         return forEach {
             Swift.print("\(s): \($0)")
         }
     }
     
-    public func dump(_ tag: String? = nil) -> Observer<ValueType> {
+    public func dump(_ tag: String? = nil) -> Observable<ValueType> {
         let s = tag ?? "\(ValueType.self)"
         return forEach {
             Swift.print("\(s):")

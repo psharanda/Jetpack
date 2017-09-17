@@ -5,24 +5,24 @@
 
 import Foundation
 
-public extension Observable where ValueType: ResultConvertible {
+public extension ObservableProtocol where ValueType: ResultConvertible {
     
-    public var valueOnly: Observer<ValueType.ValueType> {
+    public var valueOnly: Observable<ValueType.ValueType> {
         return flatMap { result in
             result.value
         }
     }
     
-    public var errorOnly: Observer<Error> {
+    public var errorOnly: Observable<Error> {
         return flatMap { result in
             result.error
         }
     }
 }
 
-public extension Observable where ValueType: Error {
+public extension ObservableProtocol where ValueType: Error {
 
-    public var localizedDescription: Observer<String> {
+    public var localizedDescription: Observable<String> {
         return map { $0.localizedDescription }
     }
 }

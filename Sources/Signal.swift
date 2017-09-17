@@ -8,7 +8,7 @@ import Foundation
 /**
  Object which holds and manages subscribers and can broadcast values to them
  */
-public final class Signal<T>: Observable, Bindable {
+public final class Signal<T>: ObservableProtocol, Bindable {
     
     public typealias ValueType = T
     

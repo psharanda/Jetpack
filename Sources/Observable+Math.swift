@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension Observable where ValueType: Comparable {
+extension ObservableProtocol where ValueType: Comparable {
     
-    public var min: Observer<ValueType> {
-        return Observer { observer in
+    public var min: Observable<ValueType> {
+        return Observable { observer in
             var minValue: ValueType? = nil
             return self.subscribe { result in
                 if let minValueNonNil = minValue {
@@ -24,8 +24,8 @@ extension Observable where ValueType: Comparable {
         }
     }
     
-    public var max: Observer<ValueType> {
-        return Observer { observer in
+    public var max: Observable<ValueType> {
+        return Observable { observer in
             var maxValue: ValueType? = nil
             return self.subscribe { result in
                 if let minValueNonNil = maxValue {
@@ -42,14 +42,14 @@ extension Observable where ValueType: Comparable {
     }
 }
 
-extension Observable {
+extension ObservableProtocol {
     
-    public var count: Observer<Int> {
+    public var count: Observable<Int> {
         return count {_ in true }
     }
     
-    public func count(_ f: @escaping (ValueType)->Bool) -> Observer<Int> {
-        return Observer { observer in
+    public func count(_ f: @escaping (ValueType)->Bool) -> Observable<Int> {
+        return Observable { observer in
             var count = 0
             return self.subscribe { result in
                 if f(result) {
@@ -61,9 +61,9 @@ extension Observable {
     }
 }
 
-public extension Observable where ValueType == Bool {
+public extension ObservableProtocol where ValueType == Bool {
     
-    public func and<T: Observable>(_ observable: T) -> Observer<Bool> where T.ValueType == ValueType {
+    public func and<T: ObservableProtocol>(_ observable: T) -> Observable<Bool> where T.ValueType == ValueType {
         return combine(observable).map {
             if let s0 = $0.0, let s1 = $0.1 {
                 return s0 && s1
@@ -73,7 +73,7 @@ public extension Observable where ValueType == Bool {
         }
     }
 
-    public func or<T: Observable>(_ observable:T) -> Observer<Bool> where T.ValueType == ValueType {
+    public func or<T: ObservableProtocol>(_ observable:T) -> Observable<Bool> where T.ValueType == ValueType {
         return combine(observable).map {
             if let s0 = $0.0, s0 {
                 return true
@@ -85,7 +85,7 @@ public extension Observable where ValueType == Bool {
         }
     }
     
-    public var not: Observer<Bool> {
+    public var not: Observable<Bool> {
         return map { !$0 }
     }
 }

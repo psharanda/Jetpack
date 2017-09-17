@@ -1,5 +1,5 @@
 //
-//  Observable+DispatchQueue.swift
+//  ObservableProtocol+DispatchQueue.swift
 //  Jetpack
 //
 //  Created by Pavel Sharanda on 20.04.17.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-extension Observable {
-    public func delay(timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observer<ValueType> {
+extension ObservableProtocol {
+    public func delay(timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observable<ValueType> {
         return flatMapLatest { value in
-            return Observer.delayed(value, timeInterval: timeInterval, queue: queue)
+            return Observable.delayed(value, timeInterval: timeInterval, queue: queue)
         }
     }
     
-    public func dispatchIn(queue: DispatchQueue) ->  Observer<ValueType> {
+    public func dispatchIn(queue: DispatchQueue) ->  Observable<ValueType> {
         return flatMapLatest { value in
-            return Observer.dispatched(value, in: queue)
+            return Observable.dispatched(value, in: queue)
         }
     }
 }

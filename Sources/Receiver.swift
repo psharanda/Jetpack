@@ -41,4 +41,3 @@ extension Receiver where ValueType: Optionable {
     }
 }
 
-

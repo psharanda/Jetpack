@@ -10,7 +10,7 @@ public protocol Bindable {
     func update(_ newValue: ValueType)
 }
 
-public extension Observable {
+public extension ObservableProtocol {
     
     public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType {
         return subscribe {result in

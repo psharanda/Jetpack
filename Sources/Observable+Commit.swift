@@ -5,8 +5,8 @@
 
 import Foundation
 
-extension Observable {
-    public func commit() -> (Observer<ValueType>, Disposable) {
+extension ObservableProtocol {
+    public func commit() -> (Observable<ValueType>, Disposable) {
         
         let signal = Signal<ValueType>()
         var immediateResult: ValueType?
@@ -29,7 +29,7 @@ extension Observable {
         }
     }
     
-    public func commit(autodisposeIn pool: AutodisposePool) -> Observer<ValueType> {
+    public func commit(autodisposeIn pool: AutodisposePool) -> Observable<ValueType> {
         let (observer, d) = commit()
         pool.add(d)
         return observer

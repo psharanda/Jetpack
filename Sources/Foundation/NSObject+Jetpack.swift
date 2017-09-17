@@ -52,7 +52,7 @@ extension JetpackExtensions where Base: NSObject {
     func jx_makeTargetActionObserver<U>(key: String,
                                            setup: (Base, AnyObject, Selector)->Void,
                                            cleanup: @escaping (Base, AnyObject, Selector)->Void,
-                                           getter: @escaping (Base)->U) -> Observer<U> {
+                                           getter: @escaping (Base)->U) -> Observable<U> {
         return base.jx_lazyObject(key: key) { () -> SignalActionHandler<Base, U> in
             let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
             setup(base, controlHandler, #selector(SignalActionHandler<Base, U>.jx_handleAction))

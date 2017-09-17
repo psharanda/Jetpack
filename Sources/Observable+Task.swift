@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension Observable where ValueType: ResultConvertible {
+extension ObservableProtocol where ValueType: ResultConvertible {
     
     public typealias ResultValueType = ValueType.ValueType
     
@@ -56,7 +56,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Add handler to perform specific action if task was successful
      */
-    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observer<ValueType> {
+    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observable<ValueType> {
         return forEach { result in
             if case let .success(value) = result.result {
                 handler(value)
@@ -67,7 +67,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Add handler to perform specific action if task failed
      */
-    public func forEachError(_ handler:  @escaping(Error) -> Void) -> Observer<ValueType> {
+    public func forEachError(_ handler:  @escaping(Error) -> Void) -> Observable<ValueType> {
         return forEach { result in
             if case let .failure(error) = result.result {
                 handler(error)
@@ -78,7 +78,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Run two tasks concurrently, return the result of the first successfull one, other one will be cancelled. When one of them fails, other one is cancelled. On cancel, it cancelles both children.
      */
-    public func race<R: Observable>(_ right: R) -> Task<Either<ResultValueType, R.ResultValueType>>  where R.ValueType: ResultConvertible {
+    public func race<R: ObservableProtocol>(_ right: R) -> Task<Either<ResultValueType, R.ResultValueType>>  where R.ValueType: ResultConvertible {
         let left = self
         return Task<Either<ResultValueType,R.ResultValueType>> { completion in
             var leftTask: Disposable?
@@ -130,9 +130,9 @@ extension Observable where ValueType: ResultConvertible {
     
     /** Run two tasks concurrently, wait for both to succeed and return both results. If one fails, then other one will be cancelled.
      */
-   // public func combineLatest<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
+   // public func combineLatest<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
         
-    public func concurrently<R: Observable>(_ with: R) -> Task<(ResultValueType,R.ResultValueType)>  where R.ValueType: ResultConvertible {
+    public func concurrently<R: ObservableProtocol>(_ with: R) -> Task<(ResultValueType,R.ResultValueType)>  where R.ValueType: ResultConvertible {
         
         return Task { completion in
             
@@ -188,7 +188,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Run a number of tasks one by one in a sequence
      */
-    public static func sequence<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
+    public static func sequence<R: ObservableProtocol>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
         let empty = Task<[R.ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.flatMapLatestValue { result in
@@ -202,7 +202,7 @@ extension Observable where ValueType: ResultConvertible {
     /**
      Run a number of tasks concurrently
      */
-    public static func concurrently<R: Observable>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
+    public static func concurrently<R: ObservableProtocol>(_ tasks: [R]) -> Task<[R.ResultValueType]> where R.ValueType: ResultConvertible, R.ValueType == ValueType {
         let empty = Task<[R.ResultValueType]>.from(value: [])
         return tasks.reduce(empty) { left, right in
             left.concurrently(right).mapValue { (result, t) in

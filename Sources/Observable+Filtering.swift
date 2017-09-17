@@ -5,16 +5,16 @@
 
 import Foundation
 
-extension Observable {
+extension ObservableProtocol {
     
-    public func filter(_ isIncluded: @escaping (ValueType) -> Bool) -> Observer<ValueType> {
+    public func filter(_ isIncluded: @escaping (ValueType) -> Bool) -> Observable<ValueType> {
         return flatMap {
             isIncluded($0) ? $0 : nil
         }
     }
     
-    public func forEach(_ f: @escaping (ValueType) -> Void) -> Observer<ValueType> {
-        return Observer { observer in
+    public func forEach(_ f: @escaping (ValueType) -> Void) -> Observable<ValueType> {
+        return Observable { observer in
             return self.subscribe { result in
                 f(result)
                 observer(result)
@@ -22,8 +22,8 @@ extension Observable {
         }
     }
 
-    public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
-        return Observer { observer in
+    public func throttle(timeInterval: TimeInterval, latest: Bool = true, queue: DispatchQueue = DispatchQueue.main) -> Observable<ValueType> {
+        return Observable { observer in
             
             var lastUpdateTime = Date.distantPast
             var lastIgnoredValue: ValueType? = nil
@@ -55,8 +55,8 @@ extension Observable {
         }
     }
 
-    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observer<ValueType> {
-        return Observer { observer in
+    public func debounce(timeInterval: TimeInterval, queue: DispatchQueue = DispatchQueue.main) -> Observable<ValueType> {
+        return Observable { observer in
             var lastAfterCancel: Disposable? = nil
             return self.subscribe { result in
                 lastAfterCancel?.dispose()
@@ -72,8 +72,8 @@ extension Observable {
     }
 
     
-    public func skip(x: Int) -> Observer<ValueType> {
-        return Observer { observer in
+    public func skip(x: Int) -> Observable<ValueType> {
+        return Observable { observer in
             var total = 0
             return self.subscribe { result in
                 if total >= x {
@@ -84,8 +84,8 @@ extension Observable {
         }
     }
     
-    public func skip(last x: Int) -> Observer<ValueType> {
-        return Observer { observer in
+    public func skip(last x: Int) -> Observable<ValueType> {
+        return Observable { observer in
             var buffer: [ValueType] = []
             return self.subscribe { result in
                 buffer.append(result)
@@ -98,8 +98,8 @@ extension Observable {
         }
     }
     
-    public func skip<T: Observable>(until: T) -> Observer<ValueType> {
-        return Observer { observer in
+    public func skip<T: ObservableProtocol>(until: T) -> Observable<ValueType> {
+        return Observable { observer in
             var canEmit = false
             
             let disposable = until.subscribe { _ in
@@ -113,8 +113,8 @@ extension Observable {
         }
     }
 
-    public func skip(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
-        return Observer { observer in
+    public func skip(while f: @escaping (ValueType)->Bool) -> Observable<ValueType> {
+        return Observable { observer in
             var canEmit = false
             return self.subscribe { result in
                 if !canEmit {
@@ -128,12 +128,12 @@ extension Observable {
         }
     }
 
-    public var first: Observer<ValueType> {
+    public var first: Observable<ValueType> {
         return take(first: 1)
     }
     
-    public func take(first: Int) -> Observer<ValueType> {
-        return Observer { observer in
+    public func take(first: Int) -> Observable<ValueType> {
+        return Observable { observer in
             var counter = 0
             return self.subscribe { result in
                 if counter < first {
@@ -144,8 +144,8 @@ extension Observable {
         }
     }
     
-    public func take<T: Observable>(until: T) -> Observer<ValueType> {
-        return Observer { observer in
+    public func take<T: ObservableProtocol>(until: T) -> Observable<ValueType> {
+        return Observable { observer in
             var canEmit = true
             
             let disposable = until.subscribe { _ in
@@ -159,8 +159,8 @@ extension Observable {
         }
     }
 
-    public func take(while f: @escaping (ValueType)->Bool) -> Observer<ValueType> {
-        return Observer { observer in
+    public func take(while f: @escaping (ValueType)->Bool) -> Observable<ValueType> {
+        return Observable { observer in
             var canEmit = true
             return self.subscribe { result in
                 if !canEmit {
@@ -174,8 +174,8 @@ extension Observable {
         }
     }
     
-    public func find(_ f: @escaping (ValueType) -> Bool) -> Observer<ValueType> {
-        return Observer { observer in
+    public func find(_ f: @escaping (ValueType) -> Bool) -> Observable<ValueType> {
+        return Observable { observer in
             var found = false
             return self.subscribe { result in
                 if f(result) && !found {
@@ -186,8 +186,8 @@ extension Observable {
         }
     }
 
-    public func element(at index: Int) -> Observer<ValueType> {
-        return Observer { observer in
+    public func element(at index: Int) -> Observable<ValueType> {
+        return Observable { observer in
             var currentIndex = 0
             return self.subscribe { result in
                 if currentIndex == index {
@@ -198,8 +198,8 @@ extension Observable {
         }
     }
     
-    public func pausable<T: Observable>(_ controller: T) -> Observer<ValueType> where T.ValueType == Bool {
-        return Observer { observer in
+    public func pausable<T: ObservableProtocol>(_ controller: T) -> Observable<ValueType> where T.ValueType == Bool {
+        return Observable { observer in
             var canEmit = false
             
             let disposable = controller.subscribe { result in
@@ -213,8 +213,8 @@ extension Observable {
         }
     }
 
-    public func pausableBuffered<T: Observable>(_ controller:T) -> Observer<ValueType> where T.ValueType == Bool {
-        return Observer { observer in
+    public func pausableBuffered<T: ObservableProtocol>(_ controller:T) -> Observable<ValueType> where T.ValueType == Bool {
+        return Observable { observer in
             var canEmit = false
             var buffer: [ValueType] = []
             
@@ -235,11 +235,11 @@ extension Observable {
     }
 }
 
-public extension Observable where ValueType: Equatable {
+public extension ObservableProtocol where ValueType: Equatable {
     
-    public var distinct: Observer<ValueType> {
+    public var distinct: Observable<ValueType> {
     
-        return Observer<ValueType> { observer in
+        return Observable<ValueType> { observer in
             var lastValue: ValueType?
             
             func test(_ result: ValueType) -> ValueType? {
@@ -259,20 +259,20 @@ public extension Observable where ValueType: Equatable {
         }
     }
     
-    public func equal(_ value: ValueType) -> Observer<ValueType> {
+    public func equal(_ value: ValueType) -> Observable<ValueType> {
         return filter {
             ($0 == value)
         }
     }
     
-    public func only(_ value: ValueType) -> Observer<Void> {
+    public func only(_ value: ValueType) -> Observable<Void> {
         return filter {
             ($0 == value)
         }.just
     }
     
-    public func contains(where f: @escaping (ValueType)->Bool) -> Observer<Bool> {
-        return Observer<Bool> { observer in
+    public func contains(where f: @escaping (ValueType)->Bool) -> Observable<Bool> {
+        return Observable<Bool> { observer in
             var val = false
             return self.subscribe { result in
                 if !val && f(result) {
@@ -283,12 +283,12 @@ public extension Observable where ValueType: Equatable {
         }
     }
     
-    public func contains(_ value: ValueType) -> Observer<Bool> {
+    public func contains(_ value: ValueType) -> Observable<Bool> {
         return contains { value == $0 }
     }
     
-    public func findIndex(of value: ValueType) -> Observer<Int> {
-        return Observer<Int> { observer in
+    public func findIndex(of value: ValueType) -> Observable<Int> {
+        return Observable<Int> { observer in
             var idx = 0
             return self.subscribe { result in
                 if  result == value {
@@ -300,10 +300,10 @@ public extension Observable where ValueType: Equatable {
     }
 }
 
-extension Observable where ValueType: Hashable {
+extension ObservableProtocol where ValueType: Hashable {
     
-    public var unique: Observer<ValueType> {
-        return Observer { observer in
+    public var unique: Observable<ValueType> {
+        return Observable { observer in
             var set = Set<ValueType>()
             return self.subscribe { result in
                 if !set.contains(result) {
@@ -315,11 +315,11 @@ extension Observable where ValueType: Hashable {
     }
 }
 
-extension Observable {
+extension ObservableProtocol {
     
-    public func findIndex(_ f: @escaping ((ValueType) -> Bool)) -> Observer<Int> {
+    public func findIndex(_ f: @escaping ((ValueType) -> Bool)) -> Observable<Int> {
     
-        return Observer { observer in
+        return Observable { observer in
             var idx = 0
             return self.subscribe { result in
                 if  f(result) {

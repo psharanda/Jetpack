@@ -2,7 +2,7 @@ import UIKit
 
 extension JetpackExtensions where Base: UIBarButtonItem {
     
-    public var clicked: Observer<Void> {
+    public var clicked: Observable<Void> {
         return jx_makeTargetActionObserver(key: #function, setup: { base, target, action in
             base.target = target
             base.action = action

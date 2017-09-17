@@ -5,10 +5,10 @@
 
 import Foundation
 
-extension Observable {
+extension ObservableProtocol {
     
-    public func buffer(timeInterval: TimeInterval, maxSize: Int = Int.max, queue: DispatchQueue = DispatchQueue.main) -> Observer<[ValueType]> {
-        return Observer { observer in
+    public func buffer(timeInterval: TimeInterval, maxSize: Int = Int.max, queue: DispatchQueue = DispatchQueue.main) -> Observable<[ValueType]> {
+        return Observable { observer in
             
             var buf = [ValueType]()
             var lastAfterCancel: Disposable? = nil

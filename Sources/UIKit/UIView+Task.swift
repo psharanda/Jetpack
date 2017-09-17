@@ -1,8 +1,8 @@
 import UIKit
 
 extension UIView {
-    public static func animationTask(withDuration duration: TimeInterval, animations: @escaping ()->Void) -> Observer<Void> {
-        return Observer { completion in
+    public static func animationTask(withDuration duration: TimeInterval, animations: @escaping ()->Void) -> Observable<Void> {
+        return Observable { completion in
             
             var cancelled = false
             
@@ -19,8 +19,8 @@ extension UIView {
         }
     }
     
-    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observer<Void> {
-        return Observer { completion in
+    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+        return Observable { completion in
             
             var cancelled = false
             
@@ -37,10 +37,10 @@ extension UIView {
         }
     }
 
-    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observer<Void> {
+    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
         
-        return Observer { completion in
+        return Observable { completion in
             
             var cancelled = false
             
@@ -57,9 +57,9 @@ extension UIView {
         }
     }
 
-    public static func transitionTask(with view: UIView, duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observer<Void> {
+    public static func transitionTask(with view: UIView, duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
-        return Observer { completion in
+        return Observable { completion in
             
             var cancelled = false
             

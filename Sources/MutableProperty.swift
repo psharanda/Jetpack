@@ -8,7 +8,7 @@ import Foundation
 /**
  Standalone reactive state
  */
-public final class State<T>: Observable, Bindable {
+public final class MutableProperty<T>: ObservableProtocol, Bindable {
     public typealias ValueType = T
     
     public var value: T {

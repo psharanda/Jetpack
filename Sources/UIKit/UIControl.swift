@@ -6,7 +6,7 @@ fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
 
 extension JetpackExtensions where Base: UIControl {
 
-    public func signalControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Observer<T> {
+    public func signalControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Observable<T> {
         let key = controlEventsKey(controlEvents)
     
         return jx_makeTargetActionObserver(key: key, setup: { base, target, action in

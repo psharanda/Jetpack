@@ -5,7 +5,7 @@
 
 import Foundation
 
-public typealias Task<T> = Observer<Result<T>>
+public typealias Task<T> = Observable<Result<T>>
 
 
 extension Task {

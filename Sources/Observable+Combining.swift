@@ -2,10 +2,10 @@ import Foundation
 
 
 
-public extension Observable {
+public extension ObservableProtocol {
     
-    public func combine<T: Observable>(_ with: T) -> Observer<(ValueType?,T.ValueType?)> {
-        return Observer { observer in
+    public func combine<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType?,T.ValueType?)> {
+        return Observable { observer in
             
             var left: ValueType?
             var right: T.ValueType?
@@ -22,20 +22,20 @@ public extension Observable {
         }
     }
     
-    public func combine<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType?, A.ValueType?, B.ValueType?)> {
+    public func combine<A: ObservableProtocol, B: ObservableProtocol>(_ observable1: A, _ observable2: B) -> Observable<(ValueType?, A.ValueType?, B.ValueType?)> {
         return combine(observable1).combine(observable2).map(repack)
     }
     
-    public func combine<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?)> {
+    public func combine<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observable<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?)> {
         return combine(observable1, observable2).combine(observable3).map(repack)
     }
     
-    public func combine<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?, D.ValueType?)> {
+    public func combine<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observable<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?, D.ValueType?)> {
         return combine(observable1, observable2, observable3).combine(observable4).map(repack)
     }
 
-    public func combine<T: Observable>(_ with: [T]) -> Observer<([ValueType?])> where T.ValueType == ValueType {
-        let initial: Observer<[ValueType?]> = map { [$0] }
+    public func combine<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType?])> where T.ValueType == ValueType {
+        let initial: Observable<[ValueType?]> = map { [$0] }
         let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.combine(right).map { (result, t) in
@@ -49,10 +49,10 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableProtocol {
     
-    public func combineLatest<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        return Observer { observer in
+    public func combineLatest<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
+        return Observable { observer in
             var left: ValueType?
             var right: T.ValueType?
             
@@ -73,20 +73,20 @@ public extension Observable {
     }
 
     
-    public func combineLatest<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType, A.ValueType, B.ValueType)> {
+    public func combineLatest<A: ObservableProtocol, B: ObservableProtocol>(_ observable1: A, _ observable2: B) -> Observable<(ValueType, A.ValueType, B.ValueType)> {
         return combineLatest(observable1).combineLatest(observable2).map(repack)
     }
     
-    public func combineLatest<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
+    public func combineLatest<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
         return combineLatest(observable1, observable2).combineLatest(observable3).map(repack)
     }
     
-    public func combineLatest<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
+    public func combineLatest<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
         return combineLatest(observable1, observable2, observable3).combineLatest(observable4).map(repack)
     }
     
-    public func combineLatest<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
-        let initial: Observer<[ValueType]> = map { [$0] }
+    public func combineLatest<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
+        let initial: Observable<[ValueType]> = map { [$0] }
         let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.combineLatest(right).map { (result, t) in
@@ -96,10 +96,10 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableProtocol {
     
-    public func zip<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        return Observer { observer in
+    public func zip<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
+        return Observable { observer in
             
             var left: ValueType?
             var right: T.ValueType?
@@ -129,20 +129,20 @@ public extension Observable {
         }
     }
     
-    public func zip<A: Observable, B: Observable>(_ observable1: A, _ observable2: B) -> Observer<(ValueType, A.ValueType, B.ValueType)> {
+    public func zip<A: ObservableProtocol, B: ObservableProtocol>(_ observable1: A, _ observable2: B) -> Observable<(ValueType, A.ValueType, B.ValueType)> {
         return zip(observable1).zip(observable2).map(repack)
     }
     
-    public func zip<A: Observable, B: Observable, C: Observable>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
+    public func zip<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType)> {
         return zip(observable1, observable2).zip(observable3).map(repack)
     }
     
-    public func zip<A: Observable, B: Observable, C: Observable, D: Observable>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observer<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
+    public func zip<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType)> {
         return zip(observable1, observable2, observable3).zip(observable4).map(repack)
     }
     
-    public func zip<T: Observable>(_ with: [T]) -> Observer<([ValueType])> where T.ValueType == ValueType {
-        let initial: Observer<[ValueType]> = map { [$0] }
+    public func zip<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
+        let initial: Observable<[ValueType]> = map { [$0] }
         let withAny = with.map { $0.asObserver }
         return withAny.reduce(initial) { left, right in
             left.zip(right).map { (result, t) in
@@ -152,14 +152,14 @@ public extension Observable {
     }
 }
 
-public extension Observable {
+public extension ObservableProtocol {
     
-    public func merge<T: Observable>(_ observables: T...) -> Observer<ValueType> where T.ValueType == ValueType {
+    public func merge<T: ObservableProtocol>(_ observables: T...) -> Observable<ValueType> where T.ValueType == ValueType {
         return merge(observables)
     }
     
-    public func merge<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
-        return Observer { observer in
+    public func merge<T: ObservableProtocol>(_ observables: [T]) -> Observable<ValueType> where T.ValueType == ValueType {
+        return Observable { observer in
     
             let disposable = observables.reduce(EmptyDisposable() as Disposable) {
                 return $0.0.with(disposable: $0.1.subscribe { result in
@@ -174,8 +174,8 @@ public extension Observable {
     }
 
     
-    public func sample<T: Observable>(_ with: T) -> Observer<ValueType> {
-        return Observer { observer in
+    public func sample<T: ObservableProtocol>(_ with: T) -> Observable<ValueType> {
+        return Observable { observer in
             
             var value: ValueType?
             
@@ -192,8 +192,8 @@ public extension Observable {
         }
     }
 
-    public func withLatestFrom<T: Observable>(_ with: T) -> Observer<(ValueType,T.ValueType)> {
-        return Observer { observer in
+    public func withLatestFrom<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
+        return Observable { observer in
             var lastValue: T.ValueType?
             
             let disposable = with.subscribe { result in
@@ -208,13 +208,13 @@ public extension Observable {
         }
     }
     
-    public func amb<T: Observable>(_ observables: T...) -> Observer<ValueType> where T.ValueType == ValueType {
+    public func amb<T: ObservableProtocol>(_ observables: T...) -> Observable<ValueType> where T.ValueType == ValueType {
         return amb(observables)
     }
     
     //emit events only from observable which emitted the very first event
-    public func amb<T: Observable>(_ observables: [T]) -> Observer<ValueType> where T.ValueType == ValueType {
-        return Observer { observer in
+    public func amb<T: ObservableProtocol>(_ observables: [T]) -> Observable<ValueType> where T.ValueType == ValueType {
+        return Observable { observer in
             var config = (0..<(observables.count + 1)).map { _ in  false }
             let all = [self.asObserver] + observables.map { $0.asObserver }
             var c = 0

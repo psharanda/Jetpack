@@ -15,29 +15,29 @@ extension Optional: Optionable  {
     
 }
 
-extension Observable where ValueType: Optionable {
+extension ObservableProtocol where ValueType: Optionable {
     
-    public var someOnly: Observer<ValueType.Wrapped> {
+    public var someOnly: Observable<ValueType.Wrapped> {
         return flatMap { $0.flatMap {$0} }
     }
     
-    public var noneOnly: Observer<Void> {
+    public var noneOnly: Observable<Void> {
         return flatMap {
             $0.flatMap {_ -> Void? in nil } ?? ()
         }
     }
     
-    public var isNone: Observer<Bool> {
+    public var isNone: Observable<Bool> {
         return map { ($0.flatMap { _ in return false }) ?? true }
     }
     
-    public var isSome: Observer<Bool> {
+    public var isSome: Observable<Bool> {
         return map { ($0.flatMap { _ in return true }) ?? false }
     }
 }
 
-extension Observable where ValueType: Sequence, ValueType.Iterator.Element: Optionable  {
-    public var anySome: Observer<ValueType.Iterator.Element.Wrapped> {
+extension ObservableProtocol where ValueType: Sequence, ValueType.Iterator.Element: Optionable  {
+    public var anySome: Observable<ValueType.Iterator.Element.Wrapped> {
         return flatMap { res in
             for r in res {
                 if let d = (r.flatMap { $0 }) {
@@ -49,17 +49,17 @@ extension Observable where ValueType: Sequence, ValueType.Iterator.Element: Opti
     }
 }
 
-extension Observable {
-    public var optionalized: Observer<ValueType?> {
+extension ObservableProtocol {
+    public var optionalized: Observable<ValueType?> {
         return map { Optional.some($0) }
     }
 }
 
-public extension Observable where ValueType: Optionable, ValueType.Wrapped: Equatable  {
+public extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equatable  {
     
-    public var distinct: Observer<ValueType> {
+    public var distinct: Observable<ValueType> {
         
-        return Observer<ValueType> { observer in
+        return Observable<ValueType> { observer in
             var lastValue: ValueType?
             
             func test(_ result: ValueType) -> ValueType? {

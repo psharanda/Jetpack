@@ -3,7 +3,7 @@ import UIKit
 
 extension JetpackExtensions where Base: UIGestureRecognizer {
     
-    public var stateChanged: Observer<(CGPoint, UIGestureRecognizerState)> {        
+    public var stateChanged: Observable<(CGPoint, UIGestureRecognizerState)> {        
         return jx_makeTargetActionObserver(key: #function, setup: { base, target, action in
             base.addTarget(target, action: action)
         }, cleanup: { base, target, action in
