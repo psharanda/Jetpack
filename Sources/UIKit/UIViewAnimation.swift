@@ -1,7 +1,7 @@
 import UIKit
 
 extension UIView {
-    public static func animationTask(withDuration duration: TimeInterval, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animation(withDuration duration: TimeInterval, animations: @escaping ()->Void) -> Observable<Void> {
         return Observable { completion in
             
             var cancelled = false
@@ -19,7 +19,7 @@ extension UIView {
         }
     }
     
-    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animation(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         return Observable { completion in
             
             var cancelled = false
@@ -37,7 +37,7 @@ extension UIView {
         }
     }
 
-    public static func animationTask(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animation(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
         
         return Observable { completion in
@@ -57,7 +57,7 @@ extension UIView {
         }
     }
 
-    public static func transitionTask(with view: UIView, duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func transition(with view: UIView, duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
         return Observable { completion in
             

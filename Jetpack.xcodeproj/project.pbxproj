@@ -97,8 +97,8 @@
 		1B6E87A61E9CD7C90063D5EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B6E87A51E9CD7C90063D5EB /* Assets.xcassets */; };
 		1B6E87A91E9CD7C90063D5EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B6E87A71E9CD7C90063D5EB /* LaunchScreen.storyboard */; };
 		1B6E87BB1E9CEA950063D5EB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
-		1B6E87E71E9E15E30063D5EB /* UIView+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */; };
-		1B6E87E91E9E15E30063D5EB /* UIView+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */; };
+		1B6E87E71E9E15E30063D5EB /* UIViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */; };
+		1B6E87E91E9E15E30063D5EB /* UIViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */; };
 		1B6E87EB1E9E15E90063D5EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
 		1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */; };
 		1B6E87FD1E9E15F20063D5EB /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FC1E9ADB540063D5EB /* UIBarButtonItem.swift */; };
@@ -246,7 +246,7 @@
 		1B6E87A81E9CD7C90063D5EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B6E87AA1E9CD7C90063D5EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B6E87BA1E9CEA950063D5EB /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Observable.swift; path = Sources/Observable.swift; sourceTree = "<group>"; };
-		1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Task.swift"; sourceTree = "<group>"; };
+		1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewAnimation.swift; sourceTree = "<group>"; };
 		1B6E88271E9E16FC0063D5EB /* TaskTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskTests.swift; path = Tests/JetpackTests/TaskTests.swift; sourceTree = "<group>"; };
 		1B6E882D1E9E170B0063D5EB /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = Sources/Disposable.swift; sourceTree = "<group>"; };
 		1B6E88371E9E17180063D5EB /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Task.swift; sourceTree = "<group>"; };
@@ -355,7 +355,7 @@
 				1B6E87091E9ADB540063D5EB /* UITextField.swift */,
 				1B6E870A1E9ADB540063D5EB /* UITextView.swift */,
 				1B6E870C1E9ADB540063D5EB /* UIView.swift */,
-				1B6E87E61E9E15E30063D5EB /* UIView+Task.swift */,
+				1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */,
 			);
 			name = UIKit;
 			path = Sources/UIKit;
@@ -882,7 +882,7 @@
 				1B6E883C1E9E17180063D5EB /* Task.swift in Sources */,
 				1B6E871A1E9ADB540063D5EB /* Observable+Optional.swift in Sources */,
 				1B6E87151E9ADB540063D5EB /* Observable+Filtering.swift in Sources */,
-				1B6E87E71E9E15E30063D5EB /* UIView+Task.swift in Sources */,
+				1B6E87E71E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
 				1B6E87281E9ADB540063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87211E9ADB540063D5EB /* Signal.swift in Sources */,
 				1BF014711EA208230061B4D9 /* Variable.swift in Sources */,
@@ -967,7 +967,7 @@
 				1B6E88561E9E18B40063D5EB /* Either.swift in Sources */,
 				1B6E880A1E9E15F20063D5EB /* UITextField.swift in Sources */,
 				1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
-				1B6E87E91E9E15E30063D5EB /* UIView+Task.swift in Sources */,
+				1B6E87E91E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
 				1BF014761EA208290061B4D9 /* Observable.swift in Sources */,
 				1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87901E9ADC280063D5EB /* Observable+Math.swift in Sources */,
