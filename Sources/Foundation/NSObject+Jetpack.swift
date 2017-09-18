@@ -42,9 +42,11 @@ extension NSObject {
 extension JetpackExtensions where Base: NSObject {
     
     func jx_makeReceiver<U>(key: String, _ action: @escaping (Base, U)->Void) -> Receiver<U> {
-        return base.jx_lazyObject(key: key) {[unowned base] in
+        return base.jx_lazyObject(key: key) {[weak base] in
             return Receiver { value in
-                action(base, value)
+                if let base = base {
+                    action(base, value)
+                }                
             }
         }
     }

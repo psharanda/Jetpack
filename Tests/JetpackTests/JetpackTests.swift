@@ -172,6 +172,19 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(firedTimes, 3)
     }
     
+    func testJetpackButton2() {
+        
+        let signal = Signal<UIImage>()
+        
+        do {
+            let button = UIButton()
+            _ = signal.bind(button.jx.backgroundImage)
+        }
+        
+        signal.update(UIImage())
+        
+    }
+    
     func testCombineLatest() {
         let a = Signal<Int>()
         let b = Signal<String>()
