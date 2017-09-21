@@ -9,8 +9,19 @@ extension ObservableProtocol where ValueType: ResultConvertible {
     
     public typealias ResultValueType = ValueType.ValueType
     
-    public func flatMapLatestValue<U>(_ f: @escaping (ResultValueType)->Task<U>) -> Task<U>  {
+    public func flatMapLatestValue<U>(_ f: @escaping (ResultValueType)->Task<U>?) -> Task<U>  {
         return flatMapLatest { result in
+            switch result.result {
+            case .success(let value):
+                return f(value)
+            case .failure(let error):
+                return Task.from(error: error)
+            }
+        }
+    }
+    
+    public func flatMapMergeValue<U>(_ f: @escaping (ResultValueType)->Task<U>?) -> Task<U>  {
+        return flatMapMerge { result in
             switch result.result {
             case .success(let value):
                 return f(value)

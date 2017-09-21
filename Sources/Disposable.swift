@@ -75,7 +75,7 @@ public final class SwapableDisposable: Disposable {
         childDisposable = nil
     }
     
-    public func swap(child disposable: Disposable) {
+    public func swap(child disposable: Disposable?) {
         self.childDisposable = disposable
     }
     
@@ -91,8 +91,10 @@ public final class MultiDisposable: Disposable {
     public init() {
     }
     
-    public func add(_ disposable: Disposable) {
-        disposables.append(disposable)
+    public func add(_ disposable: Disposable?) {
+        if let d = disposable {
+            disposables.append(d)
+        }
     }
     
     public func dispose() {
