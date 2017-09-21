@@ -5,12 +5,21 @@
 
 import Foundation
 
-public protocol ResultConvertible {
+public protocol ValueConvertible {
+    associatedtype ValueType
+    var value: ValueType? {get}
+}
+
+public protocol ErrorConvertible {
+    var error: Error? {get}
+}
+
+public protocol ResultConvertible: ValueConvertible, ErrorConvertible {
     associatedtype ValueType
     var result: Result<ValueType> {get}
 }
 
-extension ResultConvertible {
+extension ResultConvertible  {
     public var value: ValueType? {
         switch result {
         case .success(let v):

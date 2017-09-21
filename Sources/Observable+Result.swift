@@ -5,13 +5,16 @@
 
 import Foundation
 
-public extension ObservableProtocol where ValueType: ResultConvertible {
+public extension ObservableProtocol where ValueType: ValueConvertible {
     
     public var valueOnly: Observable<ValueType.ValueType> {
         return flatMap { result in
             result.value
         }
     }
+}
+
+public extension ObservableProtocol where ValueType: ErrorConvertible {
     
     public var errorOnly: Observable<Error> {
         return flatMap { result in
@@ -19,6 +22,16 @@ public extension ObservableProtocol where ValueType: ResultConvertible {
         }
     }
 }
+
+public extension ObservableProtocol where ValueType: ResultConvertible {
+    
+    var resultOnly: Observable<Result<ValueType.ValueType>> {
+        return flatMap {
+            $0.result
+        }
+    }
+}
+
 
 public extension ObservableProtocol where ValueType: Error {
 

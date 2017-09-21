@@ -51,29 +51,6 @@ extension ObservableProtocol where ValueType: ResultConvertible {
     public var optionalizedValue: Task<ResultValueType?> {
         return mapValue { Optional.some($0) }
     }
-
-    
-    /**
-     Add handler to perform specific action if task was successful
-     */
-    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observable<ValueType> {
-        return forEach { result in
-            if case let .success(value) = result.result {
-                handler(value)
-            }
-        }
-    }
-    
-    /**
-     Add handler to perform specific action if task failed
-     */
-    public func forEachError(_ handler:  @escaping(Error) -> Void) -> Observable<ValueType> {
-        return forEach { result in
-            if case let .failure(error) = result.result {
-                handler(error)
-            }
-        }
-    }
     
     /**
      Run two tasks concurrently, return the result of the first successfull one, other one will be cancelled. When one of them fails, other one is cancelled. On cancel, it cancelles both children.
@@ -259,4 +236,36 @@ extension ObservableProtocol where ValueType: ResultConvertible {
         }
     }
 }
+
+public extension ObservableProtocol where ValueType: ValueConvertible {
+    /**
+     Add handler to perform specific action if task was successful
+     */
+    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observable<ValueType> {
+        return forEach { result in
+            if let value = result.value {
+                handler(value)
+            }
+        }
+    }
+}
+
+public extension ObservableProtocol where ValueType: ErrorConvertible {
+    
+    /**
+     Add handler to perform specific action if task failed
+     */
+    public func forEachError(_ handler:  @escaping(Error) -> Void) -> Observable<ValueType> {
+        return forEach { result in
+            if let error = result.error {
+                handler(error)
+            }
+        }
+    }
+}
+
+
+
+
+
 
