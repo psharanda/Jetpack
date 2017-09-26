@@ -8,25 +8,25 @@ import XCTest
 @testable import Jetpack
 
 func requestHello(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
         completion(.success("Hello"))
     }
 }
 
 func requestError(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
         completion(.failure(NSError(domain: "request", code: -1, userInfo: nil)))
     }
 }
 
 func requestWorld(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
         completion(.success(head + "World"))
     }
 }
 
 func requestPunctuation(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
+    return DispatchQueue.main.jx.after(timeInterval: 1) {
         completion(.success(head + "!!!"))
     }
 }
@@ -267,13 +267,13 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("Hello"))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("Hello"))
             }
         }
@@ -302,14 +302,14 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) {
                 completion(.success("Hello"))
             }
         }
@@ -333,13 +333,13 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("left"))
             }
         }
 
         let right = Task<Int> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) {
                 completion(.success(5))
             }
         }
@@ -369,13 +369,13 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let left = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 1) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 1) {
                 completion(.success("left"))
             }
         }
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("right"))
             }
         }
@@ -408,7 +408,7 @@ class TaskTests: XCTestCase {
         let left = Task.from(value: "left")
 
         let right = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("right"))
             }
         }
@@ -438,19 +438,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r3"))
             }
         }
@@ -475,20 +475,20 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r3"))
             }
         }
@@ -512,19 +512,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r3"))
             }
         }
@@ -549,20 +549,20 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) { cancelled in
+            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
                 completion(.success("r3"))
             }
         }
@@ -628,11 +628,11 @@ class TaskTests: XCTestCase {
             }
         }
         
-        _ = DispatchQueue.main.jx.after(timeInterval: 0.6) { _ in
+        _ = DispatchQueue.main.jx.after(timeInterval: 0.6) { 
             cancelable.dispose()
         }
         
-        _ = DispatchQueue.main.jx.after(timeInterval: 0.65) { _ in
+        _ = DispatchQueue.main.jx.after(timeInterval: 0.65) { 
             expect.fulfill()
         }
         

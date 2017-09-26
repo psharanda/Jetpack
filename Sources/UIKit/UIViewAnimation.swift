@@ -8,7 +8,7 @@ extension UIView {
             
             UIView.animate(withDuration: duration, animations: animations) { finished in
                 if finished && !cancelled {
-                    completion()
+                    completion(())
                 }
             }
             
@@ -26,7 +26,7 @@ extension UIView {
             
             UIView.animate(withDuration: duration, delay: delay, options: options, animations: animations) { finished in
                 if finished && !cancelled {
-                    completion()
+                    completion(())
                 }
             }
             
@@ -46,7 +46,7 @@ extension UIView {
             
             UIView.animate(withDuration: duration, delay: delay, usingSpringWithDamping: dampingRatio, initialSpringVelocity: velocity, options: options, animations: animations) { finished in
                 if finished && !cancelled {
-                    completion()
+                    completion(())
                 }
             }
             
@@ -65,7 +65,7 @@ extension UIView {
             
             UIView.transition(with: view, duration: duration, options: options, animations: animations) { finished in
                 if finished && !cancelled {
-                    completion()
+                    completion(())
                 }
             }
             

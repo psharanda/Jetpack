@@ -162,7 +162,7 @@ public extension ObservableProtocol {
         return Observable { observer in
     
             let disposable = observables.reduce(EmptyDisposable() as Disposable) {
-                return $0.0.with(disposable: $0.1.subscribe { result in
+                return $0.with(disposable: $1.subscribe { result in
                     observer(result)
                 })
             }
@@ -202,7 +202,7 @@ public extension ObservableProtocol {
             
             return self.subscribe { result in
                 if let lastValue = lastValue {
-                    observer(result, lastValue)
+                    observer((result, lastValue))
                 }
             }.with(disposable: disposable)
         }
@@ -222,7 +222,7 @@ public extension ObservableProtocol {
             return all.reduce(EmptyDisposable() as Disposable) {
                 c += 1
                 let idx = c - 1
-                return $0.0.with(disposable: $0.1.subscribe { result in
+                return $0.with(disposable: $1.subscribe { result in
                     
                     if !(config.reduce(false) { $0 || $1 }) {
                         config[idx] = true

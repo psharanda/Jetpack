@@ -10,6 +10,12 @@ public protocol Bindable {
     func update(_ newValue: ValueType)
 }
 
+extension Bindable where ValueType == Void {
+    public func update() {
+        update(())
+    }
+}
+
 public extension ObservableProtocol {
     
     public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType {

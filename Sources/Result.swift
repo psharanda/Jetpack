@@ -14,8 +14,7 @@ public protocol ErrorConvertible {
     var error: Error? {get}
 }
 
-public protocol ResultConvertible: ValueConvertible, ErrorConvertible {
-    associatedtype ValueType
+public protocol ResultConvertible: ValueConvertible, ErrorConvertible  {
     var result: Result<ValueType> {get}
 }
 
