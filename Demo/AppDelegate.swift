@@ -7,15 +7,30 @@
 //
 
 import UIKit
+import Jetpack
+
+
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    private lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
 
-
+    let appStateStore = AppStateStore()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+    
+        
+        let vc = ListViewController()
+        let presenter = ListPresenter(view: vc, storeItems: appStateStore.itemsState)
+        vc.presenter = presenter
+        
+        w.rootViewController = UINavigationController(rootViewController: vc)
+        w.makeKeyAndVisible()
+        
         return true
     }
 

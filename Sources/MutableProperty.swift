@@ -34,6 +34,11 @@ public final class MutableProperty<T>: ObservableProtocol, Bindable {
         })
     }
     
+    private init(property: Property<T>, variable: Variable<T>) {
+        self.property = property
+        self.variable = variable
+    }
+    
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return property.subscribe(observer)
     }
@@ -52,6 +57,12 @@ public final class MutableProperty<T>: ObservableProtocol, Bindable {
     
     public var asVariable: Variable<ValueType> {
         return variable
+    }
+    
+    public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
+        let p: Property<U> = property.map(transform)
+        let v: Variable<U> = variable.map(transform: transform, reduce: reduce)
+        return MutableProperty<U>(property: p, variable: v)
     }
 }
 

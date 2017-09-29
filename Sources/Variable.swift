@@ -25,10 +25,18 @@ public struct Variable<T>: Bindable {
     public func update(_ newValue: T) {
         setter(newValue)
     }
+    
+    public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> Variable<U> {
+        return Variable<U>(setter: {
+            self.setter(reduce(self.getter(), $0))
+        }, getter: {
+            return transform(self.getter())
+        })
+    }
 }
 
 extension Variable {
-    public var asReceiver: Receiver<ValueType> {
+    public var asReceiver: Receiver<T> {
         return Receiver {
             self.update($0)
         }

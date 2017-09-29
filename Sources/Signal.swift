@@ -51,7 +51,7 @@ private struct TaggedObserver<T> {
 }
 
 extension Signal {
-    public var asReceiver: Receiver<ValueType> {
+    public var asReceiver: Receiver<T> {
         return Receiver {
             self.update($0)
         }

@@ -29,14 +29,14 @@ extension Receiver {
     }
 }
 
-extension Receiver where ValueType: Optionable {
+extension Receiver where T: Optionable {
     
     /**
      Convert Receiver that accepts optional values into Receiver which accepts non optional values
      */
-    public var unwrapped: Receiver<ValueType.Wrapped> {
-        return Receiver<ValueType.Wrapped> {
-            self.update(ValueType.init($0))
+    public var unwrapped: Receiver<T.Wrapped> {
+        return Receiver<T.Wrapped> {
+            self.update(T($0))
         }
     }
 }
