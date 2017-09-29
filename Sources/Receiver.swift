@@ -27,6 +27,12 @@ extension Receiver {
             self.update(transform($0))
         }
     }
+    
+    public func map<U>(getter: @escaping () -> T, reduce: @escaping (T, U) -> T) -> Receiver<U> {
+        return Receiver<U> {
+            self.update(reduce(getter(), $0))
+        }
+    }
 }
 
 extension Receiver where T: Optionable {

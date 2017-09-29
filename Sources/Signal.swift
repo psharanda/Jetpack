@@ -10,8 +10,6 @@ import Foundation
  */
 public final class Signal<T>: ObservableProtocol, Bindable {
     
-    public typealias ValueType = T
-    
     private var observers: [TaggedObserver<T>] = []
     
     private var lastToken: UInt = 0

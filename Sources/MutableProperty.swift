@@ -8,15 +8,14 @@ import Foundation
 /**
  Standalone reactive state
  */
-public final class MutableProperty<T>: ObservableProtocol, Bindable {
-    public typealias ValueType = T
+public struct MutableProperty<T>: ObservableProtocol, Bindable {
     
     public var value: T {
         return property.value
     }
     
     private let property: Property<T>
-    private let variable: Variable<T>
+    private let receiver: Receiver<T>
     
     public init(_ value: T) {
         
@@ -26,17 +25,15 @@ public final class MutableProperty<T>: ObservableProtocol, Bindable {
         property = Property(signal.asObservable) {
             return v
         }
-        variable = Variable(setter: {
+        receiver = Receiver  {
             v = $0
             signal.update(v)
-        }, getter: {
-            return v
-        })
+        }
     }
     
-    private init(property: Property<T>, variable: Variable<T>) {
+    private init(property: Property<T>, receiver: Receiver<T>) {
         self.property = property
-        self.variable = variable
+        self.receiver = receiver
     }
     
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
@@ -44,25 +41,29 @@ public final class MutableProperty<T>: ObservableProtocol, Bindable {
     }
     
     public func update(_ newValue: T) {
-        variable.update(newValue)
+        receiver.update(newValue)
     }
     
-    public var asReceiver: Receiver<ValueType> {
-        return variable.asReceiver
+    public var asReceiver: Receiver<T> {
+        return receiver
     }
     
-    public var asProperty: Property<ValueType> {
+    public var asProperty: Property<T> {
         return property
     }
     
-    public var asVariable: Variable<ValueType> {
-        return variable
+    public var asVariable: Variable<T> {
+        return Variable(setter: {
+            self.receiver.update($0)
+        }, getter: {
+            return self.property.value
+        })
     }
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
         let p: Property<U> = property.map(transform)
-        let v: Variable<U> = variable.map(transform: transform, reduce: reduce)
-        return MutableProperty<U>(property: p, variable: v)
+        let v: Receiver<U> = receiver.map(getter: { self.value }, reduce: reduce)
+        return MutableProperty<U>(property: p, receiver: v)
     }
 }
 

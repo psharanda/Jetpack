@@ -10,8 +10,6 @@ import Foundation
  */
 public struct Observable<T>: ObservableProtocol {
     
-    public typealias ValueType = T
-    
     private let generator: (@escaping (T) -> Void) -> Disposable
     
     public init(generator: @escaping (@escaping (T) -> Void) -> Disposable) {
@@ -28,9 +26,9 @@ extension Observable {
     /**
      Create task with worker which will be run in workerQueue and send result to completionQueue. Worker can produce value or error.
      */
-    public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> ValueType) {
+    public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) {
         self.init { completion in
-            return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: ValueType) in
+            return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: T) in
                 completion(value)
             }
         }

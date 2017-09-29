@@ -141,17 +141,19 @@
 		1BB6923A1F6F2894000E0177 /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
 		1BCFC34F1F7E702500F4C247 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC34E1F7E702500F4C247 /* ListPresenter.swift */; };
 		1BCFC3511F7E70A500F4C247 /* AppStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC3501F7E70A500F4C247 /* AppStateStore.swift */; };
+		1BCFC3541F7EA89100F4C247 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC3521F7EA88C00F4C247 /* Variable.swift */; };
+		1BCFC3551F7EA89200F4C247 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC3521F7EA88C00F4C247 /* Variable.swift */; };
+		1BCFC3561F7EA89200F4C247 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC3521F7EA88C00F4C247 /* Variable.swift */; };
+		1BCFC3571F7EA89300F4C247 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCFC3521F7EA88C00F4C247 /* Variable.swift */; };
+		1BCFC3581F7EB76000F4C247 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Jetpack.framework */; };
+		1BCFC3591F7EB76000F4C247 /* Jetpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 52D6D97C1BEFF229002C0205 /* Jetpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BE3CD181EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD191EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD1A1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
 		1BE3CD1B1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */; };
-		1BF014711EA208230061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014721EA208280061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
-		1BF014731EA208280061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014741EA208290061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
-		1BF014751EA208290061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014761EA208290061B4D9 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87BA1E9CEA950063D5EB /* Observable.swift */; };
-		1BF014771EA208290061B4D9 /* Variable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF014701EA208230061B4D9 /* Variable.swift */; };
 		1BF014781EA208340061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF0147B1EA208360061B4D9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1BF0147C1EA208360061B4D9 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
@@ -183,6 +185,13 @@
 			remoteGlobalIDString = 1B6E879B1E9CD7C90063D5EB;
 			remoteInfo = Demo;
 		};
+		1BCFC35A1F7EB76000F4C247 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52D6D9731BEFF229002C0205 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
+			remoteInfo = "Jetpack-iOS";
+		};
 		52D6D9881BEFF229002C0205 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 52D6D9731BEFF229002C0205 /* Project object */;
@@ -205,6 +214,20 @@
 			remoteInfo = "Jetpack-tvOS";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		1BCFC35C1F7EB76000F4C247 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1BCFC3591F7EB76000F4C247 /* Jetpack.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CADisplayLink+Task.swift"; path = "Sources/UIKit/CADisplayLink+Task.swift"; sourceTree = "<group>"; };
@@ -262,8 +285,8 @@
 		1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+DispatchQueue.swift"; path = "Sources/Observable+DispatchQueue.swift"; sourceTree = "<group>"; };
 		1BCFC34E1F7E702500F4C247 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		1BCFC3501F7E70A500F4C247 /* AppStateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateStore.swift; sourceTree = "<group>"; };
+		1BCFC3521F7EA88C00F4C247 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Sources/Variable.swift; sourceTree = "<group>"; };
 		1BE3CD171EA5150F00C9B0F5 /* Observable+Commit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Commit.swift"; path = "Sources/Observable+Commit.swift"; sourceTree = "<group>"; };
-		1BF014701EA208230061B4D9 /* Variable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Variable.swift; path = Sources/Variable.swift; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9861BEFF229002C0205 /* Jetpack-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Jetpack-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JetpackExtensions.swift; path = Sources/JetpackExtensions.swift; sourceTree = "<group>"; };
@@ -282,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BCFC3581F7EB76000F4C247 /* Jetpack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -373,8 +397,8 @@
 				1B6E87BA1E9CEA950063D5EB /* Observable.swift */,
 				1B6E86F31E9ADB540063D5EB /* Signal.swift */,
 				1B6E86DF1E9ADB540063D5EB /* Receiver.swift */,
-				1BF014701EA208230061B4D9 /* Variable.swift */,
 				1B6E86F01E9ADB540063D5EB /* Property.swift */,
+				1BCFC3521F7EA88C00F4C247 /* Variable.swift */,
 				1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
@@ -560,10 +584,12 @@
 				1B6E87981E9CD7C90063D5EB /* Sources */,
 				1B6E87991E9CD7C90063D5EB /* Frameworks */,
 				1B6E879A1E9CD7C90063D5EB /* Resources */,
+				1BCFC35C1F7EB76000F4C247 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1BCFC35B1F7EB76000F4C247 /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -846,6 +872,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B6E87191E9ADB540063D5EB /* Observable+Math.swift in Sources */,
+				1BCFC3551F7EA89200F4C247 /* Variable.swift in Sources */,
 				1B6E87311E9ADB540063D5EB /* UIRefreshControl.swift in Sources */,
 				1B6E872A1E9ADB540063D5EB /* UIBarItem.swift in Sources */,
 				1B6E871B1E9ADB540063D5EB /* Observable+Result.swift in Sources */,
@@ -893,7 +920,6 @@
 				1B6E87E71E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
 				1B6E87281E9ADB540063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87211E9ADB540063D5EB /* Signal.swift in Sources */,
-				1BF014711EA208230061B4D9 /* Variable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,6 +938,7 @@
 			files = (
 				1B6E87871E9ADC280063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87841E9ADC270063D5EB /* Observable+Optional.swift in Sources */,
+				1BCFC3561F7EA89200F4C247 /* Variable.swift in Sources */,
 				1B6E88341E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E877B1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E877F1E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
@@ -934,7 +961,6 @@
 				1BF014801EA208360061B4D9 /* Either.swift in Sources */,
 				1B6E87831E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E877C1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
-				1BF014751EA208290061B4D9 /* Variable.swift in Sources */,
 				1BF0147B1EA208360061B4D9 /* Task.swift in Sources */,
 				1BF014851EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				52D6D9EA1BEFFFA4002C0205 /* JetpackExtensions.swift in Sources */,
@@ -961,6 +987,7 @@
 				1B6E87FE1E9E15F20063D5EB /* UIBarItem.swift in Sources */,
 				1B6E88001E9E15F20063D5EB /* UIButton.swift in Sources */,
 				1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */,
+				1BCFC3541F7EA89100F4C247 /* Variable.swift in Sources */,
 				1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E875C1E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E88061E9E15F20063D5EB /* UISegmentedControl.swift in Sources */,
@@ -984,7 +1011,6 @@
 				1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */,
 				1B6E87891E9ADC280063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E88041E9E15F20063D5EB /* UIProgressView.swift in Sources */,
-				1BF014771EA208290061B4D9 /* Variable.swift in Sources */,
 				1BA2EF761E9E412400B92618 /* Observable+Task.swift in Sources */,
 				52D6DA091BF00081002C0205 /* JetpackExtensions.swift in Sources */,
 				1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */,
@@ -999,7 +1025,7 @@
 			files = (
 				1BE3CD191EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */,
 				1B6E877A1E9ADC270063D5EB /* Observable+Transforming.swift in Sources */,
-				1BF014731EA208280061B4D9 /* Variable.swift in Sources */,
+				1BCFC3571F7EA89300F4C247 /* Variable.swift in Sources */,
 				1B6E87771E9ADC270063D5EB /* Observable+Optional.swift in Sources */,
 				1B6E876E1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87721E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
@@ -1055,6 +1081,11 @@
 			target = 1B6E879B1E9CD7C90063D5EB /* Demo */;
 			targetProxy = 1B6E87AE1E9CD7CF0063D5EB /* PBXContainerItemProxy */;
 		};
+		1BCFC35B1F7EB76000F4C247 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52D6D97B1BEFF229002C0205 /* Jetpack-iOS */;
+			targetProxy = 1BCFC35A1F7EB76000F4C247 /* PBXContainerItemProxy */;
+		};
 		52D6D9891BEFF229002C0205 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 52D6D97B1BEFF229002C0205 /* Jetpack-iOS */;
@@ -1087,6 +1118,7 @@
 		1B6E87AC1E9CD7C90063D5EB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -1105,6 +1137,7 @@
 		1B6E87AD1E9CD7C90063D5EB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;

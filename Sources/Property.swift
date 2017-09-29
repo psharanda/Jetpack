@@ -8,8 +8,7 @@ import Foundation
 /**
  Wrapper around some state which provides interface for observing state changes. state always exist and always has some value
  */
-public final class Property<T>: ObservableProtocol {
-    public typealias ValueType = T
+public struct Property<T>: ObservableProtocol {
     
     private let observable: Observable<T>
     private let getter: ()->T
@@ -23,7 +22,7 @@ public final class Property<T>: ObservableProtocol {
         self.observable = observer
     }
     
-    public convenience init(constant: T) {
+    public init(constant: T) {
         self.init(Observable.from(constant), getter: { constant })
     }
     

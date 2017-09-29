@@ -33,6 +33,14 @@ public struct Variable<T>: Bindable {
             return transform(self.getter())
         })
     }
+    
+    public func map<U>(toTransform: @escaping (T) -> U, fromTranform: @escaping (U) -> T) -> Variable<U> {
+        return Variable<U>(setter: {
+            self.setter(fromTranform($0))
+        }, getter: {
+            return toTransform(self.getter())
+        })
+    }
 }
 
 extension Variable {
