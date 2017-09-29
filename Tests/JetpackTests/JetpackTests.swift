@@ -15,6 +15,10 @@ class JetpackTests: XCTestCase {
     
     func testFromValueObservable() {
         
+        _ = Observable.from(1)
+        _ = Task.from(value: 1)
+        _ = Task<Int>.from(error: NSError() )
+        
         let value = 10
         let o = Observable.from(value)
         
@@ -645,7 +649,7 @@ class JetpackTests: XCTestCase {
         
         _ = buttonClick
             .flatMapLatest {
-                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { genValue }).asObservable
+                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
             }
             .subscribe {
                 XCTAssertEqual($0.isEqual(expectedValue), true)
