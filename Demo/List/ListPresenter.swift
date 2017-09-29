@@ -1,7 +1,4 @@
 //
-//  ListPresenter.swift
-//  Demo
-//
 //  Created by Pavel Sharanda on 29.09.17.
 //  Copyright © 2017 Jetpack. All rights reserved.
 //

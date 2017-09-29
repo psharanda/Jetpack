@@ -1,7 +1,4 @@
 //
-//  ViewController.swift
-//  Demo
-//
 //  Created by Pavel Sharanda on 11.04.17.
 //  Copyright © 2017 Jetpack. All rights reserved.
 //
@@ -9,17 +6,6 @@
 import UIKit
 import Jetpack
 import Differ
-
-protocol ListViewProtocol: class {
-    var undoEnabled: Bool {get set}
-    var items: [Item] {get set}
-    var didAdd: Observable<String> {get}
-    var didToggle: Observable<(Int, Bool)> {get}
-    var didDelete: Observable<Int> {get}
-    var didMove: Observable<(Int, Int)> {get}
-    var didUndo: Observable<Void> {get}
-    var didClean: Observable<Void> {get}
-}
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListViewProtocol {
     

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "C9EE87151CCFCA83006BD90E"
                BuildableName = "Differ.framework"
                BlueprintName = "Differ"
-               ReferencedContainer = "container:Differ.xcodeproj">
+               ReferencedContainer = "container:../Utills/Differ.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -37,7 +37,7 @@
                BlueprintIdentifier = "C9838FF01D29571000691BE8"
                BuildableName = "DifferTests.xctest"
                BlueprintName = "DifferTests"
-               ReferencedContainer = "container:Differ.xcodeproj">
+               ReferencedContainer = "container:../Utills/Differ.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -47,7 +47,7 @@
             BlueprintIdentifier = "C9EE87151CCFCA83006BD90E"
             BuildableName = "Differ.framework"
             BlueprintName = "Differ"
-            ReferencedContainer = "container:Differ.xcodeproj">
+            ReferencedContainer = "container:../Utills/Differ.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -70,7 +70,7 @@
             BlueprintIdentifier = "C9EE87151CCFCA83006BD90E"
             BuildableName = "Differ.framework"
             BlueprintName = "Differ"
-            ReferencedContainer = "container:Differ.xcodeproj">
+            ReferencedContainer = "container:../Utills/Differ.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -88,7 +88,7 @@
             BlueprintIdentifier = "C9EE87151CCFCA83006BD90E"
             BuildableName = "Differ.framework"
             BlueprintName = "Differ"
-            ReferencedContainer = "container:Differ.xcodeproj">
+            ReferencedContainer = "container:../Utills/Differ.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
