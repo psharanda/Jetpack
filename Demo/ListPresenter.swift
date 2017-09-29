@@ -12,6 +12,7 @@ import Jetpack
 class ListPresenter {
     
     unowned let view: ListViewProtocol
+    let storeItems: MutableProperty<[Item]>
     
     private let apool = AutodisposePool()
     
@@ -27,6 +28,7 @@ class ListPresenter {
     
     init(view: ListViewProtocol, storeItems: MutableProperty<[Item]> ) {
         self.view = view
+        self.storeItems = storeItems
         
         undoStack.append(storeItems.value)
         
@@ -42,8 +44,7 @@ class ListPresenter {
             .subscribe {
                 var items = storeItems.value
                 items.append(Item(id: UUID().uuidString, title: $0, completed: false))
-                storeItems.update(items)
-                self.undoStack.append(items)
+                self.updateItems(items)
             }
             .autodispose(in: apool)
         
@@ -51,8 +52,7 @@ class ListPresenter {
             .subscribe {
                 var items = storeItems.value
                 items[$0.0].completed = $0.1
-                storeItems.update(items)
-                self.undoStack.append(items)
+                self.updateItems(items)
             }
             .autodispose(in: apool)
         
@@ -60,8 +60,7 @@ class ListPresenter {
             .subscribe {
                 var items = storeItems.value
                 items.remove(at: $0)
-                storeItems.update(items)
-                self.undoStack.append(items)
+                self.updateItems(items)
             }
             .autodispose(in: apool)
         
@@ -69,8 +68,13 @@ class ListPresenter {
             .subscribe {
                 var items = storeItems.value                
                 items.insert(items.remove(at: $0.0), at: $0.1)
-                storeItems.update(items)
-                self.undoStack.append(items)
+                self.updateItems(items)
+            }
+            .autodispose(in: apool)
+        
+        view.didClean
+            .subscribe {
+                self.updateItems([])
             }
             .autodispose(in: apool)
         
@@ -82,5 +86,10 @@ class ListPresenter {
                 }
             }
             .autodispose(in: apool)
+    }
+    
+    private func updateItems(_ items: [Item]) {
+        storeItems.update(items)
+        undoStack.append(items)
     }
 }

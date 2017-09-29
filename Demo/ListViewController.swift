@@ -18,36 +18,39 @@ protocol ListViewProtocol: class {
     var didDelete: Observable<Int> {get}
     var didMove: Observable<(Int, Int)> {get}
     var didUndo: Observable<Void> {get}
+    var didClean: Observable<Void> {get}
 }
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListViewProtocol {
     
     var presenter: Any?
     
+    private var didLoadTableView = false
     var items: [Item] = [] {
         didSet {
 
-            let diff = oldValue.extendedDiff(items) {
-                $0.0.id == $0.1.id
-            }
-            
-            if diff.elements.count > 0 {
-                tableView.apply(diff)
-            } else {
-                let deepDiff = oldValue.extendedDiff(items)
-                
-                let indexPathsToReload = deepDiff.elements.flatMap { el -> IndexPath? in
-                    switch el {
-                    case .insert(let i):
-                        return IndexPath(row: i, section: 0)
-                    default:
-                        return nil
-                    }
+            if didLoadTableView {
+                let diff = oldValue.extendedDiff(items) {
+                    $0.0.id == $0.1.id
                 }
                 
-                tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+                if diff.elements.count > 0 {
+                    tableView.apply(diff)
+                } else {
+                    let deepDiff = oldValue.extendedDiff(items)
+                    
+                    let indexPathsToReload = deepDiff.elements.flatMap { el -> IndexPath? in
+                        switch el {
+                        case .insert(let i):
+                            return IndexPath(row: i, section: 0)
+                        default:
+                            return nil
+                        }
+                    }
+                    
+                    tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+                }
             }
-            
         }
     }
     
@@ -89,6 +92,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private let _didUndo = Signal<Void>()
     
+    var didClean: Observable<Void> {
+        return _didClean.asObservable
+    }
+    
+    private let _didClean = Signal<Void>()
+    
     private lazy var tableView = UITableView(frame: .zero, style: .plain)
     
     override func viewDidLoad() {
@@ -111,16 +120,20 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
         
-        navigationItem.leftBarButtonItem = editButton
+        let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
+        
+        _ = cleanButton.jx.clicked.bind(_didClean)
+        
+        navigationItem.leftBarButtonItems = [editButton, cleanButton]
     
         _ = editButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(true, animated: true)
-            self.navigationItem.leftBarButtonItem = doneButton
+            self.navigationItem.leftBarButtonItems = [doneButton, cleanButton]
         }
         
         _ = doneButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(false, animated: true)
-            self.navigationItem.leftBarButtonItem = editButton
+            self.navigationItem.leftBarButtonItems = [editButton, cleanButton]
         }
         
         
@@ -134,6 +147,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     //MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        didLoadTableView = true
         return items.count
     }
     
