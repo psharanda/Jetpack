@@ -17,9 +17,9 @@ enum VisibilityFilter: String, Codable {
 
 struct Item: Codable, Equatable {
     static func ==(lhs: Item, rhs: Item) -> Bool {
-        return (lhs.title == rhs.title) && (lhs.completed == rhs.completed)
+        return (lhs.id == rhs.id) && (lhs.title == rhs.title) && (lhs.completed == rhs.completed) 
     }
-    
+    let id: String
     var title: String
     var completed: Bool
 }

@@ -8,12 +8,16 @@
 
 import UIKit
 import Jetpack
+import Differ
 
 protocol ListViewProtocol: class {
+    var undoEnabled: Bool {get set}
     var items: [Item] {get set}
     var didAdd: Observable<String> {get}
     var didToggle: Observable<(Int, Bool)> {get}
     var didDelete: Observable<Int> {get}
+    var didMove: Observable<(Int, Int)> {get}
+    var didUndo: Observable<Void> {get}
 }
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListViewProtocol {
@@ -22,7 +26,36 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var items: [Item] = [] {
         didSet {
-            tableView.reloadData()
+
+            let diff = oldValue.extendedDiff(items) {
+                $0.0.id == $0.1.id
+            }
+            
+            if diff.elements.count > 0 {
+                tableView.apply(diff)
+            } else {
+                let deepDiff = oldValue.extendedDiff(items)
+                
+                let indexPathsToReload = deepDiff.elements.flatMap { el -> IndexPath? in
+                    switch el {
+                    case .insert(let i):
+                        return IndexPath(row: i, section: 0)
+                    default:
+                        return nil
+                    }
+                }
+                
+                tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+            }
+            
+        }
+    }
+    
+    let undoButton = UIBarButtonItem(barButtonSystemItem: .undo)
+    
+    var undoEnabled: Bool = false {
+        didSet {
+            undoButton.isEnabled = undoEnabled
         }
     }
     
@@ -44,6 +77,18 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private let _didDelete = Signal<Int>()
     
+    var didMove: Observable<(Int, Int)> {
+        return _didMove.asObservable
+    }
+    
+    private let _didMove = Signal<(Int, Int)>()
+    
+    var didUndo: Observable<Void> {
+        return _didUndo.asObservable
+    }
+    
+    private let _didUndo = Signal<Void>()
+    
     private lazy var tableView = UITableView(frame: .zero, style: .plain)
     
     override func viewDidLoad() {
@@ -56,9 +101,29 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.addSubview(tableView)
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add)
-        _ = addButton.jx.clicked.map { "\(Date())" }.bind(_didAdd)
+        _ = addButton.jx.clicked.map { Lorem.words(2) }.bind(_didAdd)
         
-        self.navigationItem.rightBarButtonItem = addButton
+        
+        _ = undoButton.jx.clicked.bind(_didUndo)
+        
+        navigationItem.rightBarButtonItems = [addButton, undoButton]
+        
+        let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
+        
+        navigationItem.leftBarButtonItem = editButton
+    
+        _ = editButton.jx.clicked.subscribe { [unowned self] in
+            self.tableView.setEditing(true, animated: true)
+            self.navigationItem.leftBarButtonItem = doneButton
+        }
+        
+        _ = doneButton.jx.clicked.subscribe { [unowned self] in
+            self.tableView.setEditing(false, animated: true)
+            self.navigationItem.leftBarButtonItem = editButton
+        }
+        
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,6 +150,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = items[indexPath.row]
         _didToggle.update((indexPath.row, !item.completed))
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -98,6 +164,14 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        _didMove.update((sourceIndexPath.row, destinationIndexPath.row))
     }
 }
 

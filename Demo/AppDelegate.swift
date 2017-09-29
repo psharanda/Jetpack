@@ -7,16 +7,11 @@
 //
 
 import UIKit
-import Jetpack
-
-
-
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
+     lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
 
     let appStateStore = AppStateStore()
     
