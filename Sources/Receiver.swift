@@ -9,7 +9,7 @@ import Foundation
  Wrapper around some state which provides interface for binding
  */
 public struct Receiver<T>: UpdateValueProtocol {
-    
+
     private let setter: (T)->Void
     
     public init(setter: @escaping (T)->Void) {

@@ -10,6 +10,8 @@ import Foundation
  */
 public struct Observable<T>: ObservableProtocol {
     
+    public typealias ValueType = T
+    
     private let generator: (@escaping (T) -> Void) -> Disposable
     
     public init(generator: @escaping (@escaping (T) -> Void) -> Disposable) {
