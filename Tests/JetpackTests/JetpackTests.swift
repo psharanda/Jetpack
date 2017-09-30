@@ -891,6 +891,55 @@ class JetpackTests: XCTestCase {
         a.remove(at: 0)
         
         XCTAssertEqual(a.value, s)
+        
+        XCTAssertEqual(s, [10, 599, 3])
+    }
+    
+    func testArray2DProperty() {
+        let a = MutableArray2DProperty<Int>([[1],[2],[3]])
+
+        var s = [[Int]]()
+
+        _ = a.subscribe {
+            switch $0.1 {
+            case .set:
+                s = $0.0
+            case .removeSection(let idx):
+                s.remove(at: idx)
+            case .insertSection(let idx):
+                s.insert($0.0[idx], at: idx)
+            case .moveSection(let from, let to):
+                s.insert(s.remove(at: from), at: to)
+            case .updateSection(let idx):
+                s[idx] = $0.0[idx]
+            case .removeItem(let idx):
+                s[idx.section].remove(at: idx.item)
+            case .insertItem(let idx):
+                s[idx.section].insert(s[idx.section][idx.row], at: idx.row)
+            case .moveItem(let from, let to):
+                s[to.section].insert(s[from.section].remove(at: from.row), at: to.row)
+            case .updateItem(let idx):
+                s[idx.section][idx.row] = $0.0[idx.section][idx.row]
+            }
+        }
+
+        a.insertSection([0], at: 0)
+        a.moveSection(from: 0, to: 1)
+        a.updateSection(at: 0, with: [599])
+        a.removeSection(at: 0)
+        
+        a.insertItem(0, at: IndexPath(item: 0, section: 0))
+        a.moveItem(from: IndexPath(item: 0, section: 0), to: IndexPath(item: 0, section: 1))
+        a.removeItem(at: IndexPath(item: 0, section: 2))
+        a.updateItem(at: IndexPath(item: 0, section: 0), with: 599)
+
+        a.value.enumerated().forEach {
+            XCTAssertEqual($0.element, s[$0.offset])
+        }
+        
+        XCTAssertEqual(s[0], [599])
+        XCTAssertEqual(s[1], [0, 2])
+        XCTAssertEqual(s[2], [])
     }
 }
 

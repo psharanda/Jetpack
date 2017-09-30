@@ -46,3 +46,47 @@ public struct ArrayProperty<T>: ObservableProtocol, GetValueProtocol  {
     }
 }
 
+public enum Array2DEditEvent {
+    case set
+    case removeItem(IndexPath)
+    case insertItem(IndexPath)
+    case moveItem(IndexPath, IndexPath)
+    case updateItem(IndexPath)
+    
+    case removeSection(Int)
+    case insertSection(Int)
+    case moveSection(Int, Int)
+    case updateSection(Int)
+}
+
+public struct Array2DProperty<T>: ObservableProtocol, GetValueProtocol  {
+    
+    private let observable: Observable<([[T]], Array2DEditEvent)>
+    private let getter: ()->[[T]]
+    
+    public var value: [[T]] {
+        return getter()
+    }
+    
+    public init(_ observable: Observable<([[T]], Array2DEditEvent)>, getter: @escaping ()->[[T]]) {
+        self.getter = getter
+        self.observable = observable
+    }
+    
+    public init(constant: [[T]]) {
+        self.init(Observable.from((constant, .set)), getter: { constant })
+    }
+    
+    public func subscribe(_ observer: @escaping (([[T]], Array2DEditEvent)) -> Void) -> Disposable {
+        observer((value, .set))
+        return observable.subscribe(observer)
+    }
+    
+    public var asProperty: Property<[[T]]> {
+        return Property(observable.map { $0.0 }) {
+            return self.value
+        }
+    }
+}
+
+
