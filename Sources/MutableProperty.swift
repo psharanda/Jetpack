@@ -8,7 +8,7 @@ import Foundation
 /**
  Standalone reactive state
  */
-public struct MutableProperty<T>: ObservableProtocol, Bindable {
+public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
     
     public var value: T {
         return property.value
@@ -42,22 +42,6 @@ public struct MutableProperty<T>: ObservableProtocol, Bindable {
     
     public func update(_ newValue: T) {
         receiver.update(newValue)
-    }
-    
-    public var asReceiver: Receiver<T> {
-        return receiver
-    }
-    
-    public var asProperty: Property<T> {
-        return property
-    }
-    
-    public var asVariable: Variable<T> {
-        return Variable(setter: {
-            self.receiver.update($0)
-        }, getter: {
-            return self.property.value
-        })
     }
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {

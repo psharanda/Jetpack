@@ -9,7 +9,7 @@ import Jetpack
 class ListPresenter {
     
     unowned let view: ListViewProtocol
-    let storeItems: MutableProperty<[Item]>
+    let storeItems: MutableArrayProperty<Item>
     
     private let apool = AutodisposePool()
     
@@ -23,7 +23,7 @@ class ListPresenter {
         view.undoEnabled = undoStack.count > 1
     }
     
-    init(view: ListViewProtocol, storeItems: MutableProperty<[Item]> ) {
+    init(view: ListViewProtocol, storeItems: MutableArrayProperty<Item> ) {
         self.view = view
         self.storeItems = storeItems
         
@@ -32,46 +32,44 @@ class ListPresenter {
         updateUndoStack()
         
         storeItems
-            .subscribe { [weak self] in
-                self?.view.items = $0
-            }
+            .bind(view.items)
             .autodispose(in: apool)
         
         view.didAdd
             .subscribe {
-                var items = storeItems.value
-                items.append(Item(id: UUID().uuidString, title: $0, completed: false))
-                self.updateItems(items)
+                let item = Item(id: UUID().uuidString, title: $0, completed: false)
+                self.storeItems.append(item)
+                self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didToggle
             .subscribe {
-                var items = storeItems.value
-                items[$0.0].completed = $0.1
-                self.updateItems(items)
+                var item = self.storeItems.value[$0.0]
+                item.completed = $0.1
+                self.storeItems.update(at: $0.0, with: item)
+                self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didDelete
             .subscribe {
-                var items = storeItems.value
-                items.remove(at: $0)
-                self.updateItems(items)
+                self.storeItems.remove(at: $0)
+                self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didMove
             .subscribe {
-                var items = storeItems.value                
-                items.insert(items.remove(at: $0.0), at: $0.1)
-                self.updateItems(items)
+                self.storeItems.move(from: $0.0, to: $0.1)
+                self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didClean
             .subscribe {
-                self.updateItems([])
+                self.storeItems.update([])
+                self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
@@ -79,14 +77,10 @@ class ListPresenter {
             .subscribe {
                 if self.undoStack.count > 1 {
                     self.undoStack.removeLast()
-                    storeItems.update(self.undoStack[self.undoStack.count - 1])
+                    self.storeItems.update(self.undoStack[self.undoStack.count - 1])
                 }
             }
             .autodispose(in: apool)
     }
-    
-    private func updateItems(_ items: [Item]) {
-        storeItems.update(items)
-        undoStack.append(items)
-    }
+
 }

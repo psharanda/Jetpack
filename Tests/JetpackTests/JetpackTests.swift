@@ -864,6 +864,34 @@ class JetpackTests: XCTestCase {
         ref = nil
         state.update(nil)
     }
+    
+    func testArrayProperty() {
+        let a = MutableArrayProperty<Int>([1,2,3])
+        
+        var s = [Int]()
+        
+        _ = a.subscribe {
+            switch $0.1 {
+            case .set:
+                s = $0.0
+            case .remove(let idx):
+                s.remove(at: idx)
+            case .insert(let idx):
+                s.insert($0.0[idx], at: idx)
+            case .move(let from, let to):
+                s.insert(s.remove(at: from), at: to)
+            case .update(let idx):
+                s[idx] = $0.0[idx]
+            }
+        }
+        
+        a.insert(10, at: 0)
+        a.move(from: 0, to: 1)
+        a.update(at: 2, with: 599)
+        a.remove(at: 0)
+        
+        XCTAssertEqual(a.value, s)
+    }
 }
 
 var numberOfDeinits = 0

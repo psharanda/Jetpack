@@ -12,18 +12,27 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     var presenter: Any?
     
     private var didLoadTableView = false
-    var items: [Item] = [] {
-        didSet {
-
-            if didLoadTableView {
-                let diff = oldValue.extendedDiff(items) {
+    
+    var items: Receiver<([Item], ArrayEditEvent)> {
+        return Receiver {[weak self] in
+            self?.update(items: $0.0, editEvent: $0.1)
+        }
+    }
+    
+    private func update(items: [Item], editEvent: ArrayEditEvent) {
+        let oldItems = _items
+        _items = items
+        if didLoadTableView {
+            switch editEvent {
+            case .set:
+                let diff = oldItems.extendedDiff(_items) {
                     $0.0.id == $0.1.id
                 }
                 
                 if diff.elements.count > 0 {
                     tableView.apply(diff)
                 } else {
-                    let deepDiff = oldValue.extendedDiff(items)
+                    let deepDiff = oldItems.extendedDiff(_items)
                     
                     let indexPathsToReload = deepDiff.elements.flatMap { el -> IndexPath? in
                         switch el {
@@ -36,9 +45,19 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     tableView.reloadRows(at: indexPathsToReload, with: .automatic)
                 }
+            case .remove(let idx):
+                tableView.deleteRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
+            case .insert(let idx):
+                tableView.insertRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
+            case .move(let from, let to):
+                tableView.moveRow(at: IndexPath(row: from, section: 0), to: IndexPath(row: to, section: 0))
+            case .update(let idx):
+                tableView.reloadRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
             }
         }
     }
+    
+    private var _items: [Item] = []
     
     let undoButton = UIBarButtonItem(barButtonSystemItem: .undo)
     
@@ -134,21 +153,21 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         didLoadTableView = true
-        return items.count
+        return _items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "CellId"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) ?? UITableViewCell(style: .default, reuseIdentifier: cellId)
         
-        let item = items[indexPath.row]
+        let item = _items[indexPath.row]
         cell.textLabel?.text = item.title
         cell.accessoryType = item.completed ? .checkmark : .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
+        let item = _items[indexPath.row]
         _didToggle.update((indexPath.row, !item.completed))
         tableView.deselectRow(at: indexPath, animated: true)
     }

@@ -5,26 +5,15 @@
 
 import Foundation
 
-public protocol Bindable {
-    associatedtype ValueType
-    func update(_ newValue: ValueType)
-}
-
-extension Bindable where ValueType == Void {
-    public func update() {
-        update(())
-    }
-}
-
 public extension ObservableProtocol {
     
-    public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType {
+    public func bind<T: UpdateValueProtocol>(_ bindable: T) -> Disposable where T.UpdateValueType == ValueType {
         return subscribe {result in
             bindable.update(result)
         }
     }
     
-    public func bind<T: Bindable>(_ bindable: T) -> Disposable where T.ValueType == ValueType? {
+    public func bind<T: UpdateValueProtocol>(_ bindable: T) -> Disposable where T.UpdateValueType == ValueType? {
         
         return subscribe { result in
             bindable.update(result)

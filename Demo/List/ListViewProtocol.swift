@@ -11,7 +11,7 @@ import Jetpack
 
 protocol ListViewProtocol: class {
     var undoEnabled: Bool {get set}
-    var items: [Item] {get set}
+    var items: Receiver<([Item], ArrayEditEvent)> {get}
     var didAdd: Observable<String> {get}
     var didToggle: Observable<(Int, Bool)> {get}
     var didDelete: Observable<Int> {get}

@@ -8,7 +8,7 @@ import Foundation
 /**
  Object which holds and manages subscribers and can broadcast values to them
  */
-public final class Signal<T>: ObservableProtocol, Bindable {
+public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
     
     private var observers: [TaggedObserver<T>] = []
     
@@ -46,13 +46,5 @@ public final class Signal<T>: ObservableProtocol, Bindable {
 private struct TaggedObserver<T> {
     let token: UInt
     let observer: (T)->Void
-}
-
-extension Signal {
-    public var asReceiver: Receiver<T> {
-        return Receiver {
-            self.update($0)
-        }
-    }
 }
 

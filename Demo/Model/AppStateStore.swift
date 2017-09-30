@@ -24,40 +24,44 @@ struct Item: Codable, Equatable {
     var completed: Bool
 }
 
-struct AppState: Codable {
-    var items: [Item]
-    var filter: VisibilityFilter
-    
-    init() {
-        items = []
-        filter = .all
-    }
-}
+
 
 class AppStateStore {
     
-    let state: MutableProperty<AppState>
+    let items: MutableArrayProperty<Item>
     
-    let itemsState: MutableProperty<[Item]>
+    let filter: MutableProperty<VisibilityFilter>
     
-    init() {        
-        state = MutableProperty(AppStateStore.loadState() ?? AppState())
+    init() {
+        let state = AppStateStore.loadState() ?? AppState()
         
-        itemsState = state
-            .map(transform: {
-                $0.items
-            }, reduce: {
-                var newState = $0
-                newState.items = $1
-                return newState
-            })
+        items = MutableArrayProperty(state.items)
+        filter = MutableProperty(state.filter)
         
-        _ = state.subscribe {
-            AppStateStore.saveState($0)
+        
+        _ = items.asProperty.combineLatest(filter).subscribe {
+            let appState = AppState(items: $0.0, filter: $0.1)
+            AppStateStore.saveState(appState)
         }
     }
     
     //MARK: - persistent state storage
+    
+    private struct AppState: Codable {
+        var items: [Item]
+        var filter: VisibilityFilter
+        
+        init(items: [Item], filter: VisibilityFilter) {
+            self.items = items
+            self.filter = filter
+        }
+        
+        init() {
+            items = []
+            filter = .all
+        }
+    }
+    
     private static func stateFilePath() -> URL? {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last?.appendingPathComponent("state.json")
     }

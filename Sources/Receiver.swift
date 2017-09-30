@@ -8,7 +8,7 @@ import Foundation
 /**
  Wrapper around some state which provides interface for binding
  */
-public struct Receiver<T>: Bindable {
+public struct Receiver<T>: UpdateValueProtocol {
     
     private let setter: (T)->Void
     
@@ -43,6 +43,14 @@ extension Receiver where T: Optionable {
     public var unwrapped: Receiver<T.Wrapped> {
         return Receiver<T.Wrapped> {
             self.update(T($0))
+        }
+    }
+}
+
+extension UpdateValueProtocol {
+    public var asReceiver: Receiver<UpdateValueType> {
+        return Receiver {
+            self.update($0)
         }
     }
 }

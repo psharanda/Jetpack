@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         
         let vc = ListViewController()
-        let presenter = ListPresenter(view: vc, storeItems: appStateStore.itemsState)
+        let presenter = ListPresenter(view: vc, storeItems: appStateStore.items)
         vc.presenter = presenter
         
         w.rootViewController = UINavigationController(rootViewController: vc)

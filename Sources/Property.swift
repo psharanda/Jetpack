@@ -5,10 +5,12 @@
 
 import Foundation
 
+public protocol PropertyProtocol: ObservableProtocol , GetValueProtocol { }
+
 /**
  Wrapper around some state which provides interface for observing state changes. state always exist and always has some value
  */
-public struct Property<T>: ObservableProtocol {
+public struct Property<T>: PropertyProtocol {
     
     private let observable: Observable<T>
     private let getter: ()->T
@@ -17,9 +19,9 @@ public struct Property<T>: ObservableProtocol {
         return getter()
     }
     
-    public init(_ observer: Observable<T>, getter: @escaping ()->T) {
+    public init(_ observable: Observable<T>, getter: @escaping ()->T) {
         self.getter = getter
-        self.observable = observer
+        self.observable = observable
     }
     
     public init(constant: T) {
@@ -35,6 +37,15 @@ public struct Property<T>: ObservableProtocol {
         return Property<U>(observable.map(transform)) {
             transform(self.getter())
         }
+    }
+}
+
+
+extension PropertyProtocol where ValueType == GetValueType {
+    public var asProperty: Property<ValueType> {
+        return Property(self.asObservable, getter: {
+            return self.value
+        })
     }
 }
 
