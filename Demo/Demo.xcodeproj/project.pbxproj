@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B6260D71F80E949001E09A5 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; };
+		1B6260D81F80E949001E09A5 /* Jetpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B6260DD1F80E949001E09A5 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FD71F80E907008560A2 /* Differ.framework */; };
+		1B6260DE1F80E949001E09A5 /* Differ.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FD71F80E907008560A2 /* Differ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BC89F761F800FB4008560A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F751F800FB4008560A2 /* AppDelegate.swift */; };
 		1BC89F7D1F800FB4008560A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7C1F800FB4008560A2 /* Assets.xcassets */; };
 		1BC89F801F800FB4008560A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7E1F800FB4008560A2 /* LaunchScreen.storyboard */; };
@@ -16,13 +20,23 @@
 		1BC89F9C1F800FFF008560A2 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F971F800FFF008560A2 /* ListPresenter.swift */; };
 		1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F981F800FFF008560A2 /* ListViewController.swift */; };
 		1BC89F9E1F800FFF008560A2 /* ListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */; };
-		1BC89FC01F801047008560A2 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FB31F801040008560A2 /* Jetpack.framework */; };
-		1BC89FC11F801047008560A2 /* Jetpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FB31F801040008560A2 /* Jetpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1BC89FC41F801047008560A2 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FA51F801038008560A2 /* Differ.framework */; };
-		1BC89FC51F801047008560A2 /* Differ.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FA51F801038008560A2 /* Differ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1B6260D91F80E949001E09A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
+			remoteInfo = "Jetpack-iOS";
+		};
+		1B6260DF1F80E949001E09A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BC89FD11F80E907008560A2 /* Differ.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C9EE87151CCFCA83006BD90E;
+			remoteInfo = Differ;
+		};
 		1BC89F871F800FB5008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1BC89F6A1F800FB4008560A2 /* Project object */;
@@ -30,82 +44,68 @@
 			remoteGlobalIDString = 1BC89F711F800FB4008560A2;
 			remoteInfo = Demo;
 		};
-		1BC89FA41F801038008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FD61F80E907008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89F9F1F801038008560A2 /* Differ.xcodeproj */;
+			containerPortal = 1BC89FD11F80E907008560A2 /* Differ.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C9EE87161CCFCA83006BD90E;
 			remoteInfo = Differ;
 		};
-		1BC89FA61F801038008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FD81F80E907008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89F9F1F801038008560A2 /* Differ.xcodeproj */;
+			containerPortal = 1BC89FD11F80E907008560A2 /* Differ.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = C9838FF11D29571000691BE8;
 			remoteInfo = DifferTests;
 		};
-		1BC89FB21F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FE41F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 52D6D97C1BEFF229002C0205;
 			remoteInfo = "Jetpack-iOS";
 		};
-		1BC89FB41F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FE61F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 52D6D9E21BEFFF6E002C0205;
 			remoteInfo = "Jetpack-watchOS";
 		};
-		1BC89FB61F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FE81F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 52D6DA0F1BF000BD002C0205;
 			remoteInfo = "Jetpack-macOS";
 		};
-		1BC89FB81F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FEA1F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 52D6D9F01BEFFFBE002C0205;
 			remoteInfo = "Jetpack-tvOS";
 		};
-		1BC89FBA1F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FEC1F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 52D6D9861BEFF229002C0205;
 			remoteInfo = "Jetpack-iOS Tests";
 		};
-		1BC89FBC1F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FEE1F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DD75027A1C68FCFC006590AF;
 			remoteInfo = "Jetpack-macOS Tests";
 		};
-		1BC89FBE1F801040008560A2 /* PBXContainerItemProxy */ = {
+		1BC89FF01F80E917008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+			containerPortal = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = DD75028D1C690C7A006590AF;
 			remoteInfo = "Jetpack-tvOS Tests";
-		};
-		1BC89FC21F801047008560A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
-			remoteInfo = "Jetpack-iOS";
-		};
-		1BC89FC61F801047008560A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1BC89F9F1F801038008560A2 /* Differ.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C9EE87151CCFCA83006BD90E;
-			remoteInfo = Differ;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -116,8 +116,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1BC89FC51F801047008560A2 /* Differ.framework in Embed Frameworks */,
-				1BC89FC11F801047008560A2 /* Jetpack.framework in Embed Frameworks */,
+				1B6260DE1F80E949001E09A5 /* Differ.framework in Embed Frameworks */,
+				1B6260D81F80E949001E09A5 /* Jetpack.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,8 +138,8 @@
 		1BC89F971F800FFF008560A2 /* ListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		1BC89F981F800FFF008560A2 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewProtocol.swift; sourceTree = "<group>"; };
-		1BC89F9F1F801038008560A2 /* Differ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Differ.xcodeproj; path = Differ/Differ.xcodeproj; sourceTree = "<group>"; };
-		1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetpack.xcodeproj; path = ../Jetpack.xcodeproj; sourceTree = "<group>"; };
+		1BC89FD11F80E907008560A2 /* Differ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Differ.xcodeproj; path = Differ/Differ.xcodeproj; sourceTree = "<group>"; };
+		1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetpack.xcodeproj; path = ../Jetpack.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,8 +147,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BC89FC41F801047008560A2 /* Differ.framework in Frameworks */,
-				1BC89FC01F801047008560A2 /* Jetpack.framework in Frameworks */,
+				1B6260DD1F80E949001E09A5 /* Differ.framework in Frameworks */,
+				1B6260D71F80E949001E09A5 /* Jetpack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,8 +165,8 @@
 		1BC89F691F800FB4008560A2 = {
 			isa = PBXGroup;
 			children = (
-				1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */,
-				1BC89F9F1F801038008560A2 /* Differ.xcodeproj */,
+				1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */,
+				1BC89FD11F80E907008560A2 /* Differ.xcodeproj */,
 				1BC89F741F800FB4008560A2 /* Demo */,
 				1BC89F891F800FB5008560A2 /* DemoTests */,
 				1BC89F731F800FB4008560A2 /* Products */,
@@ -207,25 +207,25 @@
 			path = DemoTests;
 			sourceTree = "<group>";
 		};
-		1BC89FA01F801038008560A2 /* Products */ = {
+		1BC89FD21F80E907008560A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1BC89FA51F801038008560A2 /* Differ.framework */,
-				1BC89FA71F801038008560A2 /* DifferTests.xctest */,
+				1BC89FD71F80E907008560A2 /* Differ.framework */,
+				1BC89FD91F80E907008560A2 /* DifferTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1BC89FA91F80103F008560A2 /* Products */ = {
+		1BC89FDB1F80E917008560A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1BC89FB31F801040008560A2 /* Jetpack.framework */,
-				1BC89FB51F801040008560A2 /* Jetpack.framework */,
-				1BC89FB71F801040008560A2 /* Jetpack.framework */,
-				1BC89FB91F801040008560A2 /* Jetpack.framework */,
-				1BC89FBB1F801040008560A2 /* Jetpack-iOS Tests.xctest */,
-				1BC89FBD1F801040008560A2 /* Jetpack-macOS Tests.xctest */,
-				1BC89FBF1F801040008560A2 /* Jetpack-tvOS Tests.xctest */,
+				1BC89FE51F80E917008560A2 /* Jetpack.framework */,
+				1BC89FE71F80E917008560A2 /* Jetpack.framework */,
+				1BC89FE91F80E917008560A2 /* Jetpack.framework */,
+				1BC89FEB1F80E917008560A2 /* Jetpack.framework */,
+				1BC89FED1F80E917008560A2 /* Jetpack-iOS Tests.xctest */,
+				1BC89FEF1F80E917008560A2 /* Jetpack-macOS Tests.xctest */,
+				1BC89FF11F80E917008560A2 /* Jetpack-tvOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -245,8 +245,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				1BC89FC31F801047008560A2 /* PBXTargetDependency */,
-				1BC89FC71F801047008560A2 /* PBXTargetDependency */,
+				1B6260DA1F80E949001E09A5 /* PBXTargetDependency */,
+				1B6260E01F80E949001E09A5 /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -305,12 +305,12 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 1BC89FA01F801038008560A2 /* Products */;
-					ProjectRef = 1BC89F9F1F801038008560A2 /* Differ.xcodeproj */;
+					ProductGroup = 1BC89FD21F80E907008560A2 /* Products */;
+					ProjectRef = 1BC89FD11F80E907008560A2 /* Differ.xcodeproj */;
 				},
 				{
-					ProductGroup = 1BC89FA91F80103F008560A2 /* Products */;
-					ProjectRef = 1BC89FA81F80103F008560A2 /* Jetpack.xcodeproj */;
+					ProductGroup = 1BC89FDB1F80E917008560A2 /* Products */;
+					ProjectRef = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -322,67 +322,67 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1BC89FA51F801038008560A2 /* Differ.framework */ = {
+		1BC89FD71F80E907008560A2 /* Differ.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Differ.framework;
-			remoteRef = 1BC89FA41F801038008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FD61F80E907008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FA71F801038008560A2 /* DifferTests.xctest */ = {
+		1BC89FD91F80E907008560A2 /* DifferTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = DifferTests.xctest;
-			remoteRef = 1BC89FA61F801038008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FD81F80E907008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FB31F801040008560A2 /* Jetpack.framework */ = {
+		1BC89FE51F80E917008560A2 /* Jetpack.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Jetpack.framework;
-			remoteRef = 1BC89FB21F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FE41F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FB51F801040008560A2 /* Jetpack.framework */ = {
+		1BC89FE71F80E917008560A2 /* Jetpack.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Jetpack.framework;
-			remoteRef = 1BC89FB41F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FE61F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FB71F801040008560A2 /* Jetpack.framework */ = {
+		1BC89FE91F80E917008560A2 /* Jetpack.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Jetpack.framework;
-			remoteRef = 1BC89FB61F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FE81F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FB91F801040008560A2 /* Jetpack.framework */ = {
+		1BC89FEB1F80E917008560A2 /* Jetpack.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Jetpack.framework;
-			remoteRef = 1BC89FB81F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FEA1F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FBB1F801040008560A2 /* Jetpack-iOS Tests.xctest */ = {
+		1BC89FED1F80E917008560A2 /* Jetpack-iOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Jetpack-iOS Tests.xctest";
-			remoteRef = 1BC89FBA1F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FEC1F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FBD1F801040008560A2 /* Jetpack-macOS Tests.xctest */ = {
+		1BC89FEF1F80E917008560A2 /* Jetpack-macOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Jetpack-macOS Tests.xctest";
-			remoteRef = 1BC89FBC1F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FEE1F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		1BC89FBF1F801040008560A2 /* Jetpack-tvOS Tests.xctest */ = {
+		1BC89FF11F80E917008560A2 /* Jetpack-tvOS Tests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = "Jetpack-tvOS Tests.xctest";
-			remoteRef = 1BC89FBE1F801040008560A2 /* PBXContainerItemProxy */;
+			remoteRef = 1BC89FF01F80E917008560A2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -431,20 +431,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1B6260DA1F80E949001E09A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Jetpack-iOS";
+			targetProxy = 1B6260D91F80E949001E09A5 /* PBXContainerItemProxy */;
+		};
+		1B6260E01F80E949001E09A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Differ;
+			targetProxy = 1B6260DF1F80E949001E09A5 /* PBXContainerItemProxy */;
+		};
 		1BC89F881F800FB5008560A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1BC89F711F800FB4008560A2 /* Demo */;
 			targetProxy = 1BC89F871F800FB5008560A2 /* PBXContainerItemProxy */;
-		};
-		1BC89FC31F801047008560A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Jetpack-iOS";
-			targetProxy = 1BC89FC21F801047008560A2 /* PBXContainerItemProxy */;
-		};
-		1BC89FC71F801047008560A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Differ;
-			targetProxy = 1BC89FC61F801047008560A2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
