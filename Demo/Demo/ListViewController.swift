@@ -29,22 +29,25 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     $0.id == $1.id
                 }
                 
-                if diff.elements.count > 0 {
-                    tableView.apply(diff)
-                } else {
-                    let deepDiff = oldItems.extendedDiff(_items)
-                    
-                    let indexPathsToReload = deepDiff.elements.flatMap { el -> IndexPath? in
-                        switch el {
-                        case .insert(let i):
-                            return IndexPath(row: i, section: 0)
-                        default:
-                            return nil
+                var valuesMap = [String: (Item, Int)]()
+                
+                oldItems.enumerated().forEach {
+                    valuesMap[$0.element.id] = ($0.element, $0.offset)
+                }
+                
+                let indexPathsToReload = _items.flatMap { i -> IndexPath? in
+                    if let oldValue = valuesMap[i.id] {
+                        if oldValue.0 != i {
+                            return IndexPath(row: oldValue.1, section: 0)
                         }
                     }
-                    
-                    tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+                    return nil
                 }
+                
+                tableView.beginUpdates()
+                tableView.apply(diff)
+                tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+                tableView.endUpdates()
             case .remove(let idx):
                 tableView.deleteRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
             case .insert(let idx):
@@ -193,6 +196,3 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         _didMove.update((sourceIndexPath.row, destinationIndexPath.row))
     }
 }
-
-
-
