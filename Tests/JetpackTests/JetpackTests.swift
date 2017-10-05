@@ -942,6 +942,36 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(s[1], [0, 2])
         XCTAssertEqual(s[2], [])
     }
+    
+    func testWrappedMutableProperty() {
+        var a = "1"
+        
+        let prop = MutableProperty<String>.init(getter: {
+            return a
+        }) {
+            a = $0
+        }
+        
+        let upd1 = "2"
+        
+        prop.update(upd1)
+        
+        XCTAssertEqual(upd1, a)
+        
+        let d = prop.subscribe {
+            XCTAssertEqual(upd1, $0)
+        }
+        d.dispose()
+        
+        let upd2 = "3"
+        
+        var control = upd1
+        _ = prop.log().subscribe {
+            XCTAssertEqual(control, $0)
+        }
+        control = upd2
+        prop.update(upd2)
+    }
 }
 
 var numberOfDeinits = 0
