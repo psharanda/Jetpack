@@ -23,6 +23,10 @@ class ListPresenter {
         view.undoEnabled = undoStack.count > 1
     }
     
+    deinit {
+        print("deinit")
+    }
+    
     init(view: ListViewProtocol, storeItems: MutableArrayProperty<Item> ) {
         self.view = view
         self.storeItems = storeItems
@@ -36,7 +40,7 @@ class ListPresenter {
             .autodispose(in: apool)
         
         view.didAdd
-            .subscribe {
+            .subscribe { [unowned self] in
                 let item = Item(id: UUID().uuidString, title: $0, completed: false)
                 self.storeItems.append(item)
                 self.undoStack.append(self.storeItems.value)
@@ -44,7 +48,7 @@ class ListPresenter {
             .autodispose(in: apool)
         
         view.didToggle
-            .subscribe {
+            .subscribe { [unowned self] in
                 var item = self.storeItems.value[$0.0]
                 item.completed = $0.1
                 self.storeItems.update(at: $0.0, with: item)
@@ -53,28 +57,28 @@ class ListPresenter {
             .autodispose(in: apool)
         
         view.didDelete
-            .subscribe {
+            .subscribe { [unowned self] in
                 self.storeItems.remove(at: $0)
                 self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didMove
-            .subscribe {
+            .subscribe { [unowned self] in
                 self.storeItems.move(from: $0.0, to: $0.1)
                 self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didClean
-            .subscribe {
+            .subscribe { [unowned self] in
                 self.storeItems.update([])
                 self.undoStack.append(self.storeItems.value)
             }
             .autodispose(in: apool)
         
         view.didUndo
-            .subscribe {
+            .subscribe { [unowned self] in
                 if self.undoStack.count > 1 {
                     self.undoStack.removeLast()
                     self.storeItems.update(self.undoStack[self.undoStack.count - 1])
