@@ -63,6 +63,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     private var _items: [Item] = []
     
     let undoButton = UIBarButtonItem(barButtonSystemItem: .undo)
+    let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
+    let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
+    let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
     
     var undoEnabled: Bool = false {
         didSet {
@@ -108,6 +111,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private lazy var tableView = UITableView(frame: .zero, style: .plain)
     
+    private let apool = AutodisposePool()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -125,23 +130,20 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         navigationItem.rightBarButtonItems = [addButton, undoButton]
         
-        let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
+
         
-        let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
-        
-        _ = cleanButton.jx.clicked.bind(_didClean)
+        cleanButton.jx.clicked.bind(_didClean).autodispose(in: apool)
         
         navigationItem.leftBarButtonItems = [editButton, cleanButton]
     
         _ = editButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(true, animated: true)
-            self.navigationItem.leftBarButtonItems = [doneButton, cleanButton]
+            self.navigationItem.leftBarButtonItems = [self.doneButton, self.cleanButton]
         }
         
         _ = doneButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(false, animated: true)
-            self.navigationItem.leftBarButtonItems = [editButton, cleanButton]
+            self.navigationItem.leftBarButtonItems = [self.editButton, self.cleanButton]
         }
         
         
