@@ -37,9 +37,12 @@ public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
     }
     
     public init(getter: @escaping ()->T, setter: @escaping (T)->Void) {
-        let signal = Signal<T>()        
+        let signal = Signal<T>()
         property = Property(signal.asObservable, getter: getter)
-        receiver = Receiver(setter: setter)
+        receiver = Receiver  {
+            setter($0)
+            signal.update($0)
+        }
     }
     
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
