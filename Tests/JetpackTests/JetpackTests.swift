@@ -24,7 +24,7 @@ class JetpackTests: XCTestCase {
         
         var fired = false
         
-        _ = o.subscribe {
+        o.subscribe {
             fired = true
             XCTAssertEqual(value, $0)
         }
@@ -64,7 +64,7 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(fired, true)
         
-        _ = button.click.map { _ in "hello" }.map { $0.uppercased() }.subscribe {
+        button.click.map { _ in "hello" }.map { $0.uppercased() }.subscribe {
             XCTAssertEqual($0, "HELLO")
         }
         
@@ -90,7 +90,7 @@ class JetpackTests: XCTestCase {
         var fired = false
         var value = 0
         
-        _ = t.stateProperty.map { $0 * 10 }.subscribe {
+        t.stateProperty.map { $0 * 10 }.subscribe {
             fired = true
             XCTAssertEqual(value, $0)
         }
@@ -144,7 +144,7 @@ class JetpackTests: XCTestCase {
 //        let button = UIButton()
 //        var firedTimes = 0
 //
-//        _ = button.jx.clicked.subscribe {
+//        button.jx.clicked.subscribe {
 //            firedTimes += 1
 //        }
 //
@@ -183,7 +183,7 @@ class JetpackTests: XCTestCase {
         
         do {
             let button = UIButton()
-            _ = signal.bind(button.jx.backgroundImage)
+            signal.bind(button.jx.backgroundImage)
         }
         
         signal.update(UIImage())
@@ -648,7 +648,7 @@ class JetpackTests: XCTestCase {
         var genValue = 10
         let expectedValue = Result(value: 20)
         
-        _ = buttonClick
+        buttonClick
             .flatMapLatest {
                 return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
             }
@@ -739,7 +739,7 @@ class JetpackTests: XCTestCase {
             }
             
             init() {
-                _ = signal.subscribe { [weak self] in
+                signal.subscribe { [weak self] in
                     self?.increment += 1
                 }
             }
@@ -767,11 +767,11 @@ class JetpackTests: XCTestCase {
             
             let model = Model()
 
-            _ = view.nameChanged.bind(model.nameReceiver)
-            _ = model.valueChanged.bind(view.valueReceiver)
-            _ = view.nameChanged.bind(view.valueReceiver)
+            view.nameChanged.bind(model.nameReceiver)
+            model.valueChanged.bind(view.valueReceiver)
+            view.nameChanged.bind(view.valueReceiver)
             
-            _ = view.nameChanged.just.bind(view.signalReceiver)
+            view.nameChanged.just.bind(view.signalReceiver)
         }
         
         scope()
@@ -787,7 +787,7 @@ class JetpackTests: XCTestCase {
         var firedTimes = 0
         
         let d = voidSignal
-            .flatMapLatest {[unowned stringSignal] _ in
+            .flatMapLatest { _ in
                 return stringSignal.asObservable
             }
             .subscribe { _ in 
@@ -822,7 +822,7 @@ class JetpackTests: XCTestCase {
         
         var initial = true
         
-        _ = state.diff.subscribe { (oldValue, newValue) in
+        state.diff.subscribe { (oldValue, newValue) in
             if initial {
                 XCTAssertEqual(oldValue, 10)
                 XCTAssertEqual(newValue, 10)
@@ -839,7 +839,7 @@ class JetpackTests: XCTestCase {
         let state = MutableProperty(10)
         
         var ref = 10
-        _ = state.distinct.subscribe {
+        state.distinct.subscribe {
             XCTAssertEqual(ref, $0)
         }
         
@@ -853,7 +853,7 @@ class JetpackTests: XCTestCase {
         let state = MutableProperty(Optional.some(10))
         
         var ref: Int? = 10
-        _ = state.distinct.subscribe {
+        state.distinct.subscribe {
             XCTAssertEqual(ref, $0)
         }
         
@@ -871,7 +871,7 @@ class JetpackTests: XCTestCase {
         
         var s = [Int]()
         
-        _ = a.subscribe {
+        a.subscribe {
             switch $0.1 {
             case .set:
                 s = $0.0
@@ -901,7 +901,7 @@ class JetpackTests: XCTestCase {
 
         var s = [[Int]]()
 
-        _ = a.subscribe {
+        a.subscribe {
             switch $0.1 {
             case .set:
                 s = $0.0
@@ -966,7 +966,7 @@ class JetpackTests: XCTestCase {
         let upd2 = "3"
         
         var control = upd1
-        _ = prop.log().subscribe {
+        prop.log().subscribe {
             XCTAssertEqual(control, $0)
         }
         control = upd2

@@ -28,6 +28,8 @@ struct Item: Codable, Equatable {
 
 class AppStateStore {
     
+    let undoStack: MutableArrayProperty<[Item]>
+    
     let items: MutableArrayProperty<Item>
     
     let filter: MutableProperty<VisibilityFilter>
@@ -37,9 +39,9 @@ class AppStateStore {
         
         items = MutableArrayProperty(state.items)
         filter = MutableProperty(state.filter)
+        undoStack = MutableArrayProperty([items.value])        
         
-        
-        _ = items.asProperty.combineLatest(filter).subscribe {
+        items.asProperty.combineLatest(filter).subscribe {
             let appState = AppState(items: $0.0, filter: $0.1)
             AppStateStore.saveState(appState)
         }
@@ -47,7 +49,7 @@ class AppStateStore {
     
     //MARK: - persistent state storage
     
-    private struct AppState: Codable {
+    struct AppState: Codable {
         var items: [Item]
         var filter: VisibilityFilter
         

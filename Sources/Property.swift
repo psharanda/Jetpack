@@ -28,6 +28,7 @@ public struct Property<T>: PropertyProtocol {
         self.init(Observable.from(constant), getter: { constant })
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         observer(value)
         return self.observable.subscribe(observer)

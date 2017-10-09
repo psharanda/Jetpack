@@ -18,6 +18,7 @@ public struct Observable<T>: ObservableProtocol {
         self.generator = generator
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return generator(observer)
     }

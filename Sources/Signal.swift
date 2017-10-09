@@ -8,38 +8,44 @@ import Foundation
 /**
  Object which holds and manages subscribers and can broadcast values to them
  */
-public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
-    
-    private var observers: [TaggedObserver<T>] = []
-    
-    private var lastToken: UInt = 0
+public struct Signal<T>: ObservableProtocol, UpdateValueProtocol {
+  
+    private let observable: Observable<T>
+    private let receiver: Receiver<T>
     
     public init() {
-    }
-    
-    public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
-        lastToken += 1
+        var observers: [TaggedObserver<T>] = []
+        var lastToken: UInt = 0
         
-        let token = lastToken
-        observers.append(TaggedObserver<T>(token: token, observer: observer))
+        observable = Observable { observer in
+            lastToken += 1
+            
+            let token = lastToken
+            observers.append(TaggedObserver<T>(token: token, observer: observer))
+            
+            return DelegateDisposable {
+                guard let idx = (observers.index { $0.token == token }) else {
+                    return
+                }
+                
+                observers.remove(at: idx)
+            }
+        }
         
-        return DelegateDisposable { [weak self] in
-            self?.unsubscribe(token)
+        receiver = Receiver { newValue in
+            observers.forEach {
+                $0.observer(newValue)
+            }
         }
     }
     
     public func update(_ newValue: T) {
-        observers.forEach {
-            $0.observer(newValue)
-        }
+        receiver.update(newValue)
     }
     
-    private func unsubscribe(_ token: UInt) {
-        guard let idx = (observers.index { $0.token == token }) else {
-            return
-        }
-        
-        observers.remove(at: idx)
+    @discardableResult
+    public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
+        return observable.subscribe(observer)
     }
 }
 

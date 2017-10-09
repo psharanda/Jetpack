@@ -39,7 +39,7 @@ class TaskTests: XCTestCase {
         
         let r = Task(generator: requestHello)
         
-        _ = r.subscribe {
+        r.subscribe {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("Hello", value)
@@ -59,7 +59,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         let r = Task(generator: requestError)
-        _ = r.subscribe {
+        r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -117,7 +117,7 @@ class TaskTests: XCTestCase {
                 }
             }
         
-        _ = r.subscribe {
+        r.subscribe {
             switch $0 {
             case .success(let value):
                 XCTAssertEqual("HelloWorld!!!", value)
@@ -146,7 +146,7 @@ class TaskTests: XCTestCase {
                 }
             }
         
-        _ = r.subscribe {
+        r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -212,7 +212,7 @@ class TaskTests: XCTestCase {
                 expect.fulfill()
             }
         
-        _ = r.subscribe { _ in }
+        rsubscribe()
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -233,7 +233,7 @@ class TaskTests: XCTestCase {
             }
         
         
-        _ = r.subscribe { _ in }
+        rsubscribe()
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -250,7 +250,7 @@ class TaskTests: XCTestCase {
             }.forEachError { _ in
                 XCTFail("should not error")
         }
-        let c = r.subscribe { _ in }
+        let c = rsubscribe()
         
         c.dispose()
         
@@ -285,7 +285,7 @@ class TaskTests: XCTestCase {
             .forEachError { _ in
                 XCTFail("shoud not fail")
             }
-            .subscribe { _ in }
+            .subscribe()
 
         r.dispose()
         
@@ -314,7 +314,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = left.race(right)
+        left.race(right)
             .forEachValue { _ in
                 XCTFail("shoud not succeed")
                 expect.fulfill()
@@ -322,7 +322,7 @@ class TaskTests: XCTestCase {
             .forEachError { _ in
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -344,7 +344,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = left.race(right)
+        left.race(right)
             .forEachValue { value in
                 switch value {
                 case .left(let v):
@@ -358,7 +358,7 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -380,7 +380,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = left.race(right)
+        left.race(right)
             .forEachValue { value in
                 switch value {
                 case .left(_):
@@ -394,7 +394,7 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -413,7 +413,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = left.race(right)
+        left.race(right)
             .forEachValue { value in
                 switch value {
                 case .left(let v):
@@ -427,7 +427,7 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -455,7 +455,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.sequence([r1, r2, r3])
+        Task.sequence([r1, r2, r3])
             .forEachValue { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -464,7 +464,7 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -493,7 +493,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.sequence([r1, r2, r3])
+        Task.sequence([r1, r2, r3])
             .forEachValue { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
@@ -501,7 +501,7 @@ class TaskTests: XCTestCase {
             .forEachError { _ in
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -529,7 +529,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.concurrently([r1, r2, r3])
+        Task.concurrently([r1, r2, r3])
             .forEachValue { value in
                 XCTAssertEqual(value, ["r1", "r2", "r3"])
                 expect.fulfill()
@@ -538,7 +538,7 @@ class TaskTests: XCTestCase {
                 XCTFail("shoud not fail")
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -567,7 +567,7 @@ class TaskTests: XCTestCase {
             }
         }
 
-        let _ = Task.concurrently([r1, r2, r3])
+        Task.concurrently([r1, r2, r3])
             .forEachValue { value in
                 XCTFail("should not succeed")
                 expect.fulfill()
@@ -575,7 +575,7 @@ class TaskTests: XCTestCase {
             .forEachError { _ in
                 expect.fulfill()
             }
-            .subscribe { _ in }
+            .subscribe()
 
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -593,7 +593,7 @@ class TaskTests: XCTestCase {
             }
             .retry(numberOfTimes: 3, timeout: 0.1)
         
-        _ = r.subscribe {
+        r.subscribe {
             switch $0 {
             case .success(_):
                 XCTFail("should not have value")
@@ -628,11 +628,11 @@ class TaskTests: XCTestCase {
             }
         }
         
-        _ = DispatchQueue.main.jx.after(timeInterval: 0.6) { 
+        DispatchQueue.main.jx.after(timeInterval: 0.6) {
             cancelable.dispose()
         }
         
-        _ = DispatchQueue.main.jx.after(timeInterval: 0.65) { 
+        DispatchQueue.main.jx.after(timeInterval: 0.65) { 
             expect.fulfill()
         }
         

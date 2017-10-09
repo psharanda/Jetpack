@@ -45,6 +45,7 @@ public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
         }
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
         return property.subscribe(observer)
     }
@@ -59,7 +60,3 @@ public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
         return MutableProperty<U>(property: p, receiver: v)
     }
 }
-
-
-
-

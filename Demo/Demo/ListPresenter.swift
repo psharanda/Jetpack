@@ -9,76 +9,63 @@ import Jetpack
 class ListPresenter {
     
     unowned let view: ListViewProtocol
-    let storeItems: MutableArrayProperty<Item>
-    
-    private var undoStack = [[Item]]() {
-        didSet {
-            updateUndoStack()
-        }
-    }
-    
-    private func updateUndoStack() {
-        view.undoEnabled = undoStack.count > 1
-    }
-    
-    deinit {
-        print("deinit")
-    }
+    let appStateStore: AppStateStore
     
     private let apool = AutodisposePool()
     
-    init(view: ListViewProtocol, storeItems: MutableArrayProperty<Item> ) {
+    init(view: ListViewProtocol, appStateStore: AppStateStore) {
         self.view = view
-        self.storeItems = storeItems
+        self.appStateStore = appStateStore
         
-        undoStack.append(storeItems.value)
+        appStateStore.undoStack
+            .map { $0.0.count > 1 }
+            .bind(view.undoEnabled)
+            .autodispose(in: apool)
         
-        updateUndoStack()
-        
-        storeItems
+        appStateStore.items
             .bind(view.items)
             .autodispose(in: apool)
         
-        _ = view.didAdd
+        view.didAdd
             .subscribe {
                 let item = Item(id: UUID().uuidString, title: $0, completed: false)
-                self.storeItems.append(item)
-                self.undoStack.append(self.storeItems.value)
-            }
+                self.appStateStore.items.append(item)
+                self.appStateStore.undoStack.append(self.appStateStore.items.value)
+        }
         
-        _ = view.didToggle
+        view.didToggle
             .subscribe {
-                var item = self.storeItems.value[$0.0]
+                var item = appStateStore.items.value[$0.0]
                 item.completed = $0.1
-                self.storeItems.update(at: $0.0, with: item)
-                self.undoStack.append(self.storeItems.value)
-            }
+                self.appStateStore.items.update(at: $0.0, with: item)
+                self.appStateStore.undoStack.append(self.appStateStore.items.value)
+        }
         
-        _ = view.didDelete
+        view.didDelete
             .subscribe {
-                self.storeItems.remove(at: $0)
-                self.undoStack.append(self.storeItems.value)
-            }
+                self.appStateStore.items.remove(at: $0)
+                self.appStateStore.undoStack.append(self.appStateStore.items.value)
+        }
         
-        _ = view.didMove
+        view.didMove
             .subscribe {
-                self.storeItems.move(from: $0.0, to: $0.1)
-                self.undoStack.append(self.storeItems.value)
-            }
+                self.appStateStore.items.move(from: $0.0, to: $0.1)
+                self.appStateStore.undoStack.append(self.appStateStore.items.value)
+        }
         
-        _ = view.didClean
+        view.didClean
             .subscribe {
-                self.storeItems.update([])
-                self.undoStack.append(self.storeItems.value)
-            }
+                self.appStateStore.items.update([])
+                self.appStateStore.undoStack.append(self.appStateStore.items.value)
+        }
         
-        _ = view.didUndo
+        view.didUndo
             .subscribe {
-                if self.undoStack.count > 1 {
-                    self.undoStack.removeLast()
-                    self.storeItems.update(self.undoStack[self.undoStack.count - 1])
+                if self.appStateStore.undoStack.value.count > 1 {
+                    self.appStateStore.undoStack.remove(at: self.appStateStore.undoStack.value.count - 1)
+                    self.appStateStore.items.update(self.appStateStore.undoStack.value[self.appStateStore.undoStack.value.count - 1])
                 }
-            }
-    }
-
+        }
+    }    
 }
+

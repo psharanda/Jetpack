@@ -18,6 +18,16 @@ public struct Variable<T>: VariableProtocol {
         return getter()
     }
     
+    public init(_ value: T) {
+        var v = value
+        
+        self.init(setter: {
+            v = $0
+        }, getter: {
+            return v
+        })
+    }
+    
     public init(setter: @escaping (T)->Void, getter: @escaping ()->T) {
         self.setter = setter
         self.getter = getter

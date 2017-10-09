@@ -10,4 +10,11 @@ public protocol ObservableProtocol {
     func subscribe(_ observer: @escaping (ValueType) -> Void) -> Disposable
 }
 
+extension ObservableProtocol {
+    
+    @discardableResult
+    func subscribe() -> Disposable {
+        return subscribe {_ in }
+    }
+}
 

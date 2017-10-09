@@ -24,9 +24,11 @@ public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol
         signal.update((elements, .update(at)))
     }
     
-    public func remove(at: Int) {
-        elements.remove(at: at)
+    @discardableResult
+    public func remove(at: Int) -> T {
+        let el = elements.remove(at: at)
         signal.update((elements, .remove(at)))
+        return el
     }
     
     public func append(_ newElement: T) {
@@ -48,6 +50,7 @@ public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol
         signal.update((elements, .set))
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (([T], ArrayEditEvent)) -> Void) -> Disposable {
         observer((elements, .set))
         return signal.subscribe(observer)
@@ -84,9 +87,11 @@ public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtoc
         signal.update((elements, .updateSection(at)))
     }
     
-    public func removeSection(at: Int) {
-        elements.remove(at: at)
+    @discardableResult
+    public func removeSection(at: Int) -> [T] {
+        let el = elements.remove(at: at)
         signal.update((elements, .removeSection(at)))
+        return el
     }
     
     public func insertSection(_ newElement: [T], at: Int) {
@@ -104,9 +109,11 @@ public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtoc
         signal.update((elements, .updateItem(at)))
     }
     
-    public func removeItem(at: IndexPath) {
-        elements[at.section].remove(at: at.row)
+    @discardableResult
+    public func removeItem(at: IndexPath) -> T {
+        let el = elements[at.section].remove(at: at.row)
         signal.update((elements, .removeItem(at)))
+        return el
     }
     
     public func insertItem(_ newElement: T, at: IndexPath) {
@@ -124,6 +131,7 @@ public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtoc
         signal.update((elements, .set))
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (([[T]], Array2DEditEvent)) -> Void) -> Disposable {
         observer((elements, .set))
         return signal.subscribe(observer)

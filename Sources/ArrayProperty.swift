@@ -34,6 +34,7 @@ public struct ArrayProperty<T>: ObservableProtocol, GetValueProtocol  {
         self.init(Observable.from((constant, .set)), getter: { constant })
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (([T], ArrayEditEvent)) -> Void) -> Disposable {
         observer((value, .set))
         return observable.subscribe(observer)
@@ -77,6 +78,7 @@ public struct Array2DProperty<T>: ObservableProtocol, GetValueProtocol  {
         self.init(Observable.from((constant, .set)), getter: { constant })
     }
     
+    @discardableResult
     public func subscribe(_ observer: @escaping (([[T]], Array2DEditEvent)) -> Void) -> Disposable {
         observer((value, .set))
         return observable.subscribe(observer)

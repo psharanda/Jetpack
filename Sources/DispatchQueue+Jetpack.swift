@@ -8,6 +8,7 @@ import Foundation
 
 extension JetpackExtensions where Base: DispatchQueue {
 
+    @discardableResult
     public func after(timeInterval: TimeInterval, action: @escaping ()->Void) ->  Disposable {
         var closure = Optional.some(action)
         
@@ -22,6 +23,7 @@ extension JetpackExtensions where Base: DispatchQueue {
         return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
     }
     
+    @discardableResult
     public func async(action: @escaping ()->Void) ->  Disposable {
         var closure = Optional.some(action)
         
@@ -36,6 +38,7 @@ extension JetpackExtensions where Base: DispatchQueue {
         return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
     }
     
+    @discardableResult
     public func execute<T>(worker: @escaping ()->T, completionQueue: DispatchQueue = .main, completion: @escaping (T)->Void) -> Disposable {
         var cancelled = false
         

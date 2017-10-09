@@ -67,9 +67,9 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
     let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
     
-    var undoEnabled: Bool = false {
-        didSet {
-            undoButton.isEnabled = undoEnabled
+    var undoEnabled: Receiver<Bool> {
+        return Receiver { [weak self] in
+            self?.undoButton.isEnabled = $0
         }
     }
     
@@ -123,10 +123,10 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         view.addSubview(tableView)
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .add)
-        _ = addButton.jx.clicked.map { Lorem.words(2) }.bind(_didAdd)
+        addButton.jx.clicked.map { Lorem.words(2) }.bind(_didAdd)
         
         
-        _ = undoButton.jx.clicked.bind(_didUndo)
+        undoButton.jx.clicked.bind(_didUndo)
         
         navigationItem.rightBarButtonItems = [addButton, undoButton]
         
@@ -136,12 +136,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         navigationItem.leftBarButtonItems = [editButton, cleanButton]
     
-        _ = editButton.jx.clicked.subscribe { [unowned self] in
+        editButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(true, animated: true)
             self.navigationItem.leftBarButtonItems = [self.doneButton, self.cleanButton]
         }
         
-        _ = doneButton.jx.clicked.subscribe { [unowned self] in
+        doneButton.jx.clicked.subscribe { [unowned self] in
             self.tableView.setEditing(false, animated: true)
             self.navigationItem.leftBarButtonItems = [self.editButton, self.cleanButton]
         }
