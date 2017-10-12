@@ -212,7 +212,7 @@ class TaskTests: XCTestCase {
                 expect.fulfill()
             }
         
-        rsubscribe()
+        r.subscribe()
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -233,7 +233,7 @@ class TaskTests: XCTestCase {
             }
         
         
-        rsubscribe()
+        r.subscribe()
         
         self.waitForExpectations(timeout: 5) { error in
             XCTAssertNil(error)
@@ -250,7 +250,7 @@ class TaskTests: XCTestCase {
             }.forEachError { _ in
                 XCTFail("should not error")
         }
-        let c = rsubscribe()
+        let c = r.subscribe()
         
         c.dispose()
         

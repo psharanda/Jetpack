@@ -7,7 +7,13 @@
 //
 
 import Foundation
-import UIKit
+
+#if os(macOS)
+    import AppKit
+#else
+    import UIKit
+#endif
+
 import XCTest
 import Jetpack
 
@@ -177,18 +183,24 @@ class JetpackTests: XCTestCase {
 //        XCTAssertEqual(firedTimes, 3)
 //    }
     
+    
+    #if os(macOS)
+    
+    #else
     func testJetpackButton2() {
-        
+    
         let signal = Signal<UIImage>()
-        
+
         do {
-            let button = UIButton()
-            signal.bind(button.jx.backgroundImage)
+        let button = UIButton()
+        signal.bind(button.jx.backgroundImage)
         }
-        
+
         signal.update(UIImage())
-        
+    
     }
+    #endif
+    
     
     func testCombineLatest() {
         let a = Signal<Int>()
@@ -621,7 +633,7 @@ class JetpackTests: XCTestCase {
         var expectedValue = 10
         
         let d = buttonClick
-            .flatMapLatest {
+            .flatMapLatest { _ in
                 return Observable.from(genValue)
             }
             .subscribe {
@@ -649,7 +661,7 @@ class JetpackTests: XCTestCase {
         let expectedValue = Result(value: 20)
         
         buttonClick
-            .flatMapLatest {
+            .flatMapLatest { _ in
                 return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
             }
             .subscribe {
@@ -670,7 +682,7 @@ class JetpackTests: XCTestCase {
         var expectedValue = 10
         
         let d = buttonClick
-            .flatMapMerge {
+            .flatMapMerge { _ in
                 return Observable.from(genValue)
             }
             .subscribe {
@@ -690,26 +702,27 @@ class JetpackTests: XCTestCase {
         buttonClick.update()
     }
     
-    
+    #if os(macOS)
+
+    #else
     func testNotificationCenter() {
-        
         var firedTimes = 0
-        
+
         let disposable = NotificationCenter.default.jx.observer(forName: .UIApplicationDidEnterBackground).subscribe { value in
-            firedTimes += 1
-            XCTAssertEqual(value.userInfo?["hello"] as! String, "world")
+        firedTimes += 1
+        XCTAssertEqual(value.userInfo?["hello"] as! String, "world")
         }
-        
+
         NotificationCenter.default.post(name: .UIApplicationDidEnterBackground, object: nil, userInfo: ["hello": "world"])
         XCTAssertEqual(firedTimes, 1)
 
         disposable.dispose()
-        
+
         NotificationCenter.default.post(name: .UIApplicationDidEnterBackground, object: nil, userInfo: ["hello": "world"])
-        
+
         XCTAssertEqual(firedTimes, 1)
     }
-    
+    #endif
     
     func testMemory() {
         
@@ -916,11 +929,11 @@ class JetpackTests: XCTestCase {
             case .removeItem(let idx):
                 s[idx.section].remove(at: idx.item)
             case .insertItem(let idx):
-                s[idx.section].insert(s[idx.section][idx.row], at: idx.row)
+                s[idx.section].insert(s[idx.section][idx.item], at: idx.item)
             case .moveItem(let from, let to):
-                s[to.section].insert(s[from.section].remove(at: from.row), at: to.row)
+                s[to.section].insert(s[from.section].remove(at: from.item), at: to.item)
             case .updateItem(let idx):
-                s[idx.section][idx.row] = $0.0[idx.section][idx.row]
+                s[idx.section][idx.item] = $0.0[idx.section][idx.item]
             }
         }
 

@@ -4,6 +4,11 @@
 //
 
 import Foundation
+#if os(macOS)
+    import AppKit
+#else
+    import UIKit
+#endif
 
 
 public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol {
@@ -111,18 +116,18 @@ public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtoc
     
     @discardableResult
     public func removeItem(at: IndexPath) -> T {
-        let el = elements[at.section].remove(at: at.row)
+        let el = elements[at.section].remove(at: at.item)
         signal.update((elements, .removeItem(at)))
         return el
     }
     
     public func insertItem(_ newElement: T, at: IndexPath) {
-        elements[at.section].insert(newElement, at: at.row)
+        elements[at.section].insert(newElement, at: at.item)
         signal.update((elements, .insertItem(at)))
     }
     
     public func moveItem(from: IndexPath, to: IndexPath) {
-        elements[to.section].insert(elements[from.section].remove(at: from.row), at: to.row)
+        elements[to.section].insert(elements[from.section].remove(at: from.item), at: to.item)
         signal.update((elements, .moveItem(from, to)))
     }
     
