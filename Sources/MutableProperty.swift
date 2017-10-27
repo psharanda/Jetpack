@@ -11,12 +11,7 @@ import Foundation
 public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
     
     public var value: T {
-        get {
-            return property.value
-        }
-        set {
-            receiver.update(newValue)
-        }
+        return property.value
     }
     
     private let property: Property<T>
