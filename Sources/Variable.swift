@@ -10,7 +10,7 @@ public protocol VariableProtocol: UpdateValueProtocol , GetValueProtocol { }
 /**
  Wrapper around some state which provides interface to get/set value
  */
-public struct Variable<T>: VariableProtocol {
+public final class Variable<T>: VariableProtocol {
     private let setter: (T)->Void
     private let getter: ()->T
     
@@ -18,7 +18,7 @@ public struct Variable<T>: VariableProtocol {
         return getter()
     }
     
-    public init(_ value: T) {
+    public convenience init(_ value: T) {
         var v = value
         
         self.init(setter: {

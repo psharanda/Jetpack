@@ -8,7 +8,7 @@ import Foundation
 /**
  Object which holds and manages subscribers and can broadcast values to them
  */
-public struct Signal<T>: ObservableProtocol, UpdateValueProtocol {
+public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
   
     private let observable: Observable<T>
     private let receiver: Receiver<T>

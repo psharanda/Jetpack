@@ -8,10 +8,15 @@ import Foundation
 /**
  Standalone reactive state
  */
-public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
+public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
     
     public var value: T {
-        return property.value
+        get {
+            return property.value
+        }
+        set {
+            receiver.update(newValue)
+        }
     }
     
     private let property: Property<T>
@@ -55,8 +60,18 @@ public struct MutableProperty<T>: PropertyProtocol, VariableProtocol {
     }
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
-        let p: Property<U> = property.map(transform)
-        let v: Receiver<U> = receiver.map(getter: { self.value }, reduce: reduce)
-        return MutableProperty<U>(property: p, receiver: v)
+        let p = property.map(transform)
+        let r = Receiver<U> { self.update(reduce(self.value, $0)) }
+        return MutableProperty<U>(property: p, receiver: r)
+    }
+    
+    public func map<U>(keyPath: WritableKeyPath<T, U>) -> MutableProperty<U> {
+        let p = property.map(keyPath: keyPath)
+        let r = Receiver<U> {
+            var newValue = self.value
+            newValue[keyPath: keyPath] = $0
+            self.update(newValue)
+        }
+        return MutableProperty<U>(property: p, receiver: r)
     }
 }

@@ -10,7 +10,16 @@ extension ObservableProtocol {
     public func map<U>(_ transform: @escaping (ValueType)-> U) -> Observable<U> {
         return Observable<U> { observer in
             return self.subscribe { result in
-                observer((transform(result)))
+                observer(transform(result))
+            }
+        }
+    }
+    
+    public func map<U>(keyPath: KeyPath<ValueType, U>) -> Observable<U> {
+        
+        return Observable<U> { observer in
+            return self.subscribe { result in
+                observer(result[keyPath: keyPath])
             }
         }
     }

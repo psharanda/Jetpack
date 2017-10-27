@@ -8,7 +8,7 @@ import Foundation
 /**
  Wrapper around some state which provides interface for binding
  */
-public struct Receiver<T>: UpdateValueProtocol {
+public final class Receiver<T>: UpdateValueProtocol {
 
     private let setter: (T)->Void
     
@@ -28,10 +28,8 @@ extension Receiver {
         }
     }
     
-    public func map<U>(getter: @escaping () -> T, reduce: @escaping (T, U) -> T) -> Receiver<U> {
-        return Receiver<U> {
-            self.update(reduce(getter(), $0))
-        }
+    public func map<U>(keyPath: KeyPath<U, UpdateValueType>) -> Receiver<U> {
+        return map { $0[keyPath: keyPath] }
     }
 }
 

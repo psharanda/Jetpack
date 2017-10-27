@@ -10,7 +10,7 @@ public protocol PropertyProtocol: ObservableProtocol , GetValueProtocol { }
 /**
  Wrapper around some state which provides interface for observing state changes. state always exist and always has some value
  */
-public struct Property<T>: PropertyProtocol {
+public final class Property<T>: PropertyProtocol {
     
     private let observable: Observable<T>
     private let getter: ()->T
@@ -24,7 +24,7 @@ public struct Property<T>: PropertyProtocol {
         self.observable = observable
     }
     
-    public init(constant: T) {
+    public convenience  init(constant: T) {
         self.init(Observable.from(constant), getter: { constant })
     }
     
@@ -37,6 +37,12 @@ public struct Property<T>: PropertyProtocol {
     public func map<U>(_ transform: @escaping (T) -> U) -> Property<U> {
         return Property<U>(observable.map(transform)) {
             transform(self.getter())
+        }
+    }
+
+    public func map<U>(keyPath: KeyPath<T, U>) -> Property<U> {
+        return Property<U>(observable.map(keyPath: keyPath)) {
+            self.getter()[keyPath: keyPath]
         }
     }
 }

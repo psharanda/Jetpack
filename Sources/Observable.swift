@@ -8,7 +8,7 @@ import Foundation
 /**
  Building block to chain observables
  */
-public struct Observable<T>: ObservableProtocol {
+public final class Observable<T>: ObservableProtocol {
     
     public typealias ValueType = T
     
@@ -29,7 +29,7 @@ extension Observable {
     /**
      Create task with worker which will be run in workerQueue and send result to completionQueue. Worker can produce value or error.
      */
-    public init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) {
+    public convenience init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) {
         self.init { completion in
             return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: T) in
                 completion(value)

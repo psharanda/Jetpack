@@ -52,6 +52,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                 tableView.deleteRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
             case .insert(let idx):
                 tableView.insertRows(at: [IndexPath(row: idx, section: 0) ], with: .automatic)
+                tableView.scrollToRow(at: IndexPath(row: idx, section: 0), at: .bottom, animated: true)
             case .move(let from, let to):
                 tableView.moveRow(at: IndexPath(row: from, section: 0), to: IndexPath(row: to, section: 0))
             case .update(let idx):

@@ -985,6 +985,21 @@ class JetpackTests: XCTestCase {
         control = upd2
         prop.update(upd2)
     }
+    
+    func testKeyPathMap() {
+        
+        struct User {
+            var name: String
+            var age: Int
+        }
+        
+        let prop = MutableProperty(User(name: "John", age: 30))
+        
+        let nameProp = prop.map(keyPath: \User.name)
+        nameProp.update("Mike")
+        
+        XCTAssertEqual(prop.value.name, nameProp.value)
+    }
 }
 
 var numberOfDeinits = 0

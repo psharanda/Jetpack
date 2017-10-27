@@ -36,19 +36,6 @@ extension ObservableProtocol where ValueType: Optionable {
     }
 }
 
-extension ObservableProtocol where ValueType: Sequence, ValueType.Iterator.Element: Optionable  {
-    public var anySome: Observable<ValueType.Iterator.Element.Wrapped> {
-        return flatMap { res in
-            for r in res {
-                if let d = (r.flatMap { $0 }) {
-                    return d
-                }
-            }
-            return nil
-        }
-    }
-}
-
 extension ObservableProtocol {
     public var optionalized: Observable<ValueType?> {
         return map { Optional.some($0) }
