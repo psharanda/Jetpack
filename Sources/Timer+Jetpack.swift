@@ -27,7 +27,7 @@ private class TimerOwner: NSObject {
 }
 
 private class TimerDisposable: Disposable {
-    weak var timer: Timer?
+    private weak var timer: Timer?
     
     init(timer: Timer) {
         self.timer = timer

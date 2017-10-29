@@ -20,7 +20,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             closure?()
         }
         
-        return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
+        return DelegateDisposable { cancelableClosure() }
     }
     
     @discardableResult
@@ -35,7 +35,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             closure?()
         }
         
-        return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
+        return DelegateDisposable { cancelableClosure() }
     }
     
     @discardableResult
@@ -57,21 +57,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             }
         }
         
-        return DispatchQueueDisposable(cancelableClosure: cancelableClosure);
+        return DelegateDisposable { cancelableClosure() }
     }
 }
 
-private typealias Cancelation = () -> Void
-
-private class DispatchQueueDisposable: Disposable {
-    private var cancelableClosure: Cancelation?
-    
-    init(cancelableClosure: @escaping Cancelation) {
-        self.cancelableClosure = cancelableClosure
-    }
-    
-    func dispose() {
-        cancelableClosure?()
-        cancelableClosure = nil
-    }
-}

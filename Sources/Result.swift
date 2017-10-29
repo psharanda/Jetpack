@@ -59,7 +59,6 @@ public enum Result<T>: ResultConvertible {
 }
 
 
-
 extension Result {
     public func map<U>(_ transform: (T) throws -> U) rethrows -> Result<U> {
         switch self {

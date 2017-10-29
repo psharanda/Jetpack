@@ -53,6 +53,9 @@ public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
     public func update(_ newValue: T) {
         receiver.update(newValue)
     }
+}
+
+extension MutableProperty {
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
         let p = property.map(transform)

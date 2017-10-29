@@ -3,7 +3,7 @@ import UIKit
 extension JetpackExtensions where Base: UIButton {
     
     public var clicked: Observable<Void> {
-        return signalControlEvents(.touchUpInside) {_ in }
+        return controlEventDidFire(.touchUpInside)
     }
 
 	public var title: Receiver<String?> {
@@ -11,7 +11,7 @@ extension JetpackExtensions where Base: UIButton {
 	}
 
 	public func title(for state: UIControlState) -> Receiver<String?> {
-		return jx_makeReceiver(key: "\(#function) \(state.rawValue)") { $0.setTitle($1, for: state) }
+		return jx_makeReceiver { $0.setTitle($1, for: state) }
 	}
     
     public var attributedTitle: Receiver<NSAttributedString?> {
@@ -19,7 +19,7 @@ extension JetpackExtensions where Base: UIButton {
     }
     
     public func attributedTitle(for state: UIControlState) -> Receiver<NSAttributedString?> {
-        return jx_makeReceiver(key: "\(#function) \(state.rawValue)") { $0.setAttributedTitle($1, for: state) }
+        return jx_makeReceiver { $0.setAttributedTitle($1, for: state) }
     }
     
     public var image: Receiver<UIImage?> {
@@ -27,7 +27,7 @@ extension JetpackExtensions where Base: UIButton {
     }
 
 	public func image(for state: UIControlState) -> Receiver<UIImage?> {
-		return jx_makeReceiver(key: "\(#function) (\(state.rawValue)") { $0.setImage($1, for: state) }
+		return jx_makeReceiver { $0.setImage($1, for: state) }
 	}
     
     public var backgroundImage: Receiver<UIImage?> {
@@ -35,7 +35,7 @@ extension JetpackExtensions where Base: UIButton {
     }
     
     public func backgroundImage(for state: UIControlState) -> Receiver<UIImage?> {
-        return jx_makeReceiver(key: "\(#function) \(state.rawValue)") { $0.setBackgroundImage($1, for: state) }
+        return jx_makeReceiver { $0.setBackgroundImage($1, for: state) }
     }
 
 }

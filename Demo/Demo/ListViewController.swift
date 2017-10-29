@@ -122,32 +122,23 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        
+
         let addButton = UIBarButtonItem(barButtonSystemItem: .add)
         addButton.jx.clicked.map { Lorem.words(2) }.bind(_didAdd)
-        
-        
-        undoButton.jx.clicked.bind(_didUndo)
-        
-        navigationItem.rightBarButtonItems = [addButton, undoButton]
-        
 
-        
+
+        undoButton.jx.clicked.bind(_didUndo)
+
+        navigationItem.rightBarButtonItems = [addButton, undoButton]
+
         cleanButton.jx.clicked.bind(_didClean).autodispose(in: apool)
-        
-        navigationItem.leftBarButtonItems = [editButton, cleanButton]
+
+        navigationItem.leftBarButtonItems = [editButtonItem, cleanButton]
+    }
     
-        editButton.jx.clicked.subscribe { [unowned self] in
-            self.tableView.setEditing(true, animated: true)
-            self.navigationItem.leftBarButtonItems = [self.doneButton, self.cleanButton]
-        }
-        
-        doneButton.jx.clicked.subscribe { [unowned self] in
-            self.tableView.setEditing(false, animated: true)
-            self.navigationItem.leftBarButtonItems = [self.editButton, self.cleanButton]
-        }
-        
-        
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: animated)
     }
     
     override func viewDidLayoutSubviews() {

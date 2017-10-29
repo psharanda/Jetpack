@@ -4,20 +4,20 @@ import QuartzCore
 extension JetpackExtensions where Base: CADisplayLink {    
     public static func repeated(timeInterval: TimeInterval = TimeInterval.greatestFiniteMagnitude, skipFrames: Int = 0) -> Observable<Double> {
         return Observable<Double> { generator in
-            return DisplayLinkDisposable(interpolator: DisplayLinkTask(timeInterval: timeInterval, skipFrames: skipFrames, generator: generator))
+            return DisplayLinkDisposable(displayLinkTask: DisplayLinkTask(timeInterval: timeInterval, skipFrames: skipFrames, generator: generator))
         }
     }
 }
 
 private class DisplayLinkDisposable: Disposable {
     
-    weak var interpolator: DisplayLinkTask?
-    init(interpolator: DisplayLinkTask) {
-        self.interpolator = interpolator
+    private weak var displayLinkTask: DisplayLinkTask?
+    init(displayLinkTask: DisplayLinkTask) {
+        self.displayLinkTask = displayLinkTask
     }
     func dispose() {
-        interpolator?.stopDisplayLink()
-        interpolator = nil
+        displayLinkTask?.stopDisplayLink()
+        displayLinkTask = nil
     }
 }
 

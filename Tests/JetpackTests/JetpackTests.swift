@@ -996,6 +996,7 @@ class JetpackTests: XCTestCase {
         let prop = MutableProperty(User(name: "John", age: 30))
         
         let nameProp = prop.map(keyPath: \User.name)
+        
         nameProp.update("Mike")
         
         XCTAssertEqual(prop.value.name, nameProp.value)

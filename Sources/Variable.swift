@@ -36,6 +36,10 @@ public final class Variable<T>: VariableProtocol {
     public func update(_ newValue: T) {
         setter(newValue)
     }
+}
+
+
+extension Variable {
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> Variable<U> {
         return Variable<U>(setter: {

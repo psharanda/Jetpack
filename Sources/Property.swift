@@ -33,20 +33,22 @@ public final class Property<T>: PropertyProtocol {
         observer(value)
         return self.observable.subscribe(observer)
     }
+}
+
+extension Property {
     
     public func map<U>(_ transform: @escaping (T) -> U) -> Property<U> {
         return Property<U>(observable.map(transform)) {
-            transform(self.getter())
+            transform(self.value)
         }
     }
-
+    
     public func map<U>(keyPath: KeyPath<T, U>) -> Property<U> {
         return Property<U>(observable.map(keyPath: keyPath)) {
-            self.getter()[keyPath: keyPath]
+            self.value[keyPath: keyPath]
         }
     }
 }
-
 
 extension PropertyProtocol where ValueType == GetValueType {
     public var asProperty: Property<ValueType> {
