@@ -108,8 +108,7 @@ public final class MultiDisposable: Disposable {
 public final class AutodisposePool {
     private let multi = MultiDisposable()
     
-    public init() {
-    }
+    public init() { }
     
     public func add(_ disposable: Disposable) {
         multi.add(disposable)
@@ -120,12 +119,37 @@ public final class AutodisposePool {
     }
     
     deinit {
-        multi.dispose()
+        drain()
+    }
+}
+
+public final class AutodisposeBox {
+    
+    private var disposable: Disposable?
+    
+    public init() { }
+    
+    public func put(_ disposable: Disposable) {
+        drain()
+        self.disposable = disposable
+    }
+    
+    public func drain() {
+        disposable?.dispose()
+        disposable = nil
+    }
+    
+    deinit {
+        drain()
     }
 }
 
 extension Disposable {
     public func autodispose(in pool: AutodisposePool) {
         pool.add(self)
+    }
+    
+    public func autodispose(in box: AutodisposeBox) {
+        box.put(self)
     }
 }

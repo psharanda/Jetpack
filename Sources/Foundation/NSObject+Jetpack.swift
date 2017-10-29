@@ -57,16 +57,19 @@ extension JetpackExtensions where Base: NSObject {
         
         
         return Observable {
-            let target = ActionTarget(base: self.base, observer: $0, getter: getter)
+            let base = self.base
+            
+            let target = ActionTarget(base: base, observer: $0, getter: getter)
             let key = ObjectIdentifier(target).debugDescription
             let action = #selector(ActionTarget<Base, T>.handleEvent)
-            setup(self.base, target, action)
+            setup(base, target, action)
             
-            self.base.jx.jx_setObject(target, forKey: key)
+            base.jx.jx_setObject(target, forKey: key)
             
-            return DelegateDisposable {
-                cleanup(self.base, target, action)
-                self.base.jx.jx_removeObject(forKey: key)
+            return DelegateDisposable { [weak base] in
+                guard let base = base else { return }
+                cleanup(base, target, action)
+                base.jx.jx_removeObject(forKey: key)
             }
         }
     }
@@ -84,16 +87,20 @@ extension JetpackExtensions where Base: NSObject {
                                   name: Notification.Name,
                                   getter: @escaping (Base)->T) -> Property<T> {
         let observable = Observable<T> {
-            let target = NotificationTarget(base: self.base, observer: $0, getter: getter)
+            
+            let base = self.base
+            
+            let target = NotificationTarget(base: base, observer: $0, getter: getter)
             let key = ObjectIdentifier(target).debugDescription
             let action = #selector(NotificationTarget<Base, T>.handleNotification(notification:))
             NotificationCenter.default.addObserver(target, selector: action, name: name, object: nil)
             
-            self.base.jx.jx_setObject(target, forKey: key)
+            base.jx.jx_setObject(target, forKey: key)
             
-            return DelegateDisposable {
+            return DelegateDisposable { [weak base] in
+                guard let base = base else { return }
                 NotificationCenter.default.removeObserver(target)
-                self.base.jx.jx_removeObject(forKey: key)
+                base.jx.jx_removeObject(forKey: key)
             }
         }
         
@@ -103,12 +110,14 @@ extension JetpackExtensions where Base: NSObject {
     }
     
     public var autodisposePool: AutodisposePool {
-        return autodisposePool(for: "")
+        return jx_lazyObject(key: #function) {
+            return AutodisposePool()
+        }
     }
     
-    public func autodisposePool(for key: String) -> AutodisposePool {
+    public func autodisposeBox(for key: String) -> AutodisposeBox {
         return jx_lazyObject(key: #function + key) {
-            return AutodisposePool()
+            return AutodisposeBox()
         }
     }
 }
