@@ -3,7 +3,7 @@ import UIKit
 extension JetpackExtensions where Base: UIButton {
     
     public var clicked: Observable<Void> {
-        return controlEventDidFire(.touchUpInside)
+        return controlEvents(.touchUpInside)
     }
 
 	public var title: Receiver<String?> {

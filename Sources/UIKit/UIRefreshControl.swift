@@ -10,7 +10,7 @@ extension JetpackExtensions where Base: UIRefreshControl {
 		return jx_makeReceiver { $0.attributedTitle = $1 }
 	}
     
-    public var values: Property<Bool> {
+    public var isRefreshingValues: Property<Bool> {
         return propertyControlEvents(.valueChanged) { $0.isRefreshing }
     }
 }

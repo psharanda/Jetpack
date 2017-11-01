@@ -6,7 +6,7 @@ extension JetpackExtensions where Base: UISwitch {
         return jx_makeReceiver { $0.isOn = $1 }
 	}
 
-	public var values: Property<Bool> {
+	public var isOnValues: Property<Bool> {
 		return propertyControlEvents(.valueChanged) { $0.isOn }
 	}
 }

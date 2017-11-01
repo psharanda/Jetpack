@@ -8,7 +8,7 @@ fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
 
 extension JetpackExtensions where Base: UIControl {
 
-    public func controlEventDidFire(_ controlEvents: UIControlEvents) -> Observable<Void> {
+    public func controlEvents(_ controlEvents: UIControlEvents) -> Observable<Void> {
         return jx_makeTargetActionObservable(setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
         }, cleanup: { base, target, action in
