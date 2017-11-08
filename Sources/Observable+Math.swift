@@ -61,7 +61,7 @@ extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol where ValueType == Bool {
+extension ObservableProtocol where ValueType == Bool {
     
     public func and<T: ObservableProtocol>(_ observable: T) -> Observable<Bool> where T.ValueType == ValueType {
         return combine(observable).map {

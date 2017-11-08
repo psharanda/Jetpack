@@ -5,7 +5,7 @@
 
 import Foundation
 
-public extension ObservableProtocol {
+extension ObservableProtocol {
     
     @discardableResult
     public func bind<T: UpdateValueProtocol>(_ bindable: T) -> Disposable where T.UpdateValueType == ValueType {

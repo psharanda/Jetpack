@@ -235,7 +235,7 @@ extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol where ValueType: Equatable {
+extension ObservableProtocol where ValueType: Equatable {
     
     public var distinct: Observable<ValueType> {
     

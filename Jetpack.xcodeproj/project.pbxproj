@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B17E3751FB353CA009EA30A /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
+		1B17E3761FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
+		1B17E3771FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
 		1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1B34602B1F6FD42C003BF7DC /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
 		1B34602C1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
@@ -128,9 +131,6 @@
 		1B6E88451E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88461E9E17850063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B6E88471E9E17860063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
-		1B6E88531E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
-		1B6E88541E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
-		1B6E88561E9E18B40063D5EB /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
 		1BA2EF731E9E412400B92618 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
@@ -170,7 +170,6 @@
 		1BF0147B1EA208360061B4D9 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88371E9E17180063D5EB /* Task.swift */; };
 		1BF0147C1EA208360061B4D9 /* Observable+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA2EF721E9E412400B92618 /* Observable+Task.swift */; };
 		1BF0147F1EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
-		1BF014801EA208360061B4D9 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88521E9E18B40063D5EB /* Either.swift */; };
 		1BF014811EA208360061B4D9 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B4939661E9E34100005452A /* Result.swift */; };
 		1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
 		1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
@@ -256,7 +255,6 @@
 		1B6E882D1E9E170B0063D5EB /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Disposable.swift; path = Sources/Disposable.swift; sourceTree = "<group>"; };
 		1B6E88371E9E17180063D5EB /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Task.swift; path = Sources/Task.swift; sourceTree = "<group>"; };
 		1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Jetpack.swift"; path = "Sources/DispatchQueue+Jetpack.swift"; sourceTree = "<group>"; };
-		1B6E88521E9E18B40063D5EB /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Either.swift; path = Sources/Either.swift; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
 		1BA2EF721E9E412400B92618 /* Observable+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Task.swift"; path = "Sources/Observable+Task.swift"; sourceTree = "<group>"; };
@@ -337,6 +335,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B17E3791FB353F8009EA30A /* CoreAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */,
+			);
+			name = CoreAnimation;
+			sourceTree = "<group>";
+		};
 		1B6E86F91E9ADB540063D5EB /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,7 +384,6 @@
 				1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */,
 				1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
-				1B6E88521E9E18B40063D5EB /* Either.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
 			);
 			name = Primitives;
@@ -435,6 +440,7 @@
 			children = (
 				52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */,
 				1B8649A41EA0DCC300D30004 /* Foundation */,
+				1B17E3791FB353F8009EA30A /* CoreAnimation */,
 				1B6E86F91E9ADB540063D5EB /* UIKit */,
 			);
 			name = Extensions;
@@ -447,7 +453,6 @@
 				1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */,
 				1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */,
 				1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */,
-				1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */,
 			);
 			name = Foundation;
 			sourceTree = "<group>";
@@ -807,7 +812,6 @@
 				1B6E872D1E9ADB540063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B69978D1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E87331E9ADB540063D5EB /* UISlider.swift in Sources */,
-				1B6E88531E9E18B40063D5EB /* Either.swift in Sources */,
 				1B6E87101E9ADB540063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E88321E9E170B0063D5EB /* Disposable.swift in Sources */,
@@ -882,8 +886,8 @@
 				1B6E87541E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
 				1BF0147F1EA208360061B4D9 /* Result.swift in Sources */,
 				1BF014741EA208290061B4D9 /* Observable.swift in Sources */,
-				1BF014801EA208360061B4D9 /* Either.swift in Sources */,
 				1BC89F4A1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
+				1B17E3751FB353CA009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E87831E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1B6E877C1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF0147B1EA208360061B4D9 /* Task.swift in Sources */,
@@ -925,11 +929,11 @@
 				1BF014861EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E88021E9E15F20063D5EB /* UIImageView.swift in Sources */,
 				1B6E88011E9E15F20063D5EB /* UIGestureRecognizer.swift in Sources */,
+				1B17E3771FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E87FF1E9E15F20063D5EB /* UIControl.swift in Sources */,
 				1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
 				1B6E87921E9ADC280063D5EB /* Observable+Result.swift in Sources */,
 				1BE3CD1B1EA5150F00C9B0F5 /* Observable+Commit.swift in Sources */,
-				1B6E88561E9E18B40063D5EB /* Either.swift in Sources */,
 				1BC89F4C1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
 				1B6E880A1E9E15F20063D5EB /* UITextField.swift in Sources */,
 				1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
@@ -973,7 +977,6 @@
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
-				1B6E88541E9E18B40063D5EB /* Either.swift in Sources */,
 				1B69978F1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */,
@@ -981,6 +984,7 @@
 				1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1BC89F4B1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
+				1B17E3761FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
 				1BA2EF741E9E412400B92618 /* Observable+Task.swift in Sources */,

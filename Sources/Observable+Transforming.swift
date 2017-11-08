@@ -16,12 +16,7 @@ extension ObservableProtocol {
     }
     
     public func map<U>(keyPath: KeyPath<ValueType, U>) -> Observable<U> {
-        
-        return Observable<U> { observer in
-            return self.subscribe { result in
-                observer(result[keyPath: keyPath])
-            }
-        }
+        return map { $0[keyPath: keyPath] }
     }
     
     public func flatMap<U>(_ transform: @escaping (ValueType)-> U?) -> Observable<U> {

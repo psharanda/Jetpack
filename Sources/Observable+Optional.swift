@@ -42,7 +42,7 @@ extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equatable  {
+extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equatable  {
     
     public var distinct: Observable<ValueType> {
         

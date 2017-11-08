@@ -2,7 +2,7 @@ import Foundation
 
 
 
-public extension ObservableProtocol {
+extension ObservableProtocol {
     
     public func combine<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType?,T.ValueType?)> {
         return Observable { observer in
@@ -33,6 +33,10 @@ public extension ObservableProtocol {
     public func combine<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D) -> Observable<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?, D.ValueType?)> {
         return combine(observable1, observable2, observable3).combine(observable4).map(repack)
     }
+    
+    public func combine<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol, E: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D, _ observable5: E) -> Observable<(ValueType?, A.ValueType?, B.ValueType?, C.ValueType?, D.ValueType?, E.ValueType?)> {
+        return combine(observable1, observable2, observable3, observable4).combine(observable5).map(repack)
+    }
 
     public func combine<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType?])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType?]> = map { [$0] }
@@ -49,7 +53,7 @@ public extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol {
+extension ObservableProtocol {
     
     public func combineLatest<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
         return Observable { observer in
@@ -85,6 +89,10 @@ public extension ObservableProtocol {
         return combineLatest(observable1, observable2, observable3).combineLatest(observable4).map(repack)
     }
     
+    public func combineLatest<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol, E: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D, _ observable5: E) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType, E.ValueType)> {
+        return combineLatest(observable1, observable2, observable3, observable4).combineLatest(observable5).map(repack)
+    }
+    
     public func combineLatest<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType]> = map { [$0] }
         let withAny = with.map { $0.asObservable }
@@ -96,7 +104,7 @@ public extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol {
+extension ObservableProtocol {
     
     public func zip<T: ObservableProtocol>(_ with: T) -> Observable<(ValueType,T.ValueType)> {
         return Observable { observer in
@@ -141,6 +149,10 @@ public extension ObservableProtocol {
         return zip(observable1, observable2, observable3).zip(observable4).map(repack)
     }
     
+    public func zip<A: ObservableProtocol, B: ObservableProtocol, C: ObservableProtocol, D: ObservableProtocol, E: ObservableProtocol>(_ observable1: A, _ observable2: B, _ observable3: C,  _ observable4: D, _ observable5: E) -> Observable<(ValueType, A.ValueType, B.ValueType, C.ValueType, D.ValueType, E.ValueType)> {
+        return zip(observable1, observable2, observable3, observable4).zip(observable5).map(repack)
+    }
+    
     public func zip<T: ObservableProtocol>(_ with: [T]) -> Observable<([ValueType])> where T.ValueType == ValueType {
         let initial: Observable<[ValueType]> = map { [$0] }
         let withAny = with.map { $0.asObservable }
@@ -152,7 +164,7 @@ public extension ObservableProtocol {
     }
 }
 
-public extension ObservableProtocol {
+extension ObservableProtocol {
     
     public func merge<T: ObservableProtocol>(_ observables: T...) -> Observable<ValueType> where T.ValueType == ValueType {
         return merge(observables)

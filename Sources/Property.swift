@@ -44,9 +44,7 @@ extension Property {
     }
     
     public func map<U>(keyPath: KeyPath<T, U>) -> Property<U> {
-        return Property<U>(observable.map(keyPath: keyPath)) {
-            self.value[keyPath: keyPath]
-        }
+        return map { $0[keyPath: keyPath] }
     }
 }
 
