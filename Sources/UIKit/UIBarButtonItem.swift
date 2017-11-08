@@ -3,16 +3,17 @@ import UIKit
 extension JetpackExtensions where Base: UIBarButtonItem {
     
     public var clicked: Observable<Void> {
-        return jx_makeTargetActionObservable(setup: { base, target, action in
+        return jx_makeTargetActionSignal(key: #function, setup: { base, target, action in
             base.target = target
             base.action = action
-        }, cleanup: { base, target, action in
+        }, cleanup: { base, _, _ in
             base.target = nil
             base.action = nil
-        }, getter: { _ in })
+        }, getter: { _ in
+            ()
+        }).asObservable
     }
 }
-
 
 extension UIBarButtonItem {
     

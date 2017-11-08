@@ -109,6 +109,17 @@ extension JetpackExtensions where Base: NSObject {
         }
     }
     
+    func jx_makeTargetActionSignal<U>(key: String,
+                                      setup: (Base, AnyObject, Selector)->Void,
+                                      cleanup: @escaping (Base, AnyObject, Selector)->Void,
+                                      getter: @escaping (Base)->U) -> Signal<U> {
+        return jx_lazyObject(key: key) { () -> SignalActionHandler<Base, U> in
+            let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
+            setup(base, controlHandler, #selector(SignalActionHandler<Base, U>.jx_handleAction))
+            return controlHandler
+        }.signal
+    }
+    
     public var autodisposePool: AutodisposePool {
         return jx_lazyObject(key: #function) {
             return AutodisposePool()
@@ -154,6 +165,36 @@ class NotificationTarget<Base: AnyObject, T>: NSObject {
     @objc func handleNotification(notification: Notification) {
         if let any = notification.object, let object = any as? Base, base === object {
             observer(getter(base))
+        }
+    }
+}
+
+class SignalActionHandler<Base: AnyObject, T>: NSObject {
+    
+    let signal = Signal<T>()
+    let getter: (Base)->T
+    weak var base: Base?
+    let key: String
+    let cleanup: (Base, AnyObject, Selector)->Void
+    
+    init(key: String, base: Base, getter: @escaping (Base)->T, cleanup: @escaping (Base, AnyObject, Selector)->Void) {
+        self.key = key
+        self.getter = getter
+        self.base = base
+        self.cleanup = cleanup
+        super.init()
+    }
+    
+    @objc func jx_handleAction() {
+        if let base = base {
+            signal.update(getter(base))
+        }
+        
+    }
+    
+    deinit {
+        if let base = base {
+            cleanup(base, self, #selector(jx_handleAction))
         }
     }
 }
