@@ -13,7 +13,7 @@ protocol ListViewProtocol: class {
     var undoEnabled: Receiver<Bool> {get}
     var items: Receiver<([Item], ArrayEditEvent)> {get}
     var didAdd: Observable<String> {get}
-    var didToggle: Observable<(Int, Bool)> {get}
+    var didToggle: Observable<(Int)> {get}
     var didDelete: Observable<Int> {get}
     var didMove: Observable<(Int, Int)> {get}
     var didUndo: Observable<Void> {get}

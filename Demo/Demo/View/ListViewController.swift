@@ -80,11 +80,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private let _didAdd = Signal<String>()
     
-    var didToggle: Observable<(Int, Bool)> {
+    var didToggle: Observable<(Int)> {
         return _didToggle.asObservable
     }
     
-    private let _didToggle = Signal<(Int, Bool)>()
+    private let _didToggle = Signal<(Int)>()
     
     var didDelete: Observable<Int> {
         return _didDelete.asObservable
@@ -164,8 +164,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = _items[indexPath.row]
-        _didToggle.update((indexPath.row, !item.completed))
+        _didToggle.update((indexPath.row))
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

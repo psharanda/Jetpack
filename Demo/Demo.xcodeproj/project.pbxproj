@@ -15,11 +15,12 @@
 		1BC89F7D1F800FB4008560A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7C1F800FB4008560A2 /* Assets.xcassets */; };
 		1BC89F801F800FB4008560A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7E1F800FB4008560A2 /* LaunchScreen.storyboard */; };
 		1BC89F8B1F800FB5008560A2 /* DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F8A1F800FB5008560A2 /* DemoTests.swift */; };
-		1BC89F9A1F800FFF008560A2 /* AppStateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F951F800FFF008560A2 /* AppStateStore.swift */; };
+		1BC89F9A1F800FFF008560A2 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F951F800FFF008560A2 /* ListModel.swift */; };
 		1BC89F9B1F800FFF008560A2 /* LoremSwiftum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F961F800FFF008560A2 /* LoremSwiftum.swift */; };
 		1BC89F9C1F800FFF008560A2 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F971F800FFF008560A2 /* ListPresenter.swift */; };
 		1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F981F800FFF008560A2 /* ListViewController.swift */; };
 		1BC89F9E1F800FFF008560A2 /* ListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */; };
+		1BFEE0891FB34E3B000B7260 /* ListModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,13 +134,14 @@
 		1BC89F861F800FB5008560A2 /* DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BC89F8A1F800FB5008560A2 /* DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoTests.swift; sourceTree = "<group>"; };
 		1BC89F8C1F800FB5008560A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BC89F951F800FFF008560A2 /* AppStateStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStateStore.swift; sourceTree = "<group>"; };
+		1BC89F951F800FFF008560A2 /* ListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		1BC89F961F800FFF008560A2 /* LoremSwiftum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoremSwiftum.swift; sourceTree = "<group>"; };
 		1BC89F971F800FFF008560A2 /* ListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		1BC89F981F800FFF008560A2 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewProtocol.swift; sourceTree = "<group>"; };
 		1BC89FD11F80E907008560A2 /* Differ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Differ.xcodeproj; path = Differ/Differ.xcodeproj; sourceTree = "<group>"; };
 		1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetpack.xcodeproj; path = ../Jetpack.xcodeproj; sourceTree = "<group>"; };
+		1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,15 +187,14 @@
 		1BC89F741F800FB4008560A2 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1BC89F951F800FFF008560A2 /* AppStateStore.swift */,
-				1BC89F971F800FFF008560A2 /* ListPresenter.swift */,
-				1BC89F981F800FFF008560A2 /* ListViewController.swift */,
-				1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */,
-				1BC89F961F800FFF008560A2 /* LoremSwiftum.swift */,
-				1BC89F751F800FB4008560A2 /* AppDelegate.swift */,
 				1BC89F7C1F800FB4008560A2 /* Assets.xcassets */,
 				1BC89F7E1F800FB4008560A2 /* LaunchScreen.storyboard */,
 				1BC89F811F800FB4008560A2 /* Info.plist */,
+				1BFEE0861FB34DD8000B7260 /* App */,
+				1BFEE0851FB34DCC000B7260 /* Utils */,
+				1BFEE0831FB34DBA000B7260 /* Controller */,
+				1BFEE0821FB34DB6000B7260 /* View */,
+				1BFEE0811FB34DAD000B7260 /* Model */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -228,6 +229,48 @@
 				1BC89FF11F80E917008560A2 /* Jetpack-tvOS Tests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1BFEE0811FB34DAD000B7260 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */,
+				1BC89F951F800FFF008560A2 /* ListModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1BFEE0821FB34DB6000B7260 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */,
+				1BC89F981F800FFF008560A2 /* ListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		1BFEE0831FB34DBA000B7260 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1BC89F971F800FFF008560A2 /* ListPresenter.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		1BFEE0851FB34DCC000B7260 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1BC89F961F800FFF008560A2 /* LoremSwiftum.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1BFEE0861FB34DD8000B7260 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1BC89F751F800FB4008560A2 /* AppDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,9 +456,10 @@
 			files = (
 				1BC89F9C1F800FFF008560A2 /* ListPresenter.swift in Sources */,
 				1BC89F9E1F800FFF008560A2 /* ListViewProtocol.swift in Sources */,
-				1BC89F9A1F800FFF008560A2 /* AppStateStore.swift in Sources */,
+				1BC89F9A1F800FFF008560A2 /* ListModel.swift in Sources */,
 				1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */,
 				1BC89F761F800FB4008560A2 /* AppDelegate.swift in Sources */,
+				1BFEE0891FB34E3B000B7260 /* ListModelProtocol.swift in Sources */,
 				1BC89F9B1F800FFF008560A2 /* LoremSwiftum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

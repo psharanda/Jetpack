@@ -13,14 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
      lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
 
-    let appStateStore = AppStateStore()
+    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
     
         
         let vc = ListViewController()
-        let presenter = ListPresenter(view: vc, appStateStore: appStateStore)
+        let model = ListModel()
+        let presenter = ListPresenter(view: vc, model: model)
         vc.presenter = presenter
         
         w.rootViewController = UINavigationController(rootViewController: vc)
