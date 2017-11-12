@@ -9,7 +9,7 @@
 import Foundation
 import Jetpack
 
-protocol ListViewProtocol: class {
+protocol ListViewProtocol: ViewProtocol {
     var undoEnabled: Receiver<Bool> {get}
     var items: Receiver<([Item], ArrayEditEvent)> {get}
     var didAdd: Observable<String> {get}

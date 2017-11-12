@@ -5,6 +5,7 @@
 
 import Foundation
 
+/// Base interface to update value (`set`)
 public protocol UpdateValueProtocol {
     associatedtype UpdateValueType
     func update(_ newValue: UpdateValueType)

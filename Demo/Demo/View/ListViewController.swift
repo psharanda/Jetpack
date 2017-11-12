@@ -112,8 +112,6 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private lazy var tableView = UITableView(frame: .zero, style: .plain)
     
-    private let apool = AutodisposePool()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

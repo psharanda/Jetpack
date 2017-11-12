@@ -5,9 +5,8 @@
 
 import Foundation
 
-/**
- Object which holds and manages subscribers and can broadcast values to them
- */
+
+/// Object which holds and manages observers and can broadcast values to them ('set/subscribe')
 public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
   
     private let observable: Observable<T>

@@ -10,7 +10,7 @@ import Foundation
     import UIKit
 #endif
 
-
+/// Wrapper around some mutable array. ('set/get/subscribe')
 public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol {
     
     public var value: [T] {
@@ -74,6 +74,7 @@ public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol
     }
 }
 
+/// Wrapper around some mutable 2D array (array of arrays). ('set/get/subscribe')
 public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtocol {
     
     public var value: [[T]] {

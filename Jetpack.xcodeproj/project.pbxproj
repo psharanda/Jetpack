@@ -411,8 +411,8 @@
 				1B6E86EA1E9ADB540063D5EB /* Observable+Logging.swift */,
 				1B6E86EB1E9ADB540063D5EB /* Observable+Math.swift */,
 				1B6E86EC1E9ADB540063D5EB /* Observable+Optional.swift */,
-				1B6E86ED1E9ADB540063D5EB /* Observable+Result.swift */,
 				1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */,
+				1B6E86ED1E9ADB540063D5EB /* Observable+Result.swift */,
 				1BA2EF721E9E412400B92618 /* Observable+Task.swift */,
 			);
 			name = Operators;

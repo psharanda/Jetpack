@@ -16,6 +16,7 @@ public enum ArrayEditEvent {
     case update(Int)
 }
 
+/// Wrapper around some array which provides interface for observing changes. Items always exist ('get/subscribe')
 public struct ArrayProperty<T>: ObservableProtocol, GetValueProtocol  {
     
     private let observable: Observable<([T], ArrayEditEvent)>
@@ -60,6 +61,7 @@ public enum Array2DEditEvent {
     case updateSection(Int)
 }
 
+/// Wrapper around some 2D array (array of arrays) which provides interface for observing changes. Items always exist ('get/subscribe')
 public struct Array2DProperty<T>: ObservableProtocol, GetValueProtocol  {
     
     private let observable: Observable<([[T]], Array2DEditEvent)>

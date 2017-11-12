@@ -7,9 +7,7 @@ import Foundation
 
 public protocol VariableProtocol: UpdateValueProtocol , GetValueProtocol { }
 
-/**
- Wrapper around some state which provides interface to get/set value
- */
+/// Wrapper around some state which provides interface to get/set value ('set/get')
 public final class Variable<T>: VariableProtocol {
     private let setter: (T)->Void
     private let getter: ()->T

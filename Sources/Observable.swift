@@ -5,9 +5,7 @@
 
 import Foundation
 
-/**
- Building block to chain observables
- */
+/// Wrapper around some deffered, cancellable work which produces value and will be executed in the future ('subscribe')
 public final class Observable<T>: ObservableProtocol {
     
     public typealias ValueType = T

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B21CE8E1FB6238600AFA145 /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21CE8D1FB6238600AFA145 /* ViewProtocol.swift */; };
+		1B21CE971FB6239900AFA145 /* UIViewController+ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21CE961FB6239900AFA145 /* UIViewController+ViewProtocol.swift */; };
 		1B6260D71F80E949001E09A5 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; };
 		1B6260D81F80E949001E09A5 /* Jetpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B6260DD1F80E949001E09A5 /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FD71F80E907008560A2 /* Differ.framework */; };
@@ -20,7 +22,6 @@
 		1BC89F9C1F800FFF008560A2 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F971F800FFF008560A2 /* ListPresenter.swift */; };
 		1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F981F800FFF008560A2 /* ListViewController.swift */; };
 		1BC89F9E1F800FFF008560A2 /* ListViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */; };
-		1BFEE0891FB34E3B000B7260 /* ListModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B21CE8D1FB6238600AFA145 /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
+		1B21CE961FB6239900AFA145 /* UIViewController+ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ViewProtocol.swift"; sourceTree = "<group>"; };
 		1BC89F721F800FB4008560A2 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BC89F751F800FB4008560A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BC89F7C1F800FB4008560A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,7 +144,6 @@
 		1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewProtocol.swift; sourceTree = "<group>"; };
 		1BC89FD11F80E907008560A2 /* Differ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Differ.xcodeproj; path = Differ/Differ.xcodeproj; sourceTree = "<group>"; };
 		1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Jetpack.xcodeproj; path = ../Jetpack.xcodeproj; sourceTree = "<group>"; };
-		1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,7 +236,6 @@
 		1BFEE0811FB34DAD000B7260 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1BFEE0881FB34E3B000B7260 /* ListModelProtocol.swift */,
 				1BC89F951F800FFF008560A2 /* ListModel.swift */,
 			);
 			path = Model;
@@ -243,6 +244,8 @@
 		1BFEE0821FB34DB6000B7260 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1B21CE8D1FB6238600AFA145 /* ViewProtocol.swift */,
+				1B21CE961FB6239900AFA145 /* UIViewController+ViewProtocol.swift */,
 				1BC89F991F800FFF008560A2 /* ListViewProtocol.swift */,
 				1BC89F981F800FFF008560A2 /* ListViewController.swift */,
 			);
@@ -456,10 +459,11 @@
 			files = (
 				1BC89F9C1F800FFF008560A2 /* ListPresenter.swift in Sources */,
 				1BC89F9E1F800FFF008560A2 /* ListViewProtocol.swift in Sources */,
+				1B21CE8E1FB6238600AFA145 /* ViewProtocol.swift in Sources */,
+				1B21CE971FB6239900AFA145 /* UIViewController+ViewProtocol.swift in Sources */,
 				1BC89F9A1F800FFF008560A2 /* ListModel.swift in Sources */,
 				1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */,
 				1BC89F761F800FB4008560A2 /* AppDelegate.swift in Sources */,
-				1BFEE0891FB34E3B000B7260 /* ListModelProtocol.swift in Sources */,
 				1BC89F9B1F800FFF008560A2 /* LoremSwiftum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

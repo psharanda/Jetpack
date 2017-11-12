@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = ListViewController()
         let model = ListModel()
-        let presenter = ListPresenter(view: vc, model: model)
-        vc.presenter = presenter
+        
+        ListPresenter.main(view: vc, model: model)
         
         w.rootViewController = UINavigationController(rootViewController: vc)
         w.makeKeyAndVisible()

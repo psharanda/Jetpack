@@ -10,7 +10,22 @@ import Foundation
 import Jetpack
 
 
-class ListModel: ListModelProtocol {
+enum VisibilityFilter: String, Codable {
+    case all
+    case notCompleted
+    case completed
+}
+
+struct Item: Codable, Equatable {
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return (lhs.id == rhs.id) && (lhs.title == rhs.title) && (lhs.completed == rhs.completed)
+    }
+    let id: String
+    var title: String
+    var completed: Bool
+}
+
+class ListModel {
     
     var undoStack: ArrayProperty<[Item]> {
         return _undoStack.asArrayProperty

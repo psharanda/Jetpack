@@ -5,9 +5,7 @@
 
 import Foundation
 
-/**
- Standalone reactive state
- */
+/// Wrapper around some mutable value. ('set/get/subscribe')
 public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
     
     public var value: T {

@@ -61,4 +61,10 @@ extension ObservableProtocol {
     }
 }
 
+extension ObservableProtocol where ValueType: Error {
+    
+    public var localizedDescription: Observable<String> {
+        return map { $0.localizedDescription }
+    }
+}
 

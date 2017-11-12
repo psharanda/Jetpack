@@ -5,9 +5,7 @@
 
 import Foundation
 
-/**
- Wrapper around some state which provides interface for binding
- */
+/// Wrapper around setter ('set')
 public final class Receiver<T>: UpdateValueProtocol {
 
     private let setter: (T)->Void

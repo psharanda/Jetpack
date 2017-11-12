@@ -7,9 +7,6 @@ import Foundation
 
 extension Observable {
     
-    /**
-     Create task with worker which will be run in workerQueue and send result to completionQueue. Worker can produce value or error.
-     */
     public convenience init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) {
         self.init { completion in
             return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: T) in

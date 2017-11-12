@@ -7,9 +7,7 @@ import Foundation
 
 public protocol PropertyProtocol: ObservableProtocol , GetValueProtocol { }
 
-/**
- Wrapper around some state which provides interface for observing state changes. state always exist and always has some value
- */
+/// Wrapper around some state which provides interface for observing state changes. state always exist and always has some value ('get/subscribe')
 public final class Property<T>: PropertyProtocol {
     
     private let observable: Observable<T>
