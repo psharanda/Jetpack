@@ -64,4 +64,10 @@ extension VariableProtocol where UpdateValueType == GetValueType {
             return self.value
         })
     }
+    
+    public func change(reducer: (inout UpdateValueType)->Void) {
+        var newValue = value
+        reducer(&newValue)
+        update(newValue)
+    }
 }
