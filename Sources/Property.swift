@@ -45,13 +45,3 @@ extension Property {
         return map { $0[keyPath: keyPath] }
     }
 }
-
-extension PropertyProtocol where ValueType == GetValueType {
-    public var asProperty: Property<ValueType> {
-        return Property(self.asObservable, getter: {
-            return self.value
-        })
-    }
-}
-
-

@@ -67,6 +67,10 @@ public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol
         }
     }
     
+    public var asMutableProperty: MutableProperty<[T]> {
+        return MutableProperty(property: asProperty, receiver: asReceiver)
+    }
+    
     public var asArrayProperty: ArrayProperty<T> {
         return ArrayProperty(signal.asObservable) {
             return self.value
@@ -147,6 +151,10 @@ public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtoc
         return Property(signal.map { $0.0 }) {
             return self.value
         }
+    }
+    
+    public var asMutableProperty: MutableProperty<[[T]]> {
+        return MutableProperty(property: asProperty, receiver: asReceiver)
     }
     
     public var asArrayProperty: Array2DProperty<T> {

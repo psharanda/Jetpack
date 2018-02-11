@@ -29,7 +29,7 @@ public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
         }
     }
     
-    private init(property: Property<T>, receiver: Receiver<T>) {
+    public init(property: Property<T>, receiver: Receiver<T>) {
         self.property = property
         self.receiver = receiver
     }
@@ -50,6 +50,10 @@ public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
     
     public func update(_ newValue: T) {
         receiver.update(newValue)
+    }
+    
+    public var asProperty: Property<ValueType> {
+        return property
     }
 }
 
