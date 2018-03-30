@@ -18,11 +18,11 @@ extension Optional: Optionable  {
 extension ObservableProtocol where ValueType: Optionable {
     
     public var someOnly: Observable<ValueType.Wrapped> {
-        return flatMap { $0.flatMap {$0} }
+        return compactMap { $0.flatMap {$0} }
     }
     
     public var noneOnly: Observable<Void> {
-        return flatMap {
+        return compactMap {
             $0.flatMap {_ -> Void? in nil } ?? ()
         }
     }
@@ -42,13 +42,14 @@ extension ObservableProtocol {
     }
 }
 
+#if !swift(>=4.1)
 extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equatable  {
-    
+
     public var distinct: Observable<ValueType> {
-        
+
         return Observable<ValueType> { observer in
             var lastValue: ValueType?
-            
+
             func test(_ result: ValueType) -> ValueType? {
                 if let lv = lastValue {
                     return (lv.flatMap { $0 } == result.flatMap { $0 }) ? nil : result
@@ -57,7 +58,7 @@ extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equ
                     return result
                 }
             }
-            
+
             return self.subscribe { result in
                 if let newValue = test(result) {
                     observer(newValue)
@@ -66,4 +67,7 @@ extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equ
         }
     }
 }
+#endif
+
+
 

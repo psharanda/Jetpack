@@ -8,7 +8,7 @@ import Foundation
 extension ObservableProtocol where ValueType: ValueConvertible {
     
     public var valueOnly: Observable<ValueType.ValueType> {
-        return flatMap { result in
+        return compactMap { result in
             result.value
         }
     }
@@ -17,7 +17,7 @@ extension ObservableProtocol where ValueType: ValueConvertible {
 extension ObservableProtocol where ValueType: ErrorConvertible {
     
     public var errorOnly: Observable<Error> {
-        return flatMap { result in
+        return compactMap { result in
             result.error
         }
     }
@@ -26,7 +26,7 @@ extension ObservableProtocol where ValueType: ErrorConvertible {
 extension ObservableProtocol where ValueType: ResultConvertible {
     
     var resultOnly: Task<ValueType.ValueType> {
-        return flatMap {
+        return compactMap {
             $0.result
         }
     }
@@ -63,7 +63,7 @@ extension ObservableProtocol where ValueType: ResultConvertible {
     }
     
     public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
-        return flatMap { $0.result.flatMap(transform) }
+        return compactMap { $0.result.flatMap(transform) }
     }
 
     /// Transform task success value  to static value

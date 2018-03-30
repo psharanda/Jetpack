@@ -8,7 +8,7 @@ import Foundation
 extension ObservableProtocol {
     
     public func filter(_ isIncluded: @escaping (ValueType) -> Bool) -> Observable<ValueType> {
-        return flatMap {
+        return compactMap {
             isIncluded($0) ? $0 : nil
         }
     }

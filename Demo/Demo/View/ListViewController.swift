@@ -35,6 +35,16 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     valuesMap[$0.element.id] = ($0.element, $0.offset)
                 }
                 
+                #if swift(>=4.1)
+                let indexPathsToReload = _items.compactMap { i -> IndexPath? in
+                    if let oldValue = valuesMap[i.id] {
+                        if oldValue.0 != i {
+                            return IndexPath(row: oldValue.1, section: 0)
+                        }
+                    }
+                    return nil
+                }
+                #else
                 let indexPathsToReload = _items.flatMap { i -> IndexPath? in
                     if let oldValue = valuesMap[i.id] {
                         if oldValue.0 != i {
@@ -43,6 +53,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     return nil
                 }
+                #endif                
                 
                 tableView.beginUpdates()
                 tableView.apply(diff)
