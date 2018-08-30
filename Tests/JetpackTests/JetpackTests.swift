@@ -967,7 +967,7 @@ class JetpackTests: XCTestCase {
         
         let upd1 = "2"
         
-        prop.update(upd1)
+        prop.value = upd1
         
         XCTAssertEqual(upd1, a)
         

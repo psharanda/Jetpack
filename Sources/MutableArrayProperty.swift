@@ -14,7 +14,12 @@ import Foundation
 public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol {
     
     public var value: [T] {
-        return elements
+        get {
+            return elements
+        }
+        set {
+            update(newValue)
+        }
     }
     
     private let signal = Signal<([T], ArrayEditEvent)>()
@@ -82,7 +87,12 @@ public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol
 public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtocol {
     
     public var value: [[T]] {
-        return elements
+        get {
+            return elements
+        }
+        set {
+            update(newValue)
+        }
     }
     
     private let signal = Signal<([[T]], Array2DEditEvent)>()
