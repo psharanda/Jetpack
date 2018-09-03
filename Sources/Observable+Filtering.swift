@@ -244,6 +244,7 @@ extension ObservableProtocol where ValueType: Equatable {
             
             func test(_ result: ValueType) -> ValueType? {
                 if let lv = lastValue {
+                    lastValue = result
                     return (lv != result) ? result : nil
                 } else {
                     lastValue = result
