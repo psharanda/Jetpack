@@ -7,25 +7,82 @@ import UIKit
 import Jetpack
 import Differ
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ListViewProtocol {
+class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var presenter: Any?
+    private let addButton = UIBarButtonItem(barButtonSystemItem: .add)
+    private let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
+    private let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
+    
+    private let undoButton = UIBarButtonItem(barButtonSystemItem: .undo)
+    private let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
     
     private var didLoadTableView = false
     
-    var items: Receiver<([Item], ArrayEditEvent)> {
-        return Receiver {[weak self] in
-            self?.update(items: $0.0, editEvent: $0.1)
+    let viewModel: ListViewModelProtocol
+    
+    init(viewModel: ListViewModelProtocol) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        //perform bindings
+        self.viewModel.items.diff.subscribe { [weak self] in
+            self?.updateTableView(oldItems: $0.old.0, newItems: $0.new.0, editEvent: $0.new.1)
+        }
+        
+        self.viewModel.undoEnabled.subscribe { [weak self] in
+            self?.undoButton.isEnabled = $0
+        }
+        
+        addButton.jx.clicked.subscribe {
+            self.viewModel.didAdd(title: Lorem.words(2))
+        }
+        
+        undoButton.jx.clicked.subscribe {
+            self.viewModel.didUndo()
+        }
+        
+        cleanButton.jx.clicked.subscribe {
+            self.viewModel.didClean()
         }
     }
     
-    private func update(items: [Item], editEvent: ArrayEditEvent) {
-        let oldItems = _items
-        _items = items
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private lazy var tableView = UITableView(frame: .zero, style: .plain)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        title = "TODO"
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        view.addSubview(tableView)
+
+        navigationItem.rightBarButtonItems = [addButton, undoButton]
+        navigationItem.leftBarButtonItems = [editButtonItem, cleanButton]
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: animated)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+    }
+    
+    //MARK: - update
+    
+    private func updateTableView(oldItems: [Item], newItems: [Item], editEvent: ArrayEditEvent) {
         if didLoadTableView {
             switch editEvent {
             case .set:
-                let diff = oldItems.extendedDiff(_items) {
+                let diff = oldItems.extendedDiff(newItems) {
                     $0.id == $1.id
                 }
                 
@@ -36,7 +93,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 #if swift(>=4.1)
-                let indexPathsToReload = _items.compactMap { i -> IndexPath? in
+                let indexPathsToReload = newItems.compactMap { i -> IndexPath? in
                     if let oldValue = valuesMap[i.id] {
                         if oldValue.0 != i {
                             return IndexPath(row: oldValue.1, section: 0)
@@ -45,7 +102,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     return nil
                 }
                 #else
-                let indexPathsToReload = _items.flatMap { i -> IndexPath? in
+               let indexPathsToReload = _items.flatMap { i -> IndexPath? in
                     if let oldValue = valuesMap[i.id] {
                         if oldValue.0 != i {
                             return IndexPath(row: oldValue.1, section: 0)
@@ -53,8 +110,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     return nil
                 }
-                #endif                
-                
+                #endif
+ 
                 tableView.beginUpdates()
                 tableView.apply(diff)
                 tableView.reloadRows(at: indexPathsToReload, with: .automatic)
@@ -72,115 +129,32 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    private var _items: [Item] = []
-    
-    let undoButton = UIBarButtonItem(barButtonSystemItem: .undo)
-    let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
-    let doneButton = UIBarButtonItem(barButtonSystemItem: .done)
-    let cleanButton = UIBarButtonItem(barButtonSystemItem: .trash)
-    
-    var undoEnabled: Receiver<Bool> {
-        return Receiver { [weak self] in
-            self?.undoButton.isEnabled = $0
-        }
-    }
-    
-    var didAdd: Observable<String> {
-        return _didAdd.asObservable
-    }
-    
-    private let _didAdd = Signal<String>()
-    
-    var didToggle: Observable<(Int)> {
-        return _didToggle.asObservable
-    }
-    
-    private let _didToggle = Signal<(Int)>()
-    
-    var didDelete: Observable<Int> {
-        return _didDelete.asObservable
-    }
-    
-    private let _didDelete = Signal<Int>()
-    
-    var didMove: Observable<(Int, Int)> {
-        return _didMove.asObservable
-    }
-    
-    private let _didMove = Signal<(Int, Int)>()
-    
-    var didUndo: Observable<Void> {
-        return _didUndo.asObservable
-    }
-    
-    private let _didUndo = Signal<Void>()
-    
-    var didClean: Observable<Void> {
-        return _didClean.asObservable
-    }
-    
-    private let _didClean = Signal<Void>()
-    
-    private lazy var tableView = UITableView(frame: .zero, style: .plain)
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "TODO"
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(tableView)
-
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add)
-        addButton.jx.clicked.map { Lorem.words(2) }.bind(_didAdd)
-
-
-        undoButton.jx.clicked.bind(_didUndo)
-
-        navigationItem.rightBarButtonItems = [addButton, undoButton]
-
-        cleanButton.jx.clicked.bind(_didClean).autodispose(in: apool)
-
-        navigationItem.leftBarButtonItems = [editButtonItem, cleanButton]
-    }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.setEditing(editing, animated: animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-    }
-    
     //MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         didLoadTableView = true
-        return _items.count
+        return viewModel.items.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "CellId"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) ?? UITableViewCell(style: .default, reuseIdentifier: cellId)
         
-        let item = _items[indexPath.row]
+        let item = viewModel.items.value[indexPath.row]
         cell.textLabel?.text = item.title
         cell.accessoryType = item.completed ? .checkmark : .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        _didToggle.update((indexPath.row))
+        viewModel.didToggle(at: indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
-            _didDelete.update(indexPath.row)
+            viewModel.didDelete(at: indexPath.row)
         default:
             break
         }
@@ -195,6 +169,13 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        _didMove.update((sourceIndexPath.row, destinationIndexPath.row))
+        viewModel.didMove(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }
+
+
+
+
+
+
+

@@ -20,13 +20,22 @@ public struct NestedExtendedDiff: DiffProtocol {
         return i + 1
     }
 
-    public let elements: [Element]
+    /// An array of particular diff operations
+    public var elements: [Element]
+
+    //// Initializes a new `NestedExtendedDiff` from a given array of diff operations.
+    ///
+    /// - Parameters:
+    ///   - elements: an array of particular diff operations
+    public init(elements: [Element]) {
+        self.elements = elements
+    }
 }
 
-public typealias NestedElementEqualityChecker<T: Collection> = (T.Iterator.Element.Iterator.Element, T.Iterator.Element.Iterator.Element) -> Bool where T.Iterator.Element: Collection
+public typealias NestedElementEqualityChecker<T: Collection> = (T.Element.Element, T.Element.Element) -> Bool where T.Element: Collection
 
 public extension Collection
-    where Iterator.Element: Collection {
+    where Element: Collection {
 
     /// Creates a diff between the callee and `other` collection. It diffs elements two levels deep (therefore "nested")
     ///
@@ -68,7 +77,7 @@ public extension Collection
         }
 
         let sectionMoves =
-            sectionDiff.flatMap { diffElement -> (Int, Int)? in
+            sectionDiff.compactMap { diffElement -> (Int, Int)? in
                 if case let .moveSection(from, to) = diffElement {
                     return (from, to)
                 }
@@ -120,8 +129,8 @@ public extension Collection
 }
 
 public extension Collection
-    where Iterator.Element: Collection,
-    Iterator.Element.Iterator.Element: Equatable {
+    where Element: Collection,
+    Element.Element: Equatable {
 
     /// - SeeAlso: `nestedDiff(to:isEqualSection:isEqualElement:)`
     public func nestedExtendedDiff(
@@ -137,8 +146,7 @@ public extension Collection
 }
 
 public extension Collection
-    where Iterator.Element: Collection,
-    Iterator.Element: Equatable {
+    where Element: Collection, Element: Equatable {
 
     /// - SeeAlso: `nestedDiff(to:isEqualSection:isEqualElement:)`
     public func nestedExtendedDiff(
@@ -154,9 +162,8 @@ public extension Collection
 }
 
 public extension Collection
-    where Iterator.Element: Collection,
-    Iterator.Element: Equatable,
-    Iterator.Element.Iterator.Element: Equatable {
+    where Element: Collection, Element: Equatable,
+    Element.Element: Equatable {
 
     /// - SeeAlso: `nestedDiff(to:isEqualSection:isEqualElement:)`
     public func nestedExtendedDiff(to: Self) -> NestedExtendedDiff {
@@ -184,5 +191,12 @@ extension NestedExtendedDiff.Element: CustomDebugStringConvertible {
         case let .moveSection(from, to):
             return "MS(\(from),\(to))"
         }
+    }
+}
+
+extension NestedExtendedDiff: ExpressibleByArrayLiteral {
+
+    public init(arrayLiteral elements: NestedExtendedDiff.Element...) {
+        self.elements = elements
     }
 }

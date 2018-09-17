@@ -11,18 +11,17 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-     lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
-
+    lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
     
+    let m = ListModel()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
     
         
-        let vc = ListViewController()
-        let model = ListModel()
         
-        ListPresenter.main(view: vc, model: model)
+        let vm = ListViewModel(model: m)
+        let vc = ListViewController(viewModel: vm)
         
         w.rootViewController = UINavigationController(rootViewController: vc)
         w.makeKeyAndVisible()
