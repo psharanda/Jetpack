@@ -10,7 +10,7 @@ extension JetpackExtensions where Base: UIButton {
         return title(for: .normal)
 	}
 
-	public func title(for state: UIControlState) -> Receiver<String?> {
+	public func title(for state: ControlState) -> Receiver<String?> {
 		return jx_makeReceiver { $0.setTitle($1, for: state) }
 	}
     
@@ -18,7 +18,7 @@ extension JetpackExtensions where Base: UIButton {
         return attributedTitle(for: .normal)
     }
     
-    public func attributedTitle(for state: UIControlState) -> Receiver<NSAttributedString?> {
+    public func attributedTitle(for state: ControlState) -> Receiver<NSAttributedString?> {
         return jx_makeReceiver { $0.setAttributedTitle($1, for: state) }
     }
     
@@ -26,7 +26,7 @@ extension JetpackExtensions where Base: UIButton {
         return image(for: .normal)
     }
 
-	public func image(for state: UIControlState) -> Receiver<UIImage?> {
+	public func image(for state: ControlState) -> Receiver<UIImage?> {
 		return jx_makeReceiver { $0.setImage($1, for: state) }
 	}
     
@@ -34,7 +34,7 @@ extension JetpackExtensions where Base: UIButton {
         return backgroundImage(for: .normal)
     }
     
-    public func backgroundImage(for state: UIControlState) -> Receiver<UIImage?> {
+    public func backgroundImage(for state: ControlState) -> Receiver<UIImage?> {
         return jx_makeReceiver { $0.setBackgroundImage($1, for: state) }
     }
 

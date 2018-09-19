@@ -1,6 +1,14 @@
 import UIKit
 
-fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
+#if swift(>=4.2)
+public typealias ControlEvents = UIControl.Event
+public typealias ControlState = UIControl.State
+#else
+public typealias ControlEvents = UIControlEvents
+public typealias ControlState = UIControlState
+#endif
+
+fileprivate func controlEventsKey(_ controlEvents: ControlEvents) -> String {
     return "\(#function) \(controlEvents.rawValue)"
 }
 
@@ -8,7 +16,7 @@ fileprivate func controlEventsKey(_ controlEvents: UIControlEvents) -> String {
 
 extension JetpackExtensions where Base: UIControl {
 
-    public func controlEvents(_ controlEvents: UIControlEvents) -> Observable<Void> {
+    public func controlEvents(_ controlEvents: ControlEvents) -> Observable<Void> {
         return jx_makeTargetActionObservable(setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
         }, cleanup: { base, target, action in
@@ -16,7 +24,7 @@ extension JetpackExtensions where Base: UIControl {
         }, getter: { _ in })
 	}
     
-    public func propertyControlEvents<T>(_ controlEvents: UIControlEvents, getter: @escaping (Base)->T) -> Property<T> {
+    public func propertyControlEvents<T>(_ controlEvents: ControlEvents, getter: @escaping (Base)->T) -> Property<T> {
         return jx_makeTargetActionProperty(setup: { base, target, action in
             base.addTarget(target, action: action, for: controlEvents)
         }, cleanup: { base, target, action in

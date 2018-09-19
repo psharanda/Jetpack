@@ -8,6 +8,12 @@
 
 import UIKit
 
+#if swift(>=4.2)
+typealias ApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
+#else
+typealias ApplicationLaunchOptionsKey = UIApplicationLaunchOptionsKey
+#endif
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let m = ListModel()
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [ApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
     
         

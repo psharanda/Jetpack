@@ -25,8 +25,15 @@ extension UIBarButtonItem {
         self.init(image: image, style: .plain, target: nil, action: nil)
     }
     
+    #if swift(>=4.2)
+    public convenience init(barButtonSystemItem systemItem: UIBarButtonItem.SystemItem) {
+        self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
+    }
+    #else
     public convenience init(barButtonSystemItem systemItem: UIBarButtonSystemItem) {
         self.init(barButtonSystemItem: systemItem, target: nil, action: nil)
     }
+    #endif
+    
 }
 

@@ -7,6 +7,12 @@ import UIKit
 import Jetpack
 import Differ
 
+#if swift(>=4.2)
+public typealias TableViewCellEditingStyle = UITableViewCell.EditingStyle
+#else
+public typealias TableViewCellEditingStyle = UITableViewCellEditingStyle
+#endif
+
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private let addButton = UIBarButtonItem(barButtonSystemItem: .add)
@@ -151,7 +157,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: TableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
             viewModel.didDelete(at: indexPath.row)

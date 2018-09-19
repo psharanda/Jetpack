@@ -1,5 +1,13 @@
 import UIKit
 
+#if swift(>=4.2)
+public typealias ViewAnimationOptions = UIView.AnimationOptions
+public typealias ViewKeyframeAnimationOptions = UIView.KeyframeAnimationOptions
+#else
+public typealias ViewAnimationOptions = UIViewAnimationOptions
+public typealias ViewKeyframeAnimationOptions = UIViewKeyframeAnimationOptions
+#endif
+
 extension JetpackExtensions where Base: UIView {
     
     public static func animate(withDuration duration: TimeInterval, animations: @escaping ()->Void) -> Observable<Void> {
@@ -20,7 +28,7 @@ extension JetpackExtensions where Base: UIView {
         }
     }
     
-    public static func animate(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animate(withDuration duration: TimeInterval, delay: TimeInterval, options: ViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         return Observable { completion in
             
             var cancelled = false
@@ -38,7 +46,7 @@ extension JetpackExtensions where Base: UIView {
         }
     }
 
-    public static func animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animate(withDuration duration: TimeInterval, delay: TimeInterval, usingSpringWithDamping dampingRatio: CGFloat, initialSpringVelocity velocity: CGFloat,  options: ViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
         
         return Observable { completion in
@@ -58,7 +66,7 @@ extension JetpackExtensions where Base: UIView {
         }
     }
     
-    public static func animateKeyframes(withDuration duration: TimeInterval, delay: TimeInterval, options: UIViewKeyframeAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func animateKeyframes(withDuration duration: TimeInterval, delay: TimeInterval, options: ViewKeyframeAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         return Observable { completion in
             
             var cancelled = false
@@ -76,7 +84,7 @@ extension JetpackExtensions where Base: UIView {
         }
     }
 
-    public static func transition(with view: UIView, duration: TimeInterval, options: UIViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
+    public static func transition(with view: UIView, duration: TimeInterval, options: ViewAnimationOptions, animations: @escaping ()->Void) -> Observable<Void> {
         
         return Observable { completion in
             
@@ -95,7 +103,7 @@ extension JetpackExtensions where Base: UIView {
         }
     }
     
-    public static func transition(from fromView: UIView, to toView: UIView, duration: TimeInterval, options: UIViewAnimationOptions) -> Observable<Void> {
+    public static func transition(from fromView: UIView, to toView: UIView, duration: TimeInterval, options: ViewAnimationOptions) -> Observable<Void> {
         
         return Observable { completion in
             

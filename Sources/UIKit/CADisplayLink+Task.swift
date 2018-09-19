@@ -36,8 +36,11 @@ private class DisplayLinkTask {
         self.skipFrames = skipFrames
         startTime = CACurrentMediaTime()
         displayLink = CADisplayLink(target: self, selector: #selector(displayLinkDidFire))
+        #if swift(>=4.2)
+        displayLink?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
+        #else
         displayLink?.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
-        
+        #endif
     }
     
     @objc private func displayLinkDidFire() {
