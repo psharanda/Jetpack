@@ -5,7 +5,6 @@
 
 import UIKit
 import Jetpack
-import Differ
 
 #if swift(>=4.2)
 public typealias TableViewCellEditingStyle = UITableViewCell.EditingStyle

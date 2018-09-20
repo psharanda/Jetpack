@@ -7,10 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3580CB215409850009F422 /* NestedExtendedDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580BC215409850009F422 /* NestedExtendedDiff.swift */; };
+		1B3580CC215409850009F422 /* ExtendedPatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580BD215409850009F422 /* ExtendedPatch.swift */; };
+		1B3580CD215409850009F422 /* ExtendedDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580BE215409850009F422 /* ExtendedDiff.swift */; };
+		1B3580CE215409850009F422 /* Diff+UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580BF215409850009F422 /* Diff+UIKit.swift */; };
+		1B3580CF215409850009F422 /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C0215409850009F422 /* Diff.swift */; };
+		1B3580D0215409850009F422 /* NestedDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C1215409850009F422 /* NestedDiff.swift */; };
+		1B3580D1215409850009F422 /* GenericPatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C2215409850009F422 /* GenericPatch.swift */; };
+		1B3580D2215409850009F422 /* Patch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C3215409850009F422 /* Patch.swift */; };
+		1B3580D3215409850009F422 /* Diff+AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C4215409850009F422 /* Diff+AppKit.swift */; };
+		1B3580D4215409850009F422 /* NestedBatchUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C5215409850009F422 /* NestedBatchUpdate.swift */; };
+		1B3580D5215409850009F422 /* BatchUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C6215409850009F422 /* BatchUpdate.swift */; };
+		1B3580D6215409850009F422 /* Patch+Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C7215409850009F422 /* Patch+Apply.swift */; };
+		1B3580D7215409850009F422 /* Patch+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C8215409850009F422 /* Patch+Sort.swift */; };
+		1B3580D8215409850009F422 /* ExtendedPatch+Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580C9215409850009F422 /* ExtendedPatch+Apply.swift */; };
+		1B3580D9215409850009F422 /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3580CA215409850009F422 /* LinkedList.swift */; };
 		1B6260D71F80E949001E09A5 /* Jetpack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; };
 		1B6260D81F80E949001E09A5 /* Jetpack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC89FE51F80E917008560A2 /* Jetpack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1B821F5F21504773002D4BBF /* Differ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B821F562150476E002D4BBF /* Differ.framework */; };
-		1B821F6021504773002D4BBF /* Differ.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B821F562150476E002D4BBF /* Differ.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BC89F761F800FB4008560A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F751F800FB4008560A2 /* AppDelegate.swift */; };
 		1BC89F7D1F800FB4008560A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7C1F800FB4008560A2 /* Assets.xcassets */; };
 		1BC89F801F800FB4008560A2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BC89F7E1F800FB4008560A2 /* LaunchScreen.storyboard */; };
@@ -29,27 +42,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 52D6D97B1BEFF229002C0205;
 			remoteInfo = "Jetpack-iOS";
-		};
-		1B821F552150476E002D4BBF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B821F502150476E002D4BBF /* Differ.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C9EE87161CCFCA83006BD90E;
-			remoteInfo = Differ;
-		};
-		1B821F572150476E002D4BBF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B821F502150476E002D4BBF /* Differ.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C9838FF11D29571000691BE8;
-			remoteInfo = DifferTests;
-		};
-		1B821F6121504773002D4BBF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1B821F502150476E002D4BBF /* Differ.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = C9EE87151CCFCA83006BD90E;
-			remoteInfo = Differ;
 		};
 		1BC89F871F800FB5008560A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -116,7 +108,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B821F6021504773002D4BBF /* Differ.framework in Embed Frameworks */,
 				1B6260D81F80E949001E09A5 /* Jetpack.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -125,7 +116,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B821F502150476E002D4BBF /* Differ.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Differ.xcodeproj; path = Differ/Differ.xcodeproj; sourceTree = "<group>"; };
+		1B3580BC215409850009F422 /* NestedExtendedDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedExtendedDiff.swift; sourceTree = "<group>"; };
+		1B3580BD215409850009F422 /* ExtendedPatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedPatch.swift; sourceTree = "<group>"; };
+		1B3580BE215409850009F422 /* ExtendedDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedDiff.swift; sourceTree = "<group>"; };
+		1B3580BF215409850009F422 /* Diff+UIKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Diff+UIKit.swift"; sourceTree = "<group>"; };
+		1B3580C0215409850009F422 /* Diff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
+		1B3580C1215409850009F422 /* NestedDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedDiff.swift; sourceTree = "<group>"; };
+		1B3580C2215409850009F422 /* GenericPatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericPatch.swift; sourceTree = "<group>"; };
+		1B3580C3215409850009F422 /* Patch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patch.swift; sourceTree = "<group>"; };
+		1B3580C4215409850009F422 /* Diff+AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Diff+AppKit.swift"; sourceTree = "<group>"; };
+		1B3580C5215409850009F422 /* NestedBatchUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedBatchUpdate.swift; sourceTree = "<group>"; };
+		1B3580C6215409850009F422 /* BatchUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchUpdate.swift; sourceTree = "<group>"; };
+		1B3580C7215409850009F422 /* Patch+Apply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Patch+Apply.swift"; sourceTree = "<group>"; };
+		1B3580C8215409850009F422 /* Patch+Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Patch+Sort.swift"; sourceTree = "<group>"; };
+		1B3580C9215409850009F422 /* ExtendedPatch+Apply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ExtendedPatch+Apply.swift"; sourceTree = "<group>"; };
+		1B3580CA215409850009F422 /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		1BC89F721F800FB4008560A2 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BC89F751F800FB4008560A2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BC89F7C1F800FB4008560A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -147,7 +152,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B821F5F21504773002D4BBF /* Differ.framework in Frameworks */,
 				1B6260D71F80E949001E09A5 /* Jetpack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,19 +166,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1B821F512150476E002D4BBF /* Products */ = {
+		1B3580BB215409850009F422 /* Differ */ = {
 			isa = PBXGroup;
 			children = (
-				1B821F562150476E002D4BBF /* Differ.framework */,
-				1B821F582150476E002D4BBF /* DifferTests.xctest */,
+				1B3580BC215409850009F422 /* NestedExtendedDiff.swift */,
+				1B3580BD215409850009F422 /* ExtendedPatch.swift */,
+				1B3580BE215409850009F422 /* ExtendedDiff.swift */,
+				1B3580BF215409850009F422 /* Diff+UIKit.swift */,
+				1B3580C0215409850009F422 /* Diff.swift */,
+				1B3580C1215409850009F422 /* NestedDiff.swift */,
+				1B3580C2215409850009F422 /* GenericPatch.swift */,
+				1B3580C3215409850009F422 /* Patch.swift */,
+				1B3580C4215409850009F422 /* Diff+AppKit.swift */,
+				1B3580C5215409850009F422 /* NestedBatchUpdate.swift */,
+				1B3580C6215409850009F422 /* BatchUpdate.swift */,
+				1B3580C7215409850009F422 /* Patch+Apply.swift */,
+				1B3580C8215409850009F422 /* Patch+Sort.swift */,
+				1B3580C9215409850009F422 /* ExtendedPatch+Apply.swift */,
+				1B3580CA215409850009F422 /* LinkedList.swift */,
 			);
-			name = Products;
+			name = Differ;
+			path = Differ/Sources/Differ;
 			sourceTree = "<group>";
 		};
 		1BC89F691F800FB4008560A2 = {
 			isa = PBXGroup;
 			children = (
-				1B821F502150476E002D4BBF /* Differ.xcodeproj */,
+				1B3580BB215409850009F422 /* Differ */,
 				1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */,
 				1BC89F741F800FB4008560A2 /* Demo */,
 				1BC89F891F800FB5008560A2 /* DemoTests */,
@@ -286,7 +304,6 @@
 			);
 			dependencies = (
 				1B6260DA1F80E949001E09A5 /* PBXTargetDependency */,
-				1B821F6221504773002D4BBF /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -347,10 +364,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 1B821F512150476E002D4BBF /* Products */;
-					ProjectRef = 1B821F502150476E002D4BBF /* Differ.xcodeproj */;
-				},
-				{
 					ProductGroup = 1BC89FDB1F80E917008560A2 /* Products */;
 					ProjectRef = 1BC89FDA1F80E917008560A2 /* Jetpack.xcodeproj */;
 				},
@@ -364,20 +377,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		1B821F562150476E002D4BBF /* Differ.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Differ.framework;
-			remoteRef = 1B821F552150476E002D4BBF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		1B821F582150476E002D4BBF /* DifferTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = DifferTests.xctest;
-			remoteRef = 1B821F572150476E002D4BBF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		1BC89FE51F80E917008560A2 /* Jetpack.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -453,12 +452,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B3580D1215409850009F422 /* GenericPatch.swift in Sources */,
+				1B3580CD215409850009F422 /* ExtendedDiff.swift in Sources */,
+				1B3580D5215409850009F422 /* BatchUpdate.swift in Sources */,
+				1B3580D2215409850009F422 /* Patch.swift in Sources */,
 				1BC89F9C1F800FFF008560A2 /* ListViewModel.swift in Sources */,
 				1BC89F9E1F800FFF008560A2 /* ListViewModelProtocol.swift in Sources */,
+				1B3580D9215409850009F422 /* LinkedList.swift in Sources */,
+				1B3580D0215409850009F422 /* NestedDiff.swift in Sources */,
+				1B3580CF215409850009F422 /* Diff.swift in Sources */,
+				1B3580D7215409850009F422 /* Patch+Sort.swift in Sources */,
 				1BC89F9A1F800FFF008560A2 /* ListModel.swift in Sources */,
+				1B3580D8215409850009F422 /* ExtendedPatch+Apply.swift in Sources */,
 				1BC89F9D1F800FFF008560A2 /* ListViewController.swift in Sources */,
+				1B3580CE215409850009F422 /* Diff+UIKit.swift in Sources */,
+				1B3580D4215409850009F422 /* NestedBatchUpdate.swift in Sources */,
+				1B3580CB215409850009F422 /* NestedExtendedDiff.swift in Sources */,
 				1BC89F761F800FB4008560A2 /* AppDelegate.swift in Sources */,
 				1BC89F9B1F800FFF008560A2 /* LoremSwiftum.swift in Sources */,
+				1B3580D6215409850009F422 /* Patch+Apply.swift in Sources */,
+				1B3580CC215409850009F422 /* ExtendedPatch.swift in Sources */,
+				1B3580D3215409850009F422 /* Diff+AppKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,11 +491,6 @@
 			isa = PBXTargetDependency;
 			name = "Jetpack-iOS";
 			targetProxy = 1B6260D91F80E949001E09A5 /* PBXContainerItemProxy */;
-		};
-		1B821F6221504773002D4BBF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Differ;
-			targetProxy = 1B821F6121504773002D4BBF /* PBXContainerItemProxy */;
 		};
 		1BC89F881F800FB5008560A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
