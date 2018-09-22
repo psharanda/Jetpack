@@ -6,7 +6,18 @@
 import Foundation
 
 extension ObservableProtocol {
+
+    @available(*, deprecated, renamed: "share()", message: "Please use share() instead")
     public func commit() -> (Observable<ValueType>, Disposable) {
+        return share()
+    }
+    
+    @available(*, deprecated, renamed: "share(autodisposeIn:)", message: "Please use share(autodisposeIn:) instead")
+    public func commit(autodisposeIn pool: AutodisposePool) -> Observable<ValueType> {
+        return share(autodisposeIn: pool)
+    }
+    
+    public func share() -> (Observable<ValueType>, Disposable) {
         
         let signal = Signal<ValueType>()
         var immediateResult: ValueType?
@@ -29,9 +40,15 @@ extension ObservableProtocol {
         }
     }
     
-    public func commit(autodisposeIn pool: AutodisposePool) -> Observable<ValueType> {
-        let (observer, d) = commit()
+    public func share(autodisposeIn pool: AutodisposePool) -> Observable<ValueType> {
+        let (observer, d) = share()
         pool.add(d)
+        return observer
+    }
+    
+    public func share(autodisposeIn box: AutodisposeBox) -> Observable<ValueType> {
+        let (observer, d) = share()
+        box.put(d)
         return observer
     }
 }

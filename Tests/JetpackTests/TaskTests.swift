@@ -37,7 +37,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
         
         r.subscribe {
             switch $0 {
@@ -58,7 +58,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestError)
+        let r = Task(requestError)
         r.subscribe {
             switch $0 {
             case .success(_):
@@ -78,7 +78,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
         
         let c = r.subscribe {
             switch $0 {
@@ -105,7 +105,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
             .flatMapLatestValue { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
@@ -136,9 +136,9 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
             .flatMapLatestValue { result in
-                return Task(generator: requestError)
+                return Task(requestError)
             }
             .flatMapLatestValue { result in
                 return Task {
@@ -165,7 +165,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
             .flatMapLatestValue { result in
                 return Task {
                     return requestWorld(head: result, completion: $0)
@@ -203,7 +203,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
             .forEachValue {
                 XCTAssertEqual("Hello", $0)
                 expect.fulfill()
@@ -223,7 +223,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestError)
+        let r = Task(requestError)
             .forEachValue { _ in
                 XCTFail("should not have value")
                 expect.fulfill()
@@ -244,7 +244,7 @@ class TaskTests: XCTestCase {
         
         let expect = expectation(description: "result")
         
-        let r = Task(generator: requestHello)
+        let r = Task(requestHello)
             .forEachValue { _ in
                 XCTFail("should not have value")
             }.forEachError { _ in
@@ -416,7 +416,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         var numberOfFailures = 0
-        let r = Task(generator: requestError)
+        let r = Task(requestError)
             .forEachError { _ in
                 numberOfFailures += 1
             }
@@ -442,7 +442,7 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
         
         var numberOfFailures = 0
-        let r = Task(generator: requestError)
+        let r = Task(requestError)
             .forEachError { _ in
                 numberOfFailures += 1
             }

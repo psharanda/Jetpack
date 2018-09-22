@@ -11,14 +11,24 @@ public typealias Task<T> = Observable<Result<T>>
 
 extension Task {
 
-    /// Create task which immediately completes with value
+    @available(*, deprecated, renamed: "just(value:)", message: "Please use just(value:) instead")
     public static func from<U>(value: U) -> Task<U>  where T == Result<U> {
-        return from(.success(value))
+        return just(.success(value))
     }
-
-    /// Create task which immediately completes with error
+    
+    @available(*, deprecated, renamed: "just(error:)", message: "Please use just(error:) instead")
     public static func from<U>(error: Error) -> Task<U>  where T == Result<U> {
-        return from(.failure(error))
+        return just(.failure(error))
+    }
+    
+    /// Create task which immediately completes with value
+    public static func just<U>(value: U) -> Task<U>  where T == Result<U> {
+        return just(.success(value))
+    }
+    
+    /// Create task which immediately completes with error
+    public static func just<U>(error: Error) -> Task<U>  where T == Result<U> {
+        return just(.failure(error))
     }
 }
 

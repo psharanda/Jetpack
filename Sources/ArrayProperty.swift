@@ -32,7 +32,7 @@ public struct ArrayProperty<T>: ObservableProtocol, GetValueProtocol  {
     }
     
     public init(constant: [T]) {
-        self.init(Observable.from((constant, .set)), getter: { constant })
+        self.init(Observable.just((constant, .set)), getter: { constant })
     }
     
     @discardableResult
@@ -77,7 +77,7 @@ public struct Array2DProperty<T>: ObservableProtocol, GetValueProtocol  {
     }
     
     public init(constant: [[T]]) {
-        self.init(Observable.from((constant, .set)), getter: { constant })
+        self.init(Observable.just((constant, .set)), getter: { constant })
     }
     
     @discardableResult

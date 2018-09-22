@@ -15,6 +15,10 @@ extension Observable {
         }
     }
     
+    public static func create(_ generator: @escaping (@escaping (T) -> Void) -> Disposable) -> Observable<T> {
+        return Observable(generator)
+    }
+    
     public static func delayed(_ value: T, timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observable<T> {
         return Observable<T> { observer in
             return queue.jx.after(timeInterval: timeInterval) {
@@ -31,7 +35,12 @@ extension Observable {
         }
     }
     
+    @available(*, deprecated, renamed: "just(_:)", message: "Please use just(_:) instead")
     public static func from(_ value: T) -> Observable<T> {
+        return just(value)
+    }
+    
+    public static func just(_ value: T) -> Observable<T> {
         return Observable<T> { observer in
             observer(value)
             return EmptyDisposable()
@@ -41,6 +50,21 @@ extension Observable {
     public static var never: Observable<T> {
         return Observable<T> { observer in
             return EmptyDisposable()
+        }
+    }
+    
+    public static func deferred(_ f: @escaping ()->T) -> Observable<T> {
+        return Observable<T> { observer in
+            observer(f())
+            return EmptyDisposable()
+        }
+    }
+    
+    public static func deferred(_ f: @escaping ()->Observable<T>) -> Observable<T> {
+        return Observable<T> { observer in
+            return f().subscribe {
+                observer($0)
+            }
         }
     }
 }

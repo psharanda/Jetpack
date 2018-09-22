@@ -23,7 +23,7 @@ public final class Property<T>: PropertyProtocol {
     }
     
     public convenience  init(constant: T) {
-        self.init(Observable.from(constant), getter: { constant })
+        self.init(Observable.just(constant), getter: { constant })
     }
     
     @discardableResult

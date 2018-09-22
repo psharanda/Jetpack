@@ -19,14 +19,14 @@ import Jetpack
 
 class JetpackTests: XCTestCase {
     
-    func testFromValueObservable() {
+    func testJustValueObservable() {
         
-        _ = Observable.from(1)
-        _ = Task.from(value: 1)
-        _ = Task<Int>.from(error: NSError() )
+        _ = Observable.just(1)
+        _ = Task.just(value: 1)
+        _ = Task<Int>.just(error: NSError() )
         
         let value = 10
-        let o = Observable.from(value)
+        let o = Observable.just(value)
         
         var fired = false
         
@@ -634,7 +634,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapLatest { _ in
-                return Observable.from(genValue)
+                return Observable.just(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)
@@ -683,7 +683,7 @@ class JetpackTests: XCTestCase {
         
         let d = buttonClick
             .flatMapMerge { _ in
-                return Observable.from(genValue)
+                return Observable.just(genValue)
             }
             .subscribe {
                 XCTAssertEqual($0, expectedValue)
@@ -1002,6 +1002,39 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(prop.value.name, nameProp.value)
     }
+    
+    func testDeferred() {
+        var test = 10
+        
+        let obs = Observable.deferred {
+            return .just(15)
+        }
+        
+        XCTAssertEqual(test, 10)
+        
+        obs.subscribe { val in
+            test = val
+        }
+        
+        XCTAssertEqual(test, 15)
+    }
+    
+    func testDeferred2() {
+        var test = 10
+        
+        let obs = Observable.deferred {
+            return 15
+        }
+        
+        XCTAssertEqual(test, 10)
+        
+        obs.subscribe { val in
+            test = val
+        }
+        
+        XCTAssertEqual(test, 15)
+    }
+    
 }
 
 var numberOfDeinits = 0
