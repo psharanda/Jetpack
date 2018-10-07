@@ -8,47 +8,21 @@
 
 import Foundation
 
-public enum ArrayEditEvent {
+public enum ArrayEditEvent: ChangeEventProtocol {
     case set
     case remove(Int)
     case insert(Int)
     case move(Int, Int)
     case update(Int)
-}
-
-/// Wrapper around some array which provides interface for observing changes. Items always exist ('get/subscribe')
-public struct ArrayProperty<T>: ObservableProtocol, GetValueProtocol  {
     
-    private let observable: Observable<([T], ArrayEditEvent)>
-    private let getter: ()->[T]
-    
-    public var value: [T] {
-        return getter()
-    }
-    
-    public init(_ observable: Observable<([T], ArrayEditEvent)>, getter: @escaping ()->[T]) {
-        self.getter = getter
-        self.observable = observable
-    }
-    
-    public init(constant: [T]) {
-        self.init(Observable.just((constant, .set)), getter: { constant })
-    }
-    
-    @discardableResult
-    public func subscribe(_ observer: @escaping (([T], ArrayEditEvent)) -> Void) -> Disposable {
-        observer((value, .set))
-        return observable.subscribe(observer)
-    }
-    
-    public var asProperty: Property<[T]> {
-        return Property(observable.map { $0.0 }) {
-            return self.value
-        }
+    public static var resetEvent: ArrayEditEvent {
+        return .set
     }
 }
 
-public enum Array2DEditEvent {
+public typealias ArrayProperty<T> = MetaProperty<[T], ArrayEditEvent>
+
+public enum Array2DEditEvent: ChangeEventProtocol {
     case set
     case removeItem(IndexPath)
     case insertItem(IndexPath)
@@ -59,38 +33,13 @@ public enum Array2DEditEvent {
     case insertSection(Int)
     case moveSection(Int, Int)
     case updateSection(Int)
+    
+    public static var resetEvent: Array2DEditEvent {
+        return .set
+    }
 }
 
-/// Wrapper around some 2D array (array of arrays) which provides interface for observing changes. Items always exist ('get/subscribe')
-public struct Array2DProperty<T>: ObservableProtocol, GetValueProtocol  {
-    
-    private let observable: Observable<([[T]], Array2DEditEvent)>
-    private let getter: ()->[[T]]
-    
-    public var value: [[T]] {
-        return getter()
-    }
-    
-    public init(_ observable: Observable<([[T]], Array2DEditEvent)>, getter: @escaping ()->[[T]]) {
-        self.getter = getter
-        self.observable = observable
-    }
-    
-    public init(constant: [[T]]) {
-        self.init(Observable.just((constant, .set)), getter: { constant })
-    }
-    
-    @discardableResult
-    public func subscribe(_ observer: @escaping (([[T]], Array2DEditEvent)) -> Void) -> Disposable {
-        observer((value, .set))
-        return observable.subscribe(observer)
-    }
-    
-    public var asProperty: Property<[[T]]> {
-        return Property(observable.map { $0.0 }) {
-            return self.value
-        }
-    }
-}
+public typealias Array2DProperty<T> = MetaProperty<[[T]], Array2DEditEvent>
+
 
 

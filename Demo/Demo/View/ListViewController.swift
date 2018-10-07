@@ -97,7 +97,6 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     valuesMap[$0.element.id] = ($0.element, $0.offset)
                 }
                 
-                #if swift(>=4.1)
                 let indexPathsToReload = newItems.compactMap { i -> IndexPath? in
                     if let oldValue = valuesMap[i.id] {
                         if oldValue.0 != i {
@@ -106,16 +105,6 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
                     return nil
                 }
-                #else
-               let indexPathsToReload = _items.flatMap { i -> IndexPath? in
-                    if let oldValue = valuesMap[i.id] {
-                        if oldValue.0 != i {
-                            return IndexPath(row: oldValue.1, section: 0)
-                        }
-                    }
-                    return nil
-                }
-                #endif
  
                 tableView.beginUpdates()
                 tableView.apply(diff)
@@ -153,9 +142,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.didToggle(at: indexPath.row)
-        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
     
     func tableView(_ tableView: UITableView, commit editingStyle: TableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
@@ -178,10 +165,3 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         viewModel.didMove(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }
-
-
-
-
-
-
-

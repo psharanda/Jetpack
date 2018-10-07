@@ -34,18 +34,9 @@ public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
         }
     }
     
-    public init(property: Property<T>, receiver: Receiver<T>) {
+    init(property: Property<T>, receiver: Receiver<T>) {
         self.property = property
         self.receiver = receiver
-    }
-    
-    public init(getter: @escaping ()->T, setter: @escaping (T)->Void) {
-        let signal = Signal<T>()
-        property = Property(signal.asObservable, getter: getter)
-        receiver = Receiver  {
-            setter($0)
-            signal.update($0)
-        }
     }
     
     @discardableResult

@@ -19,9 +19,7 @@ class ListViewModel: ListViewModelProtocol {
     }
     
     var undoEnabled: Property<Bool> {
-        return model.undoStack.asProperty
-            .map { $0.count > 1 }
-
+        return model.undoEnabled
     }
     
     func didAdd(title: String) {
@@ -48,3 +46,6 @@ class ListViewModel: ListViewModelProtocol {
         model.clean()
     }
 }
+
+
+

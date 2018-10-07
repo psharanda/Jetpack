@@ -17,14 +17,16 @@ typealias ApplicationLaunchOptionsKey = UIApplicationLaunchOptionsKey
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
-    
-    let m = ListModel()
+    private lazy var w: UIWindow = UIWindow(frame: UIScreen.main.bounds)
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [ApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-    
+
+        let m = ListModel(items: ListPersistentStorage.load() ?? [])
         
+        m.items.subscribe {
+            ListPersistentStorage.save(items: $0.0)
+        }
         
         let vm = ListViewModel(model: m)
         let vc = ListViewController(viewModel: vm)

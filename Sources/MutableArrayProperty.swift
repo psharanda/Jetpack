@@ -11,166 +11,108 @@ import Foundation
 #endif
 
 /// Wrapper around some mutable array. ('set/get/subscribe')
-public final class MutableArrayProperty<T>: ObservableProtocol, VariableProtocol {
+public final class MutableArrayProperty<T>: MutableMetaProperty<[T], ArrayEditEvent> {
     
-    public var value: [T] {
-        get {
-            return elements
-        }
-        set {
-            update(newValue)
-        }
-    }
-    
-    private let signal = Signal<([T], ArrayEditEvent)>()
-    private var elements: [T]
-    
-    public init(_ elements: [T] = []) {
-        self.elements = elements
+    public override init(_ value: [T] = []) {
+        super.init(value)
     }
     
     public func update(at: Int, with value: T) {
-        elements[at] = value
-        signal.update((elements, .update(at)))
+        changeWithEvent {
+            $0[at] = value
+            return .update(at)
+        }
     }
-    
-    @discardableResult
-    public func remove(at: Int) -> T {
-        let el = elements.remove(at: at)
-        signal.update((elements, .remove(at)))
-        return el
-    }
-    
-    public func append(_ newElement: T) {
-        insert(newElement, at: elements.count)
-    }
-    
-    public func insert(_ newElement: T, at: Int) {
-        elements.insert(newElement, at: at)
-        signal.update((elements, .insert(at)))
-    }
-    
-    public func move(from: Int, to: Int) {
-        elements.insert(elements.remove(at: from), at: to)
-        signal.update((elements, .move(from, to)))
-    }
-    
-    public func update(_ newValue: [T]) {
-        elements = newValue
-        signal.update((elements, .set))
-    }
-    
-    @discardableResult
-    public func subscribe(_ observer: @escaping (([T], ArrayEditEvent)) -> Void) -> Disposable {
-        observer((elements, .set))
-        return signal.subscribe(observer)
-    }
-    
-    public var asProperty: Property<[T]> {
-        return Property(signal.map { $0.0 }) {
-            return self.value
+
+    public func remove(at: Int) {
+        changeWithEvent {
+            $0.remove(at: at)
+            return .remove(at)
         }
     }
     
-    public var asMutableProperty: MutableProperty<[T]> {
-        return MutableProperty(property: asProperty, receiver: asReceiver)
+    public func append(_ newElement: T) {
+        changeWithEvent {
+            $0.append(newElement)
+            return .insert($0.count)
+        }
     }
     
-    public var asArrayProperty: ArrayProperty<T> {
-        return ArrayProperty(signal.asObservable) {
-            return self.value
+    public func insert(_ newElement: T, at: Int) {
+        changeWithEvent {
+            $0.insert(newElement, at: at)
+            return .insert(at)
+        }
+    }
+    
+    public func move(from: Int, to: Int) {
+        changeWithEvent {
+            $0.insert($0.remove(at: from), at: to)
+            return .move(from, to)
         }
     }
 }
 
 /// Wrapper around some mutable 2D array (array of arrays). ('set/get/subscribe')
-public final class MutableArray2DProperty<T>: ObservableProtocol, VariableProtocol {
+public final class MutableArray2DProperty<T>: MutableMetaProperty<[[T]], Array2DEditEvent> {
     
-    public var value: [[T]] {
-        get {
-            return elements
-        }
-        set {
-            update(newValue)
-        }
-    }
-    
-    private let signal = Signal<([[T]], Array2DEditEvent)>()
-    private var elements: [[T]]
-    
-    public init(_ elements: [[T]] = []) {
-        self.elements = elements
+    public override init(_ value: [[T]] = []) {
+        super.init(value)
     }
     
     public func updateSection(at: Int, with value: [T]) {
-        elements[at] = value
-        signal.update((elements, .updateSection(at)))
+        changeWithEvent {
+            $0[at] = value
+            return .updateSection(at)
+        }
     }
     
-    @discardableResult
-    public func removeSection(at: Int) -> [T] {
-        let el = elements.remove(at: at)
-        signal.update((elements, .removeSection(at)))
-        return el
+    public func removeSection(at: Int) {
+        changeWithEvent {
+            $0.remove(at: at)
+            return .removeSection(at)
+        }
     }
     
     public func insertSection(_ newElement: [T], at: Int) {
-        elements.insert(newElement, at: at)
-        signal.update((elements, .insertSection(at)))
+        changeWithEvent {
+            $0.insert(newElement, at: at)
+            return .insertSection(at)
+        }
     }
     
     public func moveSection(from: Int, to: Int) {
-        elements.insert(elements.remove(at: from), at: to)
-        signal.update((elements, .moveSection(from, to)))
+        changeWithEvent {
+            $0.insert($0.remove(at: from), at: to)
+            return .moveSection(from, to)
+        }
     }
     
     public func updateItem(at: IndexPath, with value: T) {
-        elements[at.section][at.item] = value
-        signal.update((elements, .updateItem(at)))
+        changeWithEvent {
+            $0[at.section][at.item] = value
+            return .updateItem(at)
+        }
     }
     
-    @discardableResult
-    public func removeItem(at: IndexPath) -> T {
-        let el = elements[at.section].remove(at: at.item)
-        signal.update((elements, .removeItem(at)))
-        return el
+    public func removeItem(at: IndexPath) {
+        changeWithEvent {
+            $0[at.section].remove(at: at.item)
+            return .removeItem(at)
+        }
     }
     
     public func insertItem(_ newElement: T, at: IndexPath) {
-        elements[at.section].insert(newElement, at: at.item)
-        signal.update((elements, .insertItem(at)))
+        changeWithEvent {
+            $0[at.section].insert(newElement, at: at.item)
+            return .insertItem(at)
+        }
     }
     
     public func moveItem(from: IndexPath, to: IndexPath) {
-        elements[to.section].insert(elements[from.section].remove(at: from.item), at: to.item)
-        signal.update((elements, .moveItem(from, to)))
-    }
-    
-    public func update(_ newValue: [[T]]) {
-        elements = newValue
-        signal.update((elements, .set))
-    }
-    
-    @discardableResult
-    public func subscribe(_ observer: @escaping (([[T]], Array2DEditEvent)) -> Void) -> Disposable {
-        observer((elements, .set))
-        return signal.subscribe(observer)
-    }
-    
-    public var asProperty: Property<[[T]]> {
-        return Property(signal.map { $0.0 }) {
-            return self.value
-        }
-    }
-    
-    public var asMutableProperty: MutableProperty<[[T]]> {
-        return MutableProperty(property: asProperty, receiver: asReceiver)
-    }
-    
-    public var asArrayProperty: Array2DProperty<T> {
-        return Array2DProperty(signal.asObservable) {
-            return self.value
+        changeWithEvent {
+            $0[to.section].insert($0[from.section].remove(at: from.item), at: to.item)
+            return .moveItem(from, to)
         }
     }
 }
-

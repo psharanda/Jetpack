@@ -133,6 +133,14 @@
 		1B6E88471E9E17860063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
+		1B8CD58A216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
+		1B8CD58B216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
+		1B8CD58C216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
+		1B8CD58D216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
+		1B8CD58F216B51D800350367 /* MutableMetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */; };
+		1B8CD590216B51D800350367 /* MutableMetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */; };
+		1B8CD591216B51D800350367 /* MutableMetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */; };
+		1B8CD592216B51D800350367 /* MutableMetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */; };
 		1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1BB692381F6F288B000E0177 /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
 		1BB6923A1F6F2894000E0177 /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
@@ -253,6 +261,8 @@
 		1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Jetpack.swift"; path = "Sources/DispatchQueue+Jetpack.swift"; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
+		1B8CD589216B51B200350367 /* MetaProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MetaProperty.swift; path = Sources/MetaProperty.swift; sourceTree = "<group>"; };
+		1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MutableMetaProperty.swift; path = Sources/MutableMetaProperty.swift; sourceTree = "<group>"; };
 		1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Timer+Jetpack.swift"; path = "Sources/Timer+Jetpack.swift"; sourceTree = "<group>"; };
 		1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+DispatchQueue.swift"; path = "Sources/Observable+DispatchQueue.swift"; sourceTree = "<group>"; };
 		1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArrayProperty.swift; path = Sources/ArrayProperty.swift; sourceTree = "<group>"; };
@@ -376,6 +386,8 @@
 				1BCFC3521F7EA88C00F4C247 /* Variable.swift */,
 				1B6E86F01E9ADB540063D5EB /* Property.swift */,
 				1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */,
+				1B8CD589216B51B200350367 /* MetaProperty.swift */,
+				1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */,
 				1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */,
 				1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
@@ -785,6 +797,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B8CD58A216B51B200350367 /* MetaProperty.swift in Sources */,
 				1BC89F491F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
 				1B6E87191E9ADB540063D5EB /* Observable+Math.swift in Sources */,
 				1BCFC3551F7EA89200F4C247 /* Variable.swift in Sources */,
@@ -824,6 +837,7 @@
 				1BE3CD181EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
 				1B6E87391E9ADB540063D5EB /* UIView.swift in Sources */,
 				1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */,
+				1B8CD58F216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E87341E9ADB540063D5EB /* UIStepper.swift in Sources */,
 				1B6E87301E9ADB540063D5EB /* UIProgressView.swift in Sources */,
@@ -862,6 +876,7 @@
 				1BC89F4F1F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
 				1B6E87801E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */,
+				1B8CD58B216B51B200350367 /* MetaProperty.swift in Sources */,
 				1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
@@ -885,6 +900,7 @@
 				1BF0147B1EA208360061B4D9 /* Task.swift in Sources */,
 				1BF014851EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				52D6D9EA1BEFFFA4002C0205 /* JetpackExtensions.swift in Sources */,
+				1B8CD590216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1B6E87821E9ADC270063D5EB /* Observable+Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -926,10 +942,12 @@
 				1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
 				1B6E87921E9ADC280063D5EB /* Observable+Result.swift in Sources */,
 				1BE3CD1B1EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
+				1B8CD58D216B51B200350367 /* MetaProperty.swift in Sources */,
 				1BC89F4C1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
 				1B6E880A1E9E15F20063D5EB /* UITextField.swift in Sources */,
 				1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87E91E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
+				1B8CD592216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1BF014761EA208290061B4D9 /* Observable.swift in Sources */,
 				1B6997901FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */,
@@ -957,6 +975,7 @@
 				1BC89F501F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
 				1BF014781EA208340061B4D9 /* Result.swift in Sources */,
 				1BF014721EA208280061B4D9 /* Observable.swift in Sources */,
+				1B8CD58C216B51B200350367 /* MetaProperty.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
 				1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */,
@@ -980,6 +999,7 @@
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
 				1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */,
+				1B8CD591216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1B6E87751E9ADC270063D5EB /* Observable+Logging.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
