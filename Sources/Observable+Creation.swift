@@ -35,11 +35,6 @@ extension Observable {
         }
     }
     
-    @available(*, deprecated, renamed: "just(_:)", message: "Please use just(_:) instead")
-    public static func from(_ value: T) -> Observable<T> {
-        return just(value)
-    }
-    
     public static func just(_ value: T) -> Observable<T> {
         return Observable<T> { observer in
             observer(value)

@@ -12,13 +12,7 @@ public final class Observable<T>: ObservableProtocol {
     
     private let generator: (@escaping (T) -> Void) -> Disposable
     
-    
     public init(_ generator: @escaping (@escaping (T) -> Void) -> Disposable) {
-        self.generator = generator
-    }
-    
-    @available(*, deprecated, renamed: "init(_:)", message: "Please use init(_:) instead")
-    public init(generator: @escaping (@escaping (T) -> Void) -> Disposable) {
         self.generator = generator
     }
     

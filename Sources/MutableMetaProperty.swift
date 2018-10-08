@@ -5,7 +5,7 @@
 
 import Foundation
 
-open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtocol, VariableProtocol {
+open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtocol, UpdateValueProtocol, GetValueProtocol {
     
     public var value: T {
         get {

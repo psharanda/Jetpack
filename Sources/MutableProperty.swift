@@ -6,7 +6,7 @@
 import Foundation
 
 /// Wrapper around some mutable value. ('set/get/subscribe')
-public final class MutableProperty<T>: PropertyProtocol, VariableProtocol {
+public final class MutableProperty<T>: PropertyProtocol, UpdateValueProtocol {
     
     public var value: T {
         get {

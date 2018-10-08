@@ -17,8 +17,7 @@ extension Disposable {
 
 public final class  EmptyDisposable: Disposable {
     
-    public init() {
-    }
+    public init() {}
     
     public func dispose() {}
 }

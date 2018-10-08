@@ -29,17 +29,6 @@ extension ObservableProtocol {
         }
     }
     
-    @available(swift, deprecated: 4.1, renamed: "compactMap(_:)", message: "Please use compactMap(_:) for the case where closure returns an optional value")
-    public func flatMap<U>(_ transform: @escaping (ValueType)-> U?) -> Observable<U> {
-        return Observable<U> { observer in
-            return self.subscribe { result in
-                if let newValue = transform(result) {
-                    observer(newValue)
-                }
-            }
-        }
-    }
-    
     public func reduce<U>(_ initial: U, f: @escaping (U, ValueType) -> U) -> Observable<U> {
         return Observable<U> { observer in
             var reduced: U = initial
@@ -49,7 +38,6 @@ extension ObservableProtocol {
             }
         }
     }
-
     
     public func just<U>(_ value: U) -> Observable<U> {
         return map { _ -> U in

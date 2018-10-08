@@ -1005,6 +1005,31 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(test, 15)
     }
     
+    func testShareReplay() {
+        var sum = 0
+        let work = Observable<Int> { observer in
+            sum += 1
+            observer(sum)
+            sum += 1
+            observer(sum)
+            sum += 1
+            observer(sum)
+            return EmptyDisposable()
+        }
+        
+        let (ro, _) = work.shareReplay(2)
+        
+        var values = [Int]()
+        ro.subscribe {
+            values.append($0)
+        }
+        ro.subscribe {
+            values.append($0)
+        }
+        
+        XCTAssertEqual(values, [2, 3, 2, 3])
+    }
+    
 }
 
 var numberOfDeinits = 0
