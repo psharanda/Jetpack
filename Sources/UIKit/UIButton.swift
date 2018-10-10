@@ -6,36 +6,36 @@ extension JetpackExtensions where Base: UIButton {
         return controlEvents(.touchUpInside)
     }
 
-	public var title: Binder<String?> {
+	public var title: Consumer<String?> {
         return title(for: .normal)
 	}
 
-	public func title(for state: ControlState) -> Binder<String?> {
-		return jx_makeBinder { $0.setTitle($1, for: state) }
+	public func title(for state: ControlState) -> Consumer<String?> {
+		return jx_makeConsumer { $0.setTitle($1, for: state) }
 	}
     
-    public var attributedTitle: Binder<NSAttributedString?> {
+    public var attributedTitle: Consumer<NSAttributedString?> {
         return attributedTitle(for: .normal)
     }
     
-    public func attributedTitle(for state: ControlState) -> Binder<NSAttributedString?> {
-        return jx_makeBinder { $0.setAttributedTitle($1, for: state) }
+    public func attributedTitle(for state: ControlState) -> Consumer<NSAttributedString?> {
+        return jx_makeConsumer { $0.setAttributedTitle($1, for: state) }
     }
     
-    public var image: Binder<UIImage?> {
+    public var image: Consumer<UIImage?> {
         return image(for: .normal)
     }
 
-	public func image(for state: ControlState) -> Binder<UIImage?> {
-		return jx_makeBinder { $0.setImage($1, for: state) }
+	public func image(for state: ControlState) -> Consumer<UIImage?> {
+		return jx_makeConsumer { $0.setImage($1, for: state) }
 	}
     
-    public var backgroundImage: Binder<UIImage?> {
+    public var backgroundImage: Consumer<UIImage?> {
         return backgroundImage(for: .normal)
     }
     
-    public func backgroundImage(for state: ControlState) -> Binder<UIImage?> {
-        return jx_makeBinder { $0.setBackgroundImage($1, for: state) }
+    public func backgroundImage(for state: ControlState) -> Consumer<UIImage?> {
+        return jx_makeConsumer { $0.setBackgroundImage($1, for: state) }
     }
 
 }

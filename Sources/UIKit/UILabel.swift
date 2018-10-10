@@ -2,11 +2,11 @@ import UIKit
 
 extension JetpackExtensions where Base: UILabel {
 	
-	public var text: Binder<String?> {
-		return jx_makeBinder { $0.text = $1 }
+	public var text: Consumer<String?> {
+		return jx_makeConsumer { $0.text = $1 }
 	}
 
-	public var attributedText: Binder<NSAttributedString?> {
-        return jx_makeBinder { $0.attributedText = $1 }
+	public var attributedText: Consumer<NSAttributedString?> {
+        return jx_makeConsumer { $0.attributedText = $1 }
 	}
 }

@@ -42,8 +42,8 @@ extension JetpackExtensions where Base: NSObject {
         jx_objects.removeObject(forKey: key as NSString)
     }
     
-    func jx_makeBinder<U>(action: @escaping (Base, U)->Void) -> Binder<U> {
-        return Binder {[weak base] value in
+    func jx_makeConsumer<U>(action: @escaping (Base, U)->Void) -> Consumer<U> {
+        return Consumer {[weak base] value in
             if let base = base {
                 action(base, value)
             }                

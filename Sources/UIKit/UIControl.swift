@@ -32,16 +32,16 @@ extension JetpackExtensions where Base: UIControl {
         }, getter: getter)
     }
 
-	public var isEnabled: Binder<Bool> {
-        return jx_makeBinder { $0.isEnabled = $1 }
+	public var isEnabled: Consumer<Bool> {
+        return jx_makeConsumer { $0.isEnabled = $1 }
 	}
 
-	public var isSelected: Binder<Bool> {
-		return jx_makeBinder { $0.isSelected = $1 }
+	public var isSelected: Consumer<Bool> {
+		return jx_makeConsumer { $0.isSelected = $1 }
 	}
 
-	public var isHighlighted: Binder<Bool> {
-		return jx_makeBinder { $0.isHighlighted = $1 }
+	public var isHighlighted: Consumer<Bool> {
+		return jx_makeConsumer { $0.isHighlighted = $1 }
 	}
 }
 

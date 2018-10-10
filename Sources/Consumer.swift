@@ -6,7 +6,7 @@
 import Foundation
 
 /// Wrapper around setter ('set')
-public final class Binder<T>: UpdateValueProtocol {
+public final class Consumer<T>: UpdateValueProtocol {
 
     private let setter: (T)->Void
     
@@ -19,33 +19,33 @@ public final class Binder<T>: UpdateValueProtocol {
     }
 }
 
-extension Binder {
-    public func map<U>(_ transform: @escaping (U) -> T) -> Binder<U> {
-        return Binder<U> {
+extension Consumer {
+    public func map<U>(_ transform: @escaping (U) -> T) -> Consumer<U> {
+        return Consumer<U> {
             self.update(transform($0))
         }
     }
     
-    public func map<U>(keyPath: KeyPath<U, UpdateValueType>) -> Binder<U> {
+    public func map<U>(keyPath: KeyPath<U, UpdateValueType>) -> Consumer<U> {
         return map { $0[keyPath: keyPath] }
     }
 }
 
-extension Binder where T: Optionable {
+extension Consumer where T: Optionable {
     
     /**
-     Convert Binder that accepts optional values into Binder which accepts non optional values
+     Convert Consumer that accepts optional values into Consumer which accepts non optional values
      */
-    public var unwrapped: Binder<T.Wrapped> {
-        return Binder<T.Wrapped> {
+    public var unwrapped: Consumer<T.Wrapped> {
+        return Consumer<T.Wrapped> {
             self.update(T($0))
         }
     }
 }
 
 extension UpdateValueProtocol {
-    public var asBinder: Binder<UpdateValueType> {
-        return Binder {
+    public var asConsumer: Consumer<UpdateValueType> {
+        return Consumer {
             self.update($0)
         }
     }

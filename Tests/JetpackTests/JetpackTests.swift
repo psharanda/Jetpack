@@ -85,8 +85,8 @@ class JetpackTests: XCTestCase {
                 return state.asProperty
             }
             
-            var binder: Binder<Int> {
-                return state.asBinder
+            var consumer: Consumer<Int> {
+                return state.asConsumer
             }
         }
         
@@ -102,7 +102,7 @@ class JetpackTests: XCTestCase {
         }
         
         value = 100
-        t.binder.update(value/10)
+        t.consumer.update(value/10)
         
         XCTAssertEqual(fired, true)
     }
@@ -741,15 +741,15 @@ class JetpackTests: XCTestCase {
             
             private let value = MutableProperty<String>("FRP")
             
-            var valueBinder: Binder<String> {
-                return value.asBinder
+            var valueConsumer: Consumer<String> {
+                return value.asConsumer
             }
             
             private var increment = 0
             private let subject = PublishSubject<Void>()
             
-            var subjectBinder: Binder<Void> {
-                return subject.asBinder
+            var subjectConsumer: Consumer<Void> {
+                return subject.asConsumer
             }
             
             init() {
@@ -765,8 +765,8 @@ class JetpackTests: XCTestCase {
                 numberOfDeinits += 1
             }
             
-            var nameBinder: Binder<String> {
-                return name.asBinder
+            var nameConsumer: Consumer<String> {
+                return name.asConsumer
             }
             
             private let value = MutableProperty<String>("FRP")
@@ -781,11 +781,11 @@ class JetpackTests: XCTestCase {
             
             let model = Model()
 
-            view.nameChanged.bind(model.nameBinder)
-            model.valueChanged.bind(view.valueBinder)
-            view.nameChanged.bind(view.valueBinder)
+            view.nameChanged.bind(model.nameConsumer)
+            model.valueChanged.bind(view.valueConsumer)
+            view.nameChanged.bind(view.valueConsumer)
             
-            view.nameChanged.just.bind(view.subjectBinder)
+            view.nameChanged.just.bind(view.subjectConsumer)
         }
         
         scope()

@@ -10,7 +10,7 @@ import Foundation
 public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
   
     private let observable: Observable<T>
-    private let binder: Binder<T>
+    private let consumer: Consumer<T>
     
     public init() {
         var observers: [Observer<T>] = []
@@ -31,7 +31,7 @@ public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
             }
         }
         
-        binder = Binder { newValue in
+        consumer = Consumer { newValue in
             observers.forEach {
                 $0.observer(newValue)
             }
@@ -39,7 +39,7 @@ public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
     }
     
     public func update(_ newValue: T) {
-        binder.update(newValue)
+        consumer.update(newValue)
     }
     
     @discardableResult

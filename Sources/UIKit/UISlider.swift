@@ -2,8 +2,8 @@ import UIKit
 
 extension JetpackExtensions where Base: UISlider {
 
-	public var value: Binder<Float> {
-        return jx_makeBinder { $0.value = $1 }
+	public var value: Consumer<Float> {
+        return jx_makeConsumer { $0.value = $1 }
 	}
 
 	public var values: Property<Float> {
