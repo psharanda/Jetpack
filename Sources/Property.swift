@@ -5,10 +5,8 @@
 
 import Foundation
 
-public protocol PropertyProtocol: ObservableProtocol , GetValueProtocol { }
-
 /// Wrapper around some state which provides interface for observing state changes. state always exist and always has some value ('get/subscribe')
-public final class Property<T>: PropertyProtocol {
+public final class Property<T>: ObservableProtocol , GetValueProtocol {
     
     private let observable: Observable<T>
     private let getter: ()->T
@@ -17,7 +15,7 @@ public final class Property<T>: PropertyProtocol {
         return getter()
     }
     
-    public init(_ observable: Observable<T>, getter: @escaping ()->T) {
+    init(_ observable: Observable<T>, getter: @escaping ()->T) {
         self.getter = getter
         self.observable = observable
     }

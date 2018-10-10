@@ -16,7 +16,7 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
         }
     }
     
-    private let signal = Signal<(T, Event)>()
+    private let subject = PublishSubject<(T, Event)>()
     private var _value: T
     
     public init(_ value: T) {
@@ -25,13 +25,13 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     
     public func update(_ newValue: T) {
         _value = newValue
-        signal.update((_value, .resetEvent))
+        subject.update((_value, .resetEvent))
     }
     
     @discardableResult
     public func subscribe(_ observer: @escaping ((T, Event)) -> Void) -> Disposable {
         observer((_value, .resetEvent))
-        return signal.subscribe(observer)
+        return subject.subscribe(observer)
     }
     
     public var asProperty: Property<T> {
@@ -41,7 +41,9 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     }
     
     public var asMutableProperty: MutableProperty<T> {
-        return MutableProperty(property: asProperty, receiver: asReceiver)
+        return MutableProperty(property: asProperty) {
+            self.update($0)
+        }
     }
     
     public var asMetaProperty: MetaProperty<T, Event> {
@@ -52,6 +54,6 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     
     public func changeWithEvent(_ handler: (inout T)-> Event) {
         let event = handler(&_value)
-        signal.update((_value, event))
+        subject.update((_value, event))
     }
 }

@@ -11,14 +11,14 @@ extension JetpackExtensions where Base: NotificationCenter {
     public func observer(forName name: NSNotification.Name) -> Observable<(object: Any?, userInfo: [AnyHashable: Any]?)> {
         return jx_lazyObject(key: name.rawValue) { () -> NotificationHandler in
             return NotificationHandler(notificationCenter: base, notificationName: name)
-        }.signal.asObservable
+        }.subject.asObservable
     }
 }
 
 
 private class NotificationHandler: NSObject {
     
-    let signal = Signal<(object: Any?, userInfo: [AnyHashable: Any]?)>()
+    let subject = PublishSubject<(object: Any?, userInfo: [AnyHashable: Any]?)>()
     weak var notificationCenter: NotificationCenter?
     let notificationName: NSNotification.Name
     
@@ -30,7 +30,7 @@ private class NotificationHandler: NSObject {
     }
     
     @objc private func handleNotification(notification: NSNotification) {
-        signal.update((notification.object, notification.userInfo))
+        subject.update((notification.object, notification.userInfo))
     }
     
     deinit {

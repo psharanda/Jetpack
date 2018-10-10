@@ -46,7 +46,7 @@ class JetpackTests: XCTestCase {
                 
             }
             
-            var click = Signal<Void>()
+            var click = PublishSubject<Void>()
             
             func performClick() {
                 click.update()
@@ -85,8 +85,8 @@ class JetpackTests: XCTestCase {
                 return state.asProperty
             }
             
-            var receiver: Receiver<Int> {
-                return state.asReceiver
+            var binder: Binder<Int> {
+                return state.asBinder
             }
         }
         
@@ -102,7 +102,7 @@ class JetpackTests: XCTestCase {
         }
         
         value = 100
-        t.receiver.update(value/10)
+        t.binder.update(value/10)
         
         XCTAssertEqual(fired, true)
     }
@@ -189,22 +189,22 @@ class JetpackTests: XCTestCase {
     #else
     func testJetpackButton2() {
     
-        let signal = Signal<UIImage>()
+        let subject = PublishSubject<UIImage>()
 
         do {
         let button = UIButton()
-        signal.bind(button.jx.backgroundImage)
+        subject.bind(button.jx.backgroundImage)
         }
 
-        signal.update(UIImage())
+        subject.update(UIImage())
     
     }
     #endif
     
     
     func testCombineLatest() {
-        let a = Signal<Int>()
-        let b = Signal<String>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<String>()
         
         var firedTimes = 0
         
@@ -228,10 +228,10 @@ class JetpackTests: XCTestCase {
     }
     
     func testCombineLatestSameType() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
-        let d = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
+        let d = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -261,10 +261,10 @@ class JetpackTests: XCTestCase {
     }
     
     func testZip() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
-        let d = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
+        let d = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -312,10 +312,10 @@ class JetpackTests: XCTestCase {
     }
     
     func testZipSameType() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
-        let d = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
+        let d = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -350,8 +350,8 @@ class JetpackTests: XCTestCase {
     }
     
     func testCombine() {
-        let a = Signal<Int>()
-        let b = Signal<String>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<String>()
         
         var firedTimes = 0
         var i: Int?
@@ -385,10 +385,10 @@ class JetpackTests: XCTestCase {
     }
     
     func testCombine4() {
-        let a = Signal<Int>()
-        let b = Signal<String>()
-        let c = Signal<Int>()
-        let d = Signal<String>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<String>()
+        let c = PublishSubject<Int>()
+        let d = PublishSubject<String>()
         
         var firedTimes = 0
         var i: Int?
@@ -431,10 +431,10 @@ class JetpackTests: XCTestCase {
     }
     
     func testCombineSameType() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
-        let d = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
+        let d = PublishSubject<Int>()
         
         var firedTimes = 0
         var a_: Int?
@@ -477,9 +477,9 @@ class JetpackTests: XCTestCase {
     }
     
     func testMerge() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -506,8 +506,8 @@ class JetpackTests: XCTestCase {
     }
     
     func testSample() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -534,8 +534,8 @@ class JetpackTests: XCTestCase {
     }
 
     func testWithLatestFrom() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -564,9 +564,9 @@ class JetpackTests: XCTestCase {
     }
     
     func testAmb() {
-        let a = Signal<Int>()
-        let b = Signal<Int>()
-        let c = Signal<Int>()
+        let a = PublishSubject<Int>()
+        let b = PublishSubject<Int>()
+        let c = PublishSubject<Int>()
         
         var firedTimes = 0
         
@@ -595,7 +595,7 @@ class JetpackTests: XCTestCase {
     }
     
     func testBufferSize() {
-        let a = Signal<Int>()
+        let a = PublishSubject<Int>()
         
         var output: [Int] = []
         let disposable = a.buffer(timeInterval: 100, maxSize: 3).subscribe {
@@ -627,7 +627,7 @@ class JetpackTests: XCTestCase {
     
     func testFlatMapLatest() {
         
-        let buttonClick = Signal<Void>()
+        let buttonClick = PublishSubject<Void>()
         
         var genValue = 10
         var expectedValue = 10
@@ -655,14 +655,14 @@ class JetpackTests: XCTestCase {
     
     func testFlatMapLatestTask() {
         
-        let buttonClick = Signal<Void>()
+        let buttonClick = PublishSubject<Void>()
         
         var genValue = 10
         let expectedValue = Result(value: 20)
         
         buttonClick
             .flatMapLatest { _ in
-                return Task(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
+                return Task.performed(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
             }
             .subscribe {
                 XCTAssertEqual($0.isEqual(expectedValue), true)
@@ -676,7 +676,7 @@ class JetpackTests: XCTestCase {
     
     func testFlatMapMerge() {
         
-        let buttonClick = Signal<Void>()
+        let buttonClick = PublishSubject<Void>()
         
         var genValue = 10
         var expectedValue = 10
@@ -741,19 +741,19 @@ class JetpackTests: XCTestCase {
             
             private let value = MutableProperty<String>("FRP")
             
-            var valueReceiver: Receiver<String> {
-                return value.asReceiver
+            var valueBinder: Binder<String> {
+                return value.asBinder
             }
             
             private var increment = 0
-            private let signal = Signal<Void>()
+            private let subject = PublishSubject<Void>()
             
-            var signalReceiver: Receiver<Void> {
-                return signal.asReceiver
+            var subjectBinder: Binder<Void> {
+                return subject.asBinder
             }
             
             init() {
-                signal.subscribe { [weak self] in
+                subject.subscribe { [weak self] in
                     self?.increment += 1
                 }
             }
@@ -765,8 +765,8 @@ class JetpackTests: XCTestCase {
                 numberOfDeinits += 1
             }
             
-            var nameReceiver: Receiver<String> {
-                return name.asReceiver
+            var nameBinder: Binder<String> {
+                return name.asBinder
             }
             
             private let value = MutableProperty<String>("FRP")
@@ -781,11 +781,11 @@ class JetpackTests: XCTestCase {
             
             let model = Model()
 
-            view.nameChanged.bind(model.nameReceiver)
-            model.valueChanged.bind(view.valueReceiver)
-            view.nameChanged.bind(view.valueReceiver)
+            view.nameChanged.bind(model.nameBinder)
+            model.valueChanged.bind(view.valueBinder)
+            view.nameChanged.bind(view.valueBinder)
             
-            view.nameChanged.just.bind(view.signalReceiver)
+            view.nameChanged.just.bind(view.subjectBinder)
         }
         
         scope()
@@ -796,37 +796,37 @@ class JetpackTests: XCTestCase {
     
     func testButtonFlatMap() {
         
-        let voidSignal = Signal<Void>()
-        let stringSignal = Signal<String>()
+        let voidSubject = PublishSubject<Void>()
+        let stringSubject = PublishSubject<String>()
         var firedTimes = 0
         
-        let d = voidSignal
+        let d = voidSubject
             .flatMapLatest { _ in
-                return stringSignal.asObservable
+                return stringSubject.asObservable
             }
             .subscribe { _ in 
                 firedTimes += 1
             }
         
-        voidSignal.update()
+        voidSubject.update()
         
         XCTAssertEqual(firedTimes, 0)
         
-        stringSignal.update("1")
+        stringSubject.update("1")
         
         XCTAssertEqual(firedTimes, 1)
         
-        voidSignal.update()
+        voidSubject.update()
         
         XCTAssertEqual(firedTimes, 1)
         
-        stringSignal.update("2")
+        stringSubject.update("2")
         
         XCTAssertEqual(firedTimes, 2)
         
         d.dispose()
         
-        stringSignal.update("3")
+        stringSubject.update("3")
         
         XCTAssertEqual(firedTimes, 2)
     }

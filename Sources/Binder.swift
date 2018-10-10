@@ -6,7 +6,7 @@
 import Foundation
 
 /// Wrapper around setter ('set')
-public final class Receiver<T>: UpdateValueProtocol {
+public final class Binder<T>: UpdateValueProtocol {
 
     private let setter: (T)->Void
     
@@ -19,33 +19,33 @@ public final class Receiver<T>: UpdateValueProtocol {
     }
 }
 
-extension Receiver {
-    public func map<U>(_ transform: @escaping (U) -> T) -> Receiver<U> {
-        return Receiver<U> {
+extension Binder {
+    public func map<U>(_ transform: @escaping (U) -> T) -> Binder<U> {
+        return Binder<U> {
             self.update(transform($0))
         }
     }
     
-    public func map<U>(keyPath: KeyPath<U, UpdateValueType>) -> Receiver<U> {
+    public func map<U>(keyPath: KeyPath<U, UpdateValueType>) -> Binder<U> {
         return map { $0[keyPath: keyPath] }
     }
 }
 
-extension Receiver where T: Optionable {
+extension Binder where T: Optionable {
     
     /**
-     Convert Receiver that accepts optional values into Receiver which accepts non optional values
+     Convert Binder that accepts optional values into Binder which accepts non optional values
      */
-    public var unwrapped: Receiver<T.Wrapped> {
-        return Receiver<T.Wrapped> {
+    public var unwrapped: Binder<T.Wrapped> {
+        return Binder<T.Wrapped> {
             self.update(T($0))
         }
     }
 }
 
 extension UpdateValueProtocol {
-    public var asReceiver: Receiver<UpdateValueType> {
-        return Receiver {
+    public var asBinder: Binder<UpdateValueType> {
+        return Binder {
             self.update($0)
         }
     }

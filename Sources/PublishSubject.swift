@@ -7,22 +7,22 @@ import Foundation
 
 
 /// Object which holds and manages observers and can broadcast values to them ('set/subscribe')
-public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
+public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
   
     private let observable: Observable<T>
-    private let receiver: Receiver<T>
+    private let binder: Binder<T>
     
     public init() {
-        var observers: [TaggedObserver<T>] = []
+        var observers: [Observer<T>] = []
         var lastToken: UInt = 0
         
         observable = Observable { observer in
             lastToken += 1
             
             let token = lastToken
-            observers.append(TaggedObserver<T>(token: token, observer: observer))
+            observers.append(Observer<T>(token: token, observer: observer))
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 guard let idx = (observers.index { $0.token == token }) else {
                     return
                 }
@@ -31,7 +31,7 @@ public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
             }
         }
         
-        receiver = Receiver { newValue in
+        binder = Binder { newValue in
             observers.forEach {
                 $0.observer(newValue)
             }
@@ -39,7 +39,7 @@ public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
     }
     
     public func update(_ newValue: T) {
-        receiver.update(newValue)
+        binder.update(newValue)
     }
     
     @discardableResult
@@ -48,7 +48,7 @@ public final class Signal<T>: ObservableProtocol, UpdateValueProtocol {
     }
 }
 
-private struct TaggedObserver<T> {
+private struct Observer<T> {
     let token: UInt
     let observer: (T)->Void
 }

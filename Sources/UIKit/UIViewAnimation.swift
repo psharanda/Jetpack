@@ -21,7 +21,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
                 animations()
             }
@@ -39,7 +39,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
                 animations()
             }
@@ -59,7 +59,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
                 animations()
             }
@@ -77,7 +77,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
                 animations()
             }
@@ -96,7 +96,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
                 animations()
             }
@@ -115,7 +115,7 @@ extension JetpackExtensions where Base: UIView {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 cancelled = true
             }
         }

@@ -33,7 +33,7 @@ extension ObservableProtocol {
                     buf.removeAll()
                     after()
                 }
-            }.with(disposable: DelegateDisposable {
+            }.with(disposable: BlockDisposable {
                 lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })

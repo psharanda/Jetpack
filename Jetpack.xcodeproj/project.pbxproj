@@ -11,10 +11,10 @@
 		1B17E3761FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
 		1B17E3771FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
 		1B22A32A1EB4FB8C00FBAEEA /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
-		1B2993BB216BDFE5009A0A2B /* Replayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* Replayer.swift */; };
-		1B2993BC216BDFE5009A0A2B /* Replayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* Replayer.swift */; };
-		1B2993BD216BDFE5009A0A2B /* Replayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* Replayer.swift */; };
-		1B2993BE216BDFE5009A0A2B /* Replayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* Replayer.swift */; };
+		1B2993BB216BDFE5009A0A2B /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */; };
+		1B2993BC216BDFE5009A0A2B /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */; };
+		1B2993BD216BDFE5009A0A2B /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */; };
+		1B2993BE216BDFE5009A0A2B /* ReplaySubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */; };
 		1B34602B1F6FD42C003BF7DC /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
 		1B34602C1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
 		1B34602D1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
@@ -23,7 +23,7 @@
 		1B69978E1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */; };
 		1B69978F1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */; };
 		1B6997901FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */; };
-		1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
+		1B6E870D1E9ADB540063D5EB /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Binder.swift */; };
 		1B6E87101E9ADB540063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */; };
 		1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */; };
@@ -36,7 +36,7 @@
 		1B6E871B1E9ADB540063D5EB /* Observable+Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86ED1E9ADB540063D5EB /* Observable+Result.swift */; };
 		1B6E871D1E9ADB540063D5EB /* Observable+Transforming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */; };
 		1B6E871E1E9ADB540063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
-		1B6E87211E9ADB540063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
+		1B6E87211E9ADB540063D5EB /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */; };
 		1B6E87221E9ADB540063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E87261E9ADB540063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
 		1B6E87281E9ADB540063D5EB /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */; };
@@ -56,20 +56,20 @@
 		1B6E87361E9ADB540063D5EB /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87091E9ADB540063D5EB /* UITextField.swift */; };
 		1B6E87371E9ADB540063D5EB /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870A1E9ADB540063D5EB /* UITextView.swift */; };
 		1B6E87391E9ADB540063D5EB /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
-		1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
+		1B6E87441E9ADC1D0063D5EB /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Binder.swift */; };
 		1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
-		1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
+		1B6E87481E9ADC1D0063D5EB /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */; };
 		1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
-		1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
+		1B6E874F1E9ADC1E0063D5EB /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Binder.swift */; };
 		1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
-		1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
+		1B6E87531E9ADC1E0063D5EB /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */; };
 		1B6E87541E9ADC1E0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
-		1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Receiver.swift */; };
+		1B6E875A1E9ADC1E0063D5EB /* Binder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86DF1E9ADB540063D5EB /* Binder.swift */; };
 		1B6E875C1E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */; };
 		1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F01E9ADB540063D5EB /* Property.swift */; };
-		1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* Signal.swift */; };
+		1B6E875E1E9ADC1E0063D5EB /* PublishSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */; };
 		1B6E875F1E9ADC1E0063D5EB /* MutableProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */; };
 		1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */; };
 		1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */; };
@@ -218,10 +218,10 @@
 
 /* Begin PBXFileReference section */
 		1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CADisplayLink+Task.swift"; path = "Sources/UIKit/CADisplayLink+Task.swift"; sourceTree = "<group>"; };
-		1B2993BA216BDFE5009A0A2B /* Replayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Replayer.swift; path = Sources/Replayer.swift; sourceTree = "<group>"; };
+		1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplaySubject.swift; path = Sources/ReplaySubject.swift; sourceTree = "<group>"; };
 		1B4939661E9E34100005452A /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Sources/Result.swift; sourceTree = "<group>"; };
 		1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Observable+Creation.swift"; path = "Sources/Observable+Creation.swift"; sourceTree = "<group>"; };
-		1B6E86DF1E9ADB540063D5EB /* Receiver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Receiver.swift; path = Sources/Receiver.swift; sourceTree = "<group>"; };
+		1B6E86DF1E9ADB540063D5EB /* Binder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Binder.swift; path = Sources/Binder.swift; sourceTree = "<group>"; };
 		1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableProtocol.swift; path = Sources/ObservableProtocol.swift; sourceTree = "<group>"; };
 		1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Binding.swift"; path = "Sources/Observable+Binding.swift"; sourceTree = "<group>"; };
 		1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Buffering.swift"; path = "Sources/Observable+Buffering.swift"; sourceTree = "<group>"; };
@@ -234,7 +234,7 @@
 		1B6E86ED1E9ADB540063D5EB /* Observable+Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Result.swift"; path = "Sources/Observable+Result.swift"; sourceTree = "<group>"; };
 		1B6E86EF1E9ADB540063D5EB /* Observable+Transforming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Transforming.swift"; path = "Sources/Observable+Transforming.swift"; sourceTree = "<group>"; };
 		1B6E86F01E9ADB540063D5EB /* Property.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Property.swift; path = Sources/Property.swift; sourceTree = "<group>"; };
-		1B6E86F31E9ADB540063D5EB /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = "<group>"; };
+		1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PublishSubject.swift; path = Sources/PublishSubject.swift; sourceTree = "<group>"; };
 		1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MutableProperty.swift; path = Sources/MutableProperty.swift; sourceTree = "<group>"; };
 		1B6E86F81E9ADB540063D5EB /* Tuples+Repack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Tuples+Repack.swift"; path = "Sources/Tuples+Repack.swift"; sourceTree = "<group>"; };
 		1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIActivityIndicatorView.swift; sourceTree = "<group>"; };
@@ -381,15 +381,18 @@
 				1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */,
 				1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */,
 				1B6E87BA1E9CEA950063D5EB /* Observable.swift */,
-				1B6E86DF1E9ADB540063D5EB /* Receiver.swift */,
-				1B6E86F31E9ADB540063D5EB /* Signal.swift */,
+				1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */,
+				1BE3CD171EA5150F00C9B0F5 /* Observable+Share.swift */,
+				1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */,
+				1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */,
+				1B2993BA216BDFE5009A0A2B /* ReplaySubject.swift */,
 				1B6E86F01E9ADB540063D5EB /* Property.swift */,
 				1B6E86F41E9ADB540063D5EB /* MutableProperty.swift */,
-				1B2993BA216BDFE5009A0A2B /* Replayer.swift */,
 				1B8CD589216B51B200350367 /* MetaProperty.swift */,
 				1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */,
 				1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */,
 				1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */,
+				1B6E86DF1E9ADB540063D5EB /* Binder.swift */,
 				1B6E88371E9E17180063D5EB /* Task.swift */,
 				1B4939661E9E34100005452A /* Result.swift */,
 			);
@@ -407,9 +410,6 @@
 		1B6E873C1E9ADB820063D5EB /* Operators */ = {
 			isa = PBXGroup;
 			children = (
-				1B69978C1FA58CFD00B1A7FF /* Observable+Creation.swift */,
-				1B6E86E31E9ADB540063D5EB /* Observable+Binding.swift */,
-				1BE3CD171EA5150F00C9B0F5 /* Observable+Share.swift */,
 				1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */,
 				1B6E86E41E9ADB540063D5EB /* Observable+Buffering.swift */,
 				1B6E86E51E9ADB540063D5EB /* Observable+Combining.swift */,
@@ -822,7 +822,7 @@
 				1B6E88321E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */,
 				1B6E87221E9ADB540063D5EB /* MutableProperty.swift in Sources */,
-				1B2993BB216BDFE5009A0A2B /* Replayer.swift in Sources */,
+				1B2993BB216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1B6E872E1E9ADB540063D5EB /* UIImageView.swift in Sources */,
 				1B6E87111E9ADB540063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87161E9ADB540063D5EB /* Observable+FlatMap.swift in Sources */,
@@ -836,7 +836,7 @@
 				1B6E87351E9ADB540063D5EB /* UISwitch.swift in Sources */,
 				1BE3CD181EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
 				1B6E87391E9ADB540063D5EB /* UIView.swift in Sources */,
-				1B6E870D1E9ADB540063D5EB /* Receiver.swift in Sources */,
+				1B6E870D1E9ADB540063D5EB /* Binder.swift in Sources */,
 				1B8CD58F216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1B6E87121E9ADB540063D5EB /* Observable+Buffering.swift in Sources */,
 				1B6E87341E9ADB540063D5EB /* UIStepper.swift in Sources */,
@@ -850,7 +850,7 @@
 				1B6E87151E9ADB540063D5EB /* Observable+Filtering.swift in Sources */,
 				1B6E87E71E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
 				1B6E87281E9ADB540063D5EB /* UIActivityIndicatorView.swift in Sources */,
-				1B6E87211E9ADB540063D5EB /* Signal.swift in Sources */,
+				1B6E87211E9ADB540063D5EB /* PublishSubject.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -876,17 +876,17 @@
 				1B6E87801E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */,
 				1B8CD58B216B51B200350367 /* MetaProperty.swift in Sources */,
-				1B6E87531E9ADC1E0063D5EB /* Signal.swift in Sources */,
+				1B6E87531E9ADC1E0063D5EB /* PublishSubject.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E88431E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B34602C1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */,
 				1B6E877D1E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
 				1BC89F541F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */,
-				1B2993BC216BDFE5009A0A2B /* Replayer.swift in Sources */,
+				1B2993BC216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1BC89F431F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
-				1B6E874F1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
+				1B6E874F1E9ADC1E0063D5EB /* Binder.swift in Sources */,
 				1B6E87851E9ADC270063D5EB /* Observable+Result.swift in Sources */,
 				1B69978E1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1BE3CD1A1EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
@@ -923,11 +923,11 @@
 				1B6E878D1E9ADC280063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87EB1E9E15E90063D5EB /* UIView.swift in Sources */,
 				1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */,
-				1B2993BE216BDFE5009A0A2B /* Replayer.swift in Sources */,
+				1B2993BE216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1B6E87FE1E9E15F20063D5EB /* UIBarItem.swift in Sources */,
 				1B6E88001E9E15F20063D5EB /* UIButton.swift in Sources */,
 				1BC89F451F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
-				1B6E875E1E9ADC1E0063D5EB /* Signal.swift in Sources */,
+				1B6E875E1E9ADC1E0063D5EB /* PublishSubject.swift in Sources */,
 				1B6E876D1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E875C1E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
 				1B6E88061E9E15F20063D5EB /* UISegmentedControl.swift in Sources */,
@@ -939,7 +939,7 @@
 				1B6E88011E9E15F20063D5EB /* UIGestureRecognizer.swift in Sources */,
 				1B17E3771FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E87FF1E9E15F20063D5EB /* UIControl.swift in Sources */,
-				1B6E875A1E9ADC1E0063D5EB /* Receiver.swift in Sources */,
+				1B6E875A1E9ADC1E0063D5EB /* Binder.swift in Sources */,
 				1B6E87921E9ADC280063D5EB /* Observable+Result.swift in Sources */,
 				1BE3CD1B1EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
 				1B8CD58D216B51B200350367 /* MetaProperty.swift in Sources */,
@@ -977,19 +977,19 @@
 				1B8CD58C216B51B200350367 /* MetaProperty.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
-				1B6E87481E9ADC1D0063D5EB /* Signal.swift in Sources */,
+				1B6E87481E9ADC1D0063D5EB /* PublishSubject.swift in Sources */,
 				1B34602B1F6FD42C003BF7DC /* Timer+Jetpack.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
 				1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */,
 				1BC89F551F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */,
-				1B2993BD216BDFE5009A0A2B /* Replayer.swift in Sources */,
+				1B2993BD216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1BC89F441F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
 				1B69978F1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
-				1B6E87441E9ADC1D0063D5EB /* Receiver.swift in Sources */,
+				1B6E87441E9ADC1D0063D5EB /* Binder.swift in Sources */,
 				1B6E87781E9ADC270063D5EB /* Observable+Result.swift in Sources */,
 				1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,

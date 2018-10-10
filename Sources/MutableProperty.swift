@@ -6,37 +6,37 @@
 import Foundation
 
 /// Wrapper around some mutable value. ('set/get/subscribe')
-public final class MutableProperty<T>: PropertyProtocol, UpdateValueProtocol {
+public final class MutableProperty<T>: ObservableProtocol, GetValueProtocol, UpdateValueProtocol {
     
     public var value: T {
         get {
             return property.value
         }
         set {
-            receiver.update(newValue)
+            setter(newValue)
         }
     }
     
     private let property: Property<T>
-    private let receiver: Receiver<T>
+    private let setter:  (T)->Void
     
     public init(_ value: T) {
         
-        let signal = Signal<T>()
+        let subject = PublishSubject<T>()
         var v = value
         
-        property = Property(signal.asObservable) {
+        property = Property(subject.asObservable) {
             return v
         }
-        receiver = Receiver  {
+        setter = {
             v = $0
-            signal.update(v)
+            subject.update(v)
         }
     }
     
-    init(property: Property<T>, receiver: Receiver<T>) {
+    init(property: Property<T>, setter: @escaping (T)->Void) {
         self.property = property
-        self.receiver = receiver
+        self.setter = setter
     }
     
     @discardableResult
@@ -45,7 +45,7 @@ public final class MutableProperty<T>: PropertyProtocol, UpdateValueProtocol {
     }
     
     public func update(_ newValue: T) {
-        receiver.update(newValue)
+        setter(newValue)
     }
     
     public var asProperty: Property<ValueType> {
@@ -57,17 +57,17 @@ extension MutableProperty {
     
     public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
         let p = property.map(transform)
-        let r = Receiver<U> { self.update(reduce(self.value, $0)) }
-        return MutableProperty<U>(property: p, receiver: r)
+        return MutableProperty<U>(property: p) {
+            self.update(reduce(self.value, $0))
+        }
     }
     
     public func map<U>(keyPath: WritableKeyPath<T, U>) -> MutableProperty<U> {
         let p = property.map(keyPath: keyPath)
-        let r = Receiver<U> {
+        return MutableProperty<U>(property: p) {
             var newValue = self.value
             newValue[keyPath: keyPath] = $0
             self.update(newValue)
         }
-        return MutableProperty<U>(property: p, receiver: r)
     }
 }

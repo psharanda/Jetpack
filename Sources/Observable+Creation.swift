@@ -7,16 +7,16 @@ import Foundation
 
 extension Observable {
     
-    public convenience init(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) {
-        self.init { completion in
+    public static func create(_ generator: @escaping (@escaping (T) -> Void) -> Disposable) -> Observable<T> {
+        return Observable(generator)
+    }
+    
+    public static func performed(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) ->  Observable<T> {
+        return Observable { completion in
             return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: T) in
                 completion(value)
             }
         }
-    }
-    
-    public static func create(_ generator: @escaping (@escaping (T) -> Void) -> Disposable) -> Observable<T> {
-        return Observable(generator)
     }
     
     public static func delayed(_ value: T, timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observable<T> {

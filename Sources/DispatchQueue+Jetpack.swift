@@ -20,7 +20,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             closure?()
         }
         
-        return DelegateDisposable { cancelableClosure() }
+        return BlockDisposable { cancelableClosure() }
     }
     
     @discardableResult
@@ -35,7 +35,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             closure?()
         }
         
-        return DelegateDisposable { cancelableClosure() }
+        return BlockDisposable { cancelableClosure() }
     }
     
     @discardableResult
@@ -57,7 +57,7 @@ extension JetpackExtensions where Base: DispatchQueue {
             }
         }
         
-        return DelegateDisposable { cancelableClosure() }
+        return BlockDisposable { cancelableClosure() }
     }
 }
 

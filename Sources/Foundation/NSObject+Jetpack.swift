@@ -42,8 +42,8 @@ extension JetpackExtensions where Base: NSObject {
         jx_objects.removeObject(forKey: key as NSString)
     }
     
-    func jx_makeReceiver<U>(action: @escaping (Base, U)->Void) -> Receiver<U> {
-        return Receiver {[weak base] value in
+    func jx_makeBinder<U>(action: @escaping (Base, U)->Void) -> Binder<U> {
+        return Binder {[weak base] value in
             if let base = base {
                 action(base, value)
             }                
@@ -66,7 +66,7 @@ extension JetpackExtensions where Base: NSObject {
             
             base.jx.jx_setObject(target, forKey: key)
             
-            return DelegateDisposable { [weak base] in
+            return BlockDisposable { [weak base] in
                 guard let base = base else { return }
                 cleanup(base, target, action)
                 base.jx.jx_removeObject(forKey: key)
@@ -97,7 +97,7 @@ extension JetpackExtensions where Base: NSObject {
             
             base.jx.jx_setObject(target, forKey: key)
             
-            return DelegateDisposable { [weak base] in
+            return BlockDisposable { [weak base] in
                 guard let base = base else { return }
                 NotificationCenter.default.removeObserver(target)
                 base.jx.jx_removeObject(forKey: key)
@@ -109,26 +109,20 @@ extension JetpackExtensions where Base: NSObject {
         }
     }
     
-    func jx_makeTargetActionSignal<U>(key: String,
+    func jx_makeTargetActionSubject<U>(key: String,
                                       setup: (Base, AnyObject, Selector)->Void,
                                       cleanup: @escaping (Base, AnyObject, Selector)->Void,
-                                      getter: @escaping (Base)->U) -> Signal<U> {
-        return jx_lazyObject(key: key) { () -> SignalActionHandler<Base, U> in
-            let controlHandler = SignalActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
-            setup(base, controlHandler, #selector(SignalActionHandler<Base, U>.jx_handleAction))
+                                      getter: @escaping (Base)->U) -> PublishSubject<U> {
+        return jx_lazyObject(key: key) { () -> SubjectActionHandler<Base, U> in
+            let controlHandler = SubjectActionHandler(key: key, base: base, getter: getter, cleanup: cleanup)
+            setup(base, controlHandler, #selector(SubjectActionHandler<Base, U>.jx_handleAction))
             return controlHandler
-        }.signal
+        }.subject
     }
     
-    public var autodisposePool: AutodisposePool {
+    public var disposeBag: DisposeBag {
         return jx_lazyObject(key: #function) {
-            return AutodisposePool()
-        }
-    }
-    
-    public func autodisposeBox(for key: String) -> AutodisposeBox {
-        return jx_lazyObject(key: #function + key) {
-            return AutodisposeBox()
+            return DisposeBag()
         }
     }
 }
@@ -169,9 +163,9 @@ class NotificationTarget<Base: AnyObject, T>: NSObject {
     }
 }
 
-class SignalActionHandler<Base: AnyObject, T>: NSObject {
+class SubjectActionHandler<Base: AnyObject, T>: NSObject {
     
-    let signal = Signal<T>()
+    let subject = PublishSubject<T>()
     let getter: (Base)->T
     weak var base: Base?
     let key: String
@@ -187,7 +181,7 @@ class SignalActionHandler<Base: AnyObject, T>: NSObject {
     
     @objc func jx_handleAction() {
         if let base = base {
-            signal.update(getter(base))
+            subject.update(getter(base))
         }
         
     }

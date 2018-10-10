@@ -17,7 +17,7 @@ public final class MetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoc
         return getter()
     }
     
-    public init(_ observable: Observable<(T, Event)>, getter: @escaping ()->T) {
+    init(_ observable: Observable<(T, Event)>, getter: @escaping ()->T) {
         self.getter = getter
         self.observable = observable
     }

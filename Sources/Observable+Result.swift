@@ -62,7 +62,7 @@ extension ObservableProtocol where ValueType: ResultConvertible {
         return map { $0.result.map(transform) }
     }
     
-    public func flatMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
+    public func compactMapValue<U>(_ transform: @escaping (ResultValueType)-> Result<U>) -> Task<U> {
         return compactMap { $0.result.flatMap(transform) }
     }
 
@@ -155,7 +155,7 @@ extension ObservableProtocol where ValueType: ResultConvertible {
                 }
             }
             
-            return DelegateDisposable {
+            return BlockDisposable {
                 withDisposable?.dispose()
                 selfDisposable?.dispose()
             }
@@ -211,7 +211,8 @@ extension ObservableProtocol where ValueType: ResultConvertible {
             var currentTimeout = timeout
             var numberOfRetries = 0
             
-            let serial = SwapableDisposable()
+            let parent = SerialDisposable()
+            let child = SerialDisposable()
             
             func retryImpl() -> Disposable {
                 return self.subscribe { result in
@@ -221,10 +222,8 @@ extension ObservableProtocol where ValueType: ResultConvertible {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
-                            serial.disposeChild()
-                            serial.swap(child: queue.jx.after(timeInterval: currentTimeout) {
-                                serial.disposeParent()
-                                serial.swap(parent: retryImpl())
+                            child.swap(with: queue.jx.after(timeInterval: currentTimeout) {
+                                parent.swap(with: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)
                         } else {
@@ -234,8 +233,8 @@ extension ObservableProtocol where ValueType: ResultConvertible {
                 }
             }
             
-            serial.swap(parent: retryImpl())
-            return serial
+            parent.swap(with: retryImpl())
+            return parent.with(disposable: child)
         }
     }
 }

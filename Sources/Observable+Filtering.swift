@@ -48,7 +48,7 @@ extension ObservableProtocol {
                         }
                     }
                 }
-            }.with(disposable: DelegateDisposable {
+            }.with(disposable: BlockDisposable {
                 lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })
@@ -64,7 +64,7 @@ extension ObservableProtocol {
                 lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
                     observer(result)
                 }
-            }.with(disposable: DelegateDisposable {
+            }.with(disposable: BlockDisposable {
                 lastAfterCancel?.dispose()
                 lastAfterCancel = nil
             })

@@ -5,9 +5,9 @@
 
 import Foundation
 
-/// Basically the same as signal, but replays during subscription last values if there are any of them ('set/subscribe')
-public final class Replayer<T>: ObservableProtocol, UpdateValueProtocol {
-    private let bufferSize: Int
+/// Basically the same as subject, but replays during subscription last values if there are any of them ('set/subscribe')
+public final class ReplaySubject<T>: ObservableProtocol, UpdateValueProtocol {
+    public let bufferSize: Int
     
     private(set) var buffer = [T]()
     
@@ -15,7 +15,7 @@ public final class Replayer<T>: ObservableProtocol, UpdateValueProtocol {
         return buffer.last
     }
     
-    private let signal = Signal<T>()
+    private let subject = PublishSubject<T>()
     
     public init(bufferSize: Int = 1) {
         self.bufferSize = bufferSize
@@ -26,7 +26,7 @@ public final class Replayer<T>: ObservableProtocol, UpdateValueProtocol {
         buffer.forEach {
             observer($0)
         }
-        return signal.subscribe(observer)
+        return subject.subscribe(observer)
     }
     
     public func update(_ newValue: T) {
@@ -34,6 +34,6 @@ public final class Replayer<T>: ObservableProtocol, UpdateValueProtocol {
         if buffer.count > bufferSize {
             buffer.removeFirst()
         }
-        signal.update(newValue)
+        subject.update(newValue)
     }
 }
