@@ -82,12 +82,12 @@ public final class DisposeBag {
         multi.add(disposable)
     }
     
-    public func drain() {
+    public func dispose() {
         multi.dispose()
     }
     
     deinit {
-        drain()
+        dispose()
     }
 }
 
