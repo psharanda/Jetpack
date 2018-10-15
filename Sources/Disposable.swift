@@ -93,7 +93,7 @@ public final class DisposeBag {
 
 
 extension Disposable {
-    public func dispose(in bag: DisposeBag) {
+    public func disposed(by bag: DisposeBag) {
         bag.add(self)
     }
 }
