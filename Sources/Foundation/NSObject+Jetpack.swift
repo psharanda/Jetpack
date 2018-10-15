@@ -126,7 +126,7 @@ extension JetpackExtensions where Base: NSObject {
         }
     }
     
-    public func observed2<Value>(_ sourceKeyPath: KeyPath<Base,Value>, options: NSKeyValueObservingOptions = [.initial, .new, .old]) -> Observable<(Base, NSKeyValueObservedChange<Value>)>
+    public func observed<Value>(_ sourceKeyPath: KeyPath<Base,Value>, options: NSKeyValueObservingOptions = [.initial, .new, .old]) -> Observable<(Base, NSKeyValueObservedChange<Value>)>
     {
         return Observable { observer in
             
