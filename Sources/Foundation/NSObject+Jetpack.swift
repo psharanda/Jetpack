@@ -125,6 +125,19 @@ extension JetpackExtensions where Base: NSObject {
             return DisposeBag()
         }
     }
+    
+    public func observed<Value>(_ sourceKeyPath: KeyPath<Base,Value>) -> Observable<Value>
+    {
+        return Observable { observer in
+            let observation = self.base.observe(sourceKeyPath, options: [.initial, .new]) { object, change in
+                guard let newValue = change.newValue else { return }
+                observer(newValue)
+            }
+            return BlockDisposable {
+                observation.invalidate()
+            }
+        }
+    }
 }
 
 extension NSObject: JetpackExtensionsProvider {}
