@@ -9,46 +9,35 @@ import Foundation
 /// Object which holds and manages observers and can broadcast values to them ('set/subscribe')
 public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
   
-    private let observable: Observable<T>
-    private let consumer: Consumer<T>
+    private var observers: [PublishSubjectObserver<T>] = []
+    private var lastToken: UInt = 0
     
-    public init() {
-        var observers: [Observer<T>] = []
-        var lastToken: UInt = 0
-        
-        observable = Observable { observer in
-            lastToken += 1
-            
-            let token = lastToken
-            observers.append(Observer<T>(token: token, observer: observer))
-            
-            return BlockDisposable {
-                guard let idx = (observers.index { $0.token == token }) else {
-                    return
-                }
-                
-                observers.remove(at: idx)
-            }
-        }
-        
-        consumer = Consumer { newValue in
-            observers.forEach {
-                $0.observer(newValue)
-            }
-        }
-    }
+    public init() { }
     
     public func update(_ newValue: T) {
-        consumer.update(newValue)
+        observers.forEach {
+            $0.observer(newValue)
+        }
     }
     
     @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
-        return observable.subscribe(observer)
+        lastToken += 1
+        
+        let token = lastToken
+        observers.append(PublishSubjectObserver<T>(token: token, observer: observer))
+        
+        return BlockDisposable {
+            guard let idx = (self.observers.index { $0.token == token }) else {
+                return
+            }
+            
+            self.observers.remove(at: idx)
+        }
     }
 }
 
-private struct Observer<T> {
+private struct PublishSubjectObserver<T> {
     let token: UInt
     let observer: (T)->Void
 }

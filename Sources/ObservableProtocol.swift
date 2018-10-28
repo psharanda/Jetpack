@@ -12,7 +12,8 @@ public protocol ObservableProtocol {
 }
 
 extension ObservableProtocol {
-    @discardableResult public func subscribe() -> Disposable {
+    @discardableResult
+    public func subscribe() -> Disposable {
         return subscribe {_ in }
     }
 }

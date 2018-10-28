@@ -1017,7 +1017,7 @@ class JetpackTests: XCTestCase {
             return EmptyDisposable()
         }
         
-        let (ro, _) = work.shareReplay(2)
+        let ro = work.shareReplay(2)
         
         var values = [Int]()
         ro.subscribe {
@@ -1028,6 +1028,27 @@ class JetpackTests: XCTestCase {
         }
         
         XCTAssertEqual(values, [2, 3, 2, 3])
+    }
+    
+    func testShareReplay2() {
+        var values = [Int]()
+        let source = PublishSubject<Int>()
+        source.update(1)
+        let sr = source.shareReplay(1)
+        source.update(2)
+        let d = sr.subscribe {
+            values.append($0)
+        }
+        source.update(3)
+        d.dispose()
+        source.update(4)
+        sr.subscribe {
+            values.append($0)
+        }
+        source.update(5)
+        
+        
+        XCTAssertEqual(values, [3, 5])
     }
     
 }

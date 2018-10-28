@@ -6,15 +6,28 @@
 import Foundation
 
 extension ObservableProtocol {
-    
-    public func shareReplay(_ count: Int = 1) -> (Observable<ValueType>, Disposable) {
-        let replayer = ReplaySubject<ValueType>(bufferSize: count)
-        return (replayer.asObservable, bind(replayer))
-    }
-    
-    public func shareReplay(_ count: Int = 1, disposeIn bag: DisposeBag) -> Observable<ValueType> {
-        let (observer, d) = shareReplay()
-        bag.add(d)
-        return observer
+    public func shareReplay(_ bufferSize: Int = 1) -> Observable<ValueType> {
+        var replaySubject: ReplaySubject<ValueType>?
+        var refCount: Int = 0
+        var disposable: Disposable?
+        
+        return Observable { observer in
+            if disposable == nil {
+                replaySubject = ReplaySubject<ValueType>(bufferSize: bufferSize)
+                disposable = self.bind(replaySubject!)
+            }
+            refCount += 1
+            let subjectDisposable = replaySubject!.subscribe(observer)
+            
+            return BlockDisposable {
+                subjectDisposable.dispose()
+                refCount -= 1
+                if refCount == 0 {
+                    disposable?.dispose()
+                    disposable = nil
+                    replaySubject = nil
+                }
+            }
+        }
     }
 }

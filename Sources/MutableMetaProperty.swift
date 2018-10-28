@@ -35,7 +35,7 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     }
     
     public var asProperty: Property<T> {
-        return Property(asObservable.map { $0.0 }) {
+        return Property(observable: asObservable.map { $0.0 }) {
             return self.value
         }
     }
@@ -47,7 +47,7 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     }
     
     public var asMetaProperty: MetaProperty<T, Event> {
-        return MetaProperty(asObservable) {
+        return MetaProperty(observable: asObservable) {
             return self.value
         }
     }

@@ -78,7 +78,7 @@ extension JetpackExtensions where Base: NSObject {
                                         cleanup: @escaping (Base, AnyObject, Selector)->Void,
                                         getter: @escaping (Base)->T) -> Property<T> {
         let observable = jx_makeTargetActionObservable(setup: setup, cleanup: cleanup, getter: getter)
-        return Property(observable) {
+        return Property(observable: observable) {
             getter(self.base)
         }
     }
@@ -104,7 +104,7 @@ extension JetpackExtensions where Base: NSObject {
             }
         }
         
-        return Property(observable) {
+        return Property(observable: observable) {
             getter(self.base)
         }
     }

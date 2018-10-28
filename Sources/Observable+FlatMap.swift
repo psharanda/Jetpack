@@ -13,7 +13,6 @@ extension ObservableProtocol {
             let parent = SerialDisposable()
             let child = SerialDisposable()
             parent.swap(with: self.subscribe { result in
-                //serial.disposeChild()                
                 child.swap(with: f(result).subscribe(observer))
             })
             return parent.with(disposable: child)

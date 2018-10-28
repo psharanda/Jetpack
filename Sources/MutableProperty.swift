@@ -25,7 +25,7 @@ public final class MutableProperty<T>: ObservableProtocol, GetValueProtocol, Upd
         let subject = PublishSubject<T>()
         var v = value
         
-        property = Property(subject.asObservable) {
+        property = Property(observable: subject.asObservable) {
             return v
         }
         setter = {

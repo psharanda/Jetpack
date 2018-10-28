@@ -15,13 +15,9 @@ public final class Property<T>: ObservableProtocol , GetValueProtocol {
         return getter()
     }
     
-    init(_ observable: Observable<T>, getter: @escaping ()->T) {
+    init(observable: Observable<T>, getter: @escaping ()->T) {
         self.getter = getter
         self.observable = observable
-    }
-    
-    public convenience  init(constant: T) {
-        self.init(Observable.just(constant), getter: { constant })
     }
     
     @discardableResult
@@ -33,8 +29,12 @@ public final class Property<T>: ObservableProtocol , GetValueProtocol {
 
 extension Property {
     
+    public static func just(_ value: T) -> Property<T> {
+        return Property(observable: Observable.just(value), getter: { value })
+    }
+    
     public func map<U>(_ transform: @escaping (T) -> U) -> Property<U> {
-        return Property<U>(observable.map(transform)) {
+        return Property<U>(observable: observable.map(transform)) {
             transform(self.value)
         }
     }

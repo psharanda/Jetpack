@@ -17,14 +17,12 @@ public final class MetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoc
         return getter()
     }
     
-    init(_ observable: Observable<(T, Event)>, getter: @escaping ()->T) {
+    init(observable: Observable<(T, Event)>, getter: @escaping ()->T) {
         self.getter = getter
         self.observable = observable
     }
     
-    public convenience init(constant: T) {
-        self.init(Observable.just((constant, .resetEvent)), getter: { constant })
-    }
+    
     
     @discardableResult
     public func subscribe(_ observer: @escaping ((T, Event)) -> Void) -> Disposable {
@@ -33,8 +31,15 @@ public final class MetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoc
     }
     
     public var asProperty: Property<T> {
-        return Property(observable.map { $0.0 }) {
+        return Property(observable: observable.map { $0.0 }) {
             return self.value
         }
+    }
+}
+
+
+extension MetaProperty {
+    public static func just(_ value: T) -> MetaProperty<T, Event> {
+        return MetaProperty(observable: Observable.just((value, .resetEvent)), getter: { value })
     }
 }
