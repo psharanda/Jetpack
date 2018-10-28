@@ -8,25 +8,25 @@ import XCTest
 @testable import Jetpack
 
 func requestHello(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+    return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
         completion(.success("Hello"))
     }
 }
 
 func requestError(completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+    return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
         completion(.failure(NSError(domain: "request", code: -1, userInfo: nil)))
     }
 }
 
 func requestWorld(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+    return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
         completion(.success(head + "World"))
     }
 }
 
 func requestPunctuation(head: String, completion: @escaping (Result<String>) -> Void)->(Disposable) {
-    return DispatchQueue.main.jx.after(timeInterval: 1) {
+    return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  1) {
         completion(.success(head + "!!!"))
     }
 }
@@ -267,19 +267,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.4) {
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r3"))
             }
         }
@@ -304,20 +304,20 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.4) {
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r3"))
             }
         }
@@ -341,19 +341,19 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.4) {
                 completion(.success("r2"))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r3"))
             }
         }
@@ -378,20 +378,20 @@ class TaskTests: XCTestCase {
         let expect = expectation(description: "result")
 
         let r1 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r1"))
             }
         }
 
         let r2 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.4) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.4) {
                 let error = NSError(domain: "test", code: 0, userInfo: [:])
                 completion(.failure(error))
             }
         }
 
         let r3 = Task<String> { completion in
-            return DispatchQueue.main.jx.after(timeInterval: 0.2) {
+            return DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.2) {
                 completion(.success("r3"))
             }
         }
@@ -457,11 +457,11 @@ class TaskTests: XCTestCase {
             }
         }
         
-        DispatchQueue.main.jx.after(timeInterval: 0.6) {
+        DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.6) {
             cancelable.dispose()
         }
         
-        DispatchQueue.main.jx.after(timeInterval: 0.65) { 
+        DispatchQueue.main.jx.asyncAfter(deadline: .now() +  0.65) { 
             expect.fulfill()
         }
         

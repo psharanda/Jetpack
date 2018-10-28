@@ -15,7 +15,7 @@ extension ObservableProtocol {
             
             func after() {
                 lastAfterCancel?.dispose()
-                lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
+                lastAfterCancel = queue.jx.asyncAfter(deadline: .now() + timeInterval) {
                     if buf.count > 0 {
                         observer(buf)
                         buf.removeAll()

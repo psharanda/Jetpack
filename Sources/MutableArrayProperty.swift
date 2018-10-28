@@ -31,11 +31,8 @@ public final class MutableArrayProperty<T>: MutableMetaProperty<[T], ArrayEditEv
         }
     }
     
-    public func append(_ newElement: T) {
-        changeWithEvent {
-            $0.append(newElement)
-            return .insert($0.count)
-        }
+    public func append(_ newElement: T) {        
+        return insert(newElement, at: value.count)
     }
     
     public func insert(_ newElement: T, at: Int) {

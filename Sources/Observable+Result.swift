@@ -222,7 +222,7 @@ extension ObservableProtocol where ValueType: ResultConvertible {
                     case .failure(let error):
                         numberOfRetries += 1
                         if until(error) && (numberOfRetries <= numberOfTimes) {
-                            child.swap(with: queue.jx.after(timeInterval: currentTimeout) {
+                            child.swap(with: queue.jx.asyncAfter(deadline: .now() + currentTimeout) {
                                 parent.swap(with: retryImpl())
                             })
                             currentTimeout = nextTimeout(currentTimeout)

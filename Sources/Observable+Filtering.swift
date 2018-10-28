@@ -39,7 +39,7 @@ extension ObservableProtocol {
                     lastAfterCancel = nil
                     observer(result)                    
                     if latest {
-                        lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
+                        lastAfterCancel = queue.jx.asyncAfter(deadline: .now() + timeInterval) {
                             if let lastIgnoredValue = lastIgnoredValue {
                                 observer(lastIgnoredValue)
                                 lastUpdateTime = Date()
@@ -61,7 +61,7 @@ extension ObservableProtocol {
             return self.subscribe { result in
                 lastAfterCancel?.dispose()
                 
-                lastAfterCancel = queue.jx.after(timeInterval: timeInterval) {
+                lastAfterCancel = queue.jx.asyncAfter(deadline: .now() + timeInterval) {
                     observer(result)
                 }
             }.with(disposable: BlockDisposable {

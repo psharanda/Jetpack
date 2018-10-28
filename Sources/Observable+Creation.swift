@@ -12,16 +12,14 @@ extension Observable {
     }
     
     public static func performed(workerQueue: DispatchQueue, completionQueue: DispatchQueue = .main, worker: @escaping () -> T) ->  Observable<T> {
-        return Observable { completion in
-            return workerQueue.jx.execute(worker: worker, completionQueue: completionQueue) { (value: T) in
-                completion(value)
-            }
-        }
+        return Observable<Void>.dispatched((), in: workerQueue)
+            .map(worker)
+            .dispatchIn(queue: completionQueue)
     }
     
     public static func delayed(_ value: T, timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observable<T> {
         return Observable<T> { observer in
-            return queue.jx.after(timeInterval: timeInterval) {
+            return queue.jx.asyncAfter(deadline: .now() + timeInterval) {
                 observer(value)
             }
         }
