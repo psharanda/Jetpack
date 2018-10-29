@@ -38,7 +38,7 @@ public final class BlockDisposable: Disposable {
     }
 }
 
-public final class SerialDisposable: Disposable {
+public final class SwapableDisposable: Disposable {
     private var disposable: Disposable?
     
     public init() { }

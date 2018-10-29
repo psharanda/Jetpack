@@ -211,8 +211,8 @@ extension ObservableProtocol where ValueType: ResultConvertible {
             var currentTimeout = timeout
             var numberOfRetries = 0
             
-            let parent = SerialDisposable()
-            let child = SerialDisposable()
+            let parent = SwapableDisposable()
+            let child = SwapableDisposable()
             
             func retryImpl() -> Disposable {
                 return self.subscribe { result in

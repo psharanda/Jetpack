@@ -18,7 +18,7 @@ extension Observable {
     }
     
     public static func delayed(_ value: T, timeInterval: TimeInterval, queue: DispatchQueue = .main) ->  Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             return queue.jx.asyncAfter(deadline: .now() + timeInterval) {
                 observer(value)
             }
@@ -26,7 +26,7 @@ extension Observable {
     }
     
     public static func dispatched(_ value: T, in queue: DispatchQueue) ->  Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             return queue.jx.async {
                 observer(value)
             }
@@ -34,27 +34,27 @@ extension Observable {
     }
     
     public static func just(_ value: T) -> Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             observer(value)
             return EmptyDisposable()
         }
     }
     
     public static var never: Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             return EmptyDisposable()
         }
     }
     
     public static func deferred(_ f: @escaping ()->T) -> Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             observer(f())
             return EmptyDisposable()
         }
     }
     
     public static func deferred(_ f: @escaping ()->Observable<T>) -> Observable<T> {
-        return Observable<T> { observer in
+        return Observable { observer in
             return f().subscribe {
                 observer($0)
             }

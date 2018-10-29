@@ -8,7 +8,7 @@ import Foundation
 extension ObservableProtocol {
     
     public func map<U>(_ transform: @escaping (ValueType)-> U) -> Observable<U> {
-        return Observable<U> { observer in
+        return Observable { observer in
             return self.subscribe { result in
                 observer(transform(result))
             }
@@ -20,7 +20,7 @@ extension ObservableProtocol {
     }
     
     public func compactMap<U>(_ transform: @escaping (ValueType)-> U?) -> Observable<U> {
-        return Observable<U> { observer in
+        return Observable { observer in
             return self.subscribe { result in
                 if let newValue = transform(result) {
                     observer(newValue)
@@ -30,7 +30,7 @@ extension ObservableProtocol {
     }
     
     public func reduce<U>(_ initial: U, f: @escaping (U, ValueType) -> U) -> Observable<U> {
-        return Observable<U> { observer in
+        return Observable { observer in
             var reduced: U = initial
             return self.subscribe { result in
                 reduced = f(reduced, result)
@@ -50,7 +50,7 @@ extension ObservableProtocol {
     }
     
     public var diff: Observable<(old: ValueType, new: ValueType)> {
-        return Observable<(old: ValueType, new: ValueType)> { observer in
+        return Observable { observer in
             var prevValue: ValueType?
             return self.subscribe { result in
                 observer((prevValue ?? result, result))

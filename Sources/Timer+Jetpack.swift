@@ -7,7 +7,7 @@ import Foundation
 
 extension JetpackExtensions where Base: Timer {
     public static func repeated(timeInterval: TimeInterval) -> Observable<Void> {
-        return Observable<Void> { observer in
+        return Observable { observer in
             let timerOwner = TimerOwner(observer: observer)
             let timer = Timer.scheduledTimer(timeInterval: timeInterval, target: timerOwner, selector: #selector(TimerOwner.handleTimer), userInfo: nil, repeats: true)
             return TimerDisposable(timer: timer)

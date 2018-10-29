@@ -3,7 +3,7 @@ import QuartzCore
 
 extension JetpackExtensions where Base: CADisplayLink {    
     public static func repeated(timeInterval: TimeInterval = TimeInterval.greatestFiniteMagnitude, skipFrames: Int = 0) -> Observable<Double> {
-        return Observable<Double> { generator in
+        return Observable { generator in
             return DisplayLinkDisposable(displayLinkTask: DisplayLinkTask(timeInterval: timeInterval, skipFrames: skipFrames, generator: generator))
         }
     }

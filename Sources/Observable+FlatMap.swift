@@ -9,9 +9,9 @@ import Foundation
 extension ObservableProtocol {
     
     public func flatMapLatest<U>(_ f: @escaping ((ValueType) -> Observable<U>)) -> Observable<U> {
-        return Observable<U> { observer in
-            let parent = SerialDisposable()
-            let child = SerialDisposable()
+        return Observable { observer in
+            let parent = SwapableDisposable()
+            let child = SwapableDisposable()
             parent.swap(with: self.subscribe { result in
                 child.swap(with: f(result).subscribe(observer))
             })
@@ -20,7 +20,7 @@ extension ObservableProtocol {
     }
     
     public func flatMapMerge<U>(_ f: @escaping ((ValueType) -> Observable<U>)) -> Observable<U> {
-        return Observable<U> { observer in
+        return Observable { observer in
             let multi = CompositeDisposable()
             
             multi.add(self.subscribe { result in

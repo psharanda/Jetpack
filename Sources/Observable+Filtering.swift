@@ -27,7 +27,7 @@ extension ObservableProtocol {
             
             var lastUpdateTime = Date.distantPast
             var lastIgnoredValue: ValueType? = nil
-            var lastAfterCancel: Disposable? = nil
+            var lastAfterDisposable: Disposable? = nil
             
             return self.subscribe { result in
                 let newDate = Date()
@@ -35,22 +35,27 @@ extension ObservableProtocol {
                 if newDate.timeIntervalSince(lastUpdateTime) >= timeInterval {
                     lastUpdateTime = newDate
                     lastIgnoredValue = nil
-                    lastAfterCancel?.dispose()
-                    lastAfterCancel = nil
+                    lastAfterDisposable?.dispose()
+                    lastAfterDisposable = nil
                     observer(result)                    
                     if latest {
-                        lastAfterCancel = queue.jx.asyncAfter(deadline: .now() + timeInterval) {
-                            if let lastIgnoredValue = lastIgnoredValue {
-                                observer(lastIgnoredValue)
-                                lastUpdateTime = Date()
+                        func handleLatest() {
+                            lastAfterDisposable = queue.jx.asyncAfter(deadline: .now() + timeInterval) {
+                                if let lastIgnoredValue = lastIgnoredValue {
+                                    observer(lastIgnoredValue)
+                                    lastUpdateTime = Date()
+                                }
+                                lastIgnoredValue = nil
+                                lastAfterDisposable = nil
+                                handleLatest()
                             }
-                            lastIgnoredValue = nil
-                        }
+                        }                        
+                        handleLatest()
                     }
                 }
             }.with(disposable: BlockDisposable {
-                lastAfterCancel?.dispose()
-                lastAfterCancel = nil
+                lastAfterDisposable?.dispose()
+                lastAfterDisposable = nil
             })
         }
     }
@@ -239,7 +244,7 @@ extension ObservableProtocol where ValueType: Equatable {
     
     public var distinct: Observable<ValueType> {
     
-        return Observable<ValueType> { observer in
+        return Observable { observer in
             var lastValue: ValueType?
             
             func test(_ result: ValueType) -> ValueType? {
@@ -273,7 +278,7 @@ extension ObservableProtocol where ValueType: Equatable {
     }
     
     public func contains(where f: @escaping (ValueType)->Bool) -> Observable<Bool> {
-        return Observable<Bool> { observer in
+        return Observable { observer in
             var val = false
             return self.subscribe { result in
                 if !val && f(result) {
@@ -289,7 +294,7 @@ extension ObservableProtocol where ValueType: Equatable {
     }
     
     public func findIndex(of value: ValueType) -> Observable<Int> {
-        return Observable<Int> { observer in
+        return Observable { observer in
             var idx = 0
             return self.subscribe { result in
                 if  result == value {

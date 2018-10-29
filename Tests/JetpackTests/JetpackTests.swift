@@ -1051,6 +1051,74 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(values, [3, 5])
     }
     
+    func testThrottle1() {
+        let timeIntervals: [TimeInterval] = [
+            // curtime - last time - n[!|x]
+            0,      // 0 - nil - 0!
+            0.05,   // 0.05 - 0 - 1X
+            0.01,   // 0.06 - 0 - 2X
+            // 0.1 - 0 - 2!
+            0.12,   // 0.18 - 0.1 - 3X
+            // 0.2 - 0.1 - 3!
+            0.09,   // 0.27 - 0.2 - 4X
+            // 0.3 - 0.2 - 4!
+            0.09,   // 0.36 - 0.3 - 5X
+            // 0.4 - 0.3 - 5!
+            0.08,   // 0.44 - 0.4 - 6X
+            // 0.5 - 0.4 - 6!
+            0.12    // 0.56 - 0.5 - 7X
+            // 0.6 - 0.5 - 7!
+        ]
+        testThrottle(timeIntervals: timeIntervals, expectedValues: [0, 2, 3, 4, 5, 6, 7])
+    }
+    
+    func testThrottle2() {
+        let timeIntervals: [TimeInterval] = [
+            
+            // curtime - last time - n[!|x]
+            0,      // 0 - nil - 0!
+            0.02,   // 0.02 - 0 - 1X
+            0.02,   // 0.04 - 0 - 2X
+            0.02,   // 0.06 - 0 - 3X
+            // 0.1 - 0 - 3!
+            0.06,    // 0.12 - 0.1 - 4X
+            0.02,   // 0.14 - 0.1 - 5X
+            // 0.2 - 0.1 - 5!
+        ]
+        testThrottle(timeIntervals: timeIntervals, expectedValues: [0, 3, 5])
+    }
+    
+    private func testThrottle(timeIntervals: [TimeInterval], expectedValues: [Int]) {
+        
+        let expect = expectation(description: "result")
+        
+        var values = [Int]()
+        let source = PublishSubject<Int>()
+        
+        source
+            .throttle(timeInterval: 0.1)
+            .subscribe {
+                values.append($0)
+        }
+        
+        var deadline = DispatchTime.now()
+        timeIntervals.enumerated().forEach { t in
+            deadline = deadline + t.element
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
+                source.update(t.offset)
+                if t.offset == timeIntervals.count - 1 {
+                    DispatchQueue.main.asyncAfter(deadline: deadline + 0.2) {
+                        XCTAssertEqual(values, expectedValues)
+                        expect.fulfill()
+                    }
+                }
+            }
+        }
+        
+        self.waitForExpectations(timeout: 5) { error in
+            XCTAssertNil(error)
+        }
+    }
 }
 
 var numberOfDeinits = 0

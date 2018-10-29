@@ -47,7 +47,7 @@ extension ObservableProtocol where ValueType: Optionable, ValueType.Wrapped: Equ
 
     public var distinct: Observable<ValueType> {
 
-        return Observable<ValueType> { observer in
+        return Observable { observer in
             var lastValue: ValueType?
 
             func test(_ result: ValueType) -> ValueType? {
