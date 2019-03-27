@@ -28,7 +28,7 @@ public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
         observers.append(PublishSubjectObserver<T>(token: token, observer: observer))
         
         return BlockDisposable {
-            guard let idx = (self.observers.index { $0.token == token }) else {
+            guard let idx = (self.observers.firstIndex { $0.token == token }) else {
                 return
             }
             

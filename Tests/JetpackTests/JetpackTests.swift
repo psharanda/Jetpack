@@ -1119,6 +1119,42 @@ class JetpackTests: XCTestCase {
             XCTAssertNil(error)
         }
     }
+
+    
+    func testThrottleFlatMapLatest(timeIntervals: [TimeInterval], expectedValues: [Int]) {
+        
+        let expect = expectation(description: "result")
+        
+        var values = [Int]()
+        let source = PublishSubject<Int>()
+        
+        source
+            .throttle(timeInterval: 0.1)
+            .flatMapLatest {
+                Observable.delayed($0, timeInterval: 0.1)
+            }
+            .subscribe {
+                values.append($0)
+        }
+        
+        var deadline = DispatchTime.now()
+        timeIntervals.enumerated().forEach { t in
+            deadline = deadline + t.element
+            DispatchQueue.main.asyncAfter(deadline: deadline) {
+                source.update(t.offset)
+                if t.offset == timeIntervals.count - 1 {
+                    DispatchQueue.main.asyncAfter(deadline: deadline + 0.2) {
+                        XCTAssertEqual(values, expectedValues)
+                        expect.fulfill()
+                    }
+                }
+            }
+        }
+        
+        self.waitForExpectations(timeout: 5) { error in
+            XCTAssertNil(error)
+        }
+    }
 }
 
 var numberOfDeinits = 0
