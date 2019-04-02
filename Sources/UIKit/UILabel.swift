@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UILabel {
@@ -10,3 +12,5 @@ extension JetpackExtensions where Base: UILabel {
         return jx_makeConsumer { $0.attributedText = $1 }
 	}
 }
+
+#endif

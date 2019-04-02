@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIView {
@@ -18,3 +20,5 @@ extension JetpackExtensions where Base: UIView {
 		return jx_makeConsumer { $0.isUserInteractionEnabled = $1 }
 	}
 }
+
+#endif

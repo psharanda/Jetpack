@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UITextField {
@@ -19,3 +21,5 @@ extension JetpackExtensions where Base: UITextField {
 	}
 	
 }
+
+#endif

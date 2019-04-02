@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIImageView {
@@ -10,3 +12,5 @@ extension JetpackExtensions where Base: UIImageView {
 		return jx_makeConsumer { $0.highlightedImage = $1 }
 	}
 }
+
+#endif

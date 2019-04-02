@@ -1,3 +1,5 @@
+#if os(iOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIRefreshControl {
@@ -15,3 +17,4 @@ extension JetpackExtensions where Base: UIRefreshControl {
     }
 }
 
+#endif

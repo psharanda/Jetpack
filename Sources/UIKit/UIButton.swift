@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIButton {
@@ -39,3 +41,5 @@ extension JetpackExtensions where Base: UIButton {
     }
 
 }
+
+#endif

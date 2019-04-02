@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIActivityIndicatorView {
@@ -6,3 +8,5 @@ extension JetpackExtensions where Base: UIActivityIndicatorView {
         return jx_makeConsumer { $1 ? $0.startAnimating() : $0.stopAnimating() }
 	}
 }
+
+#endif

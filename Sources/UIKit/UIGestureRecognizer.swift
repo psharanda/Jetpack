@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 
@@ -13,3 +15,5 @@ extension JetpackExtensions where Base: UIGestureRecognizer {
         })
     }
 }
+
+#endif

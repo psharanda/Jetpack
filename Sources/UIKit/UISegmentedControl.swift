@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UISegmentedControl {
@@ -10,3 +12,5 @@ extension JetpackExtensions where Base: UISegmentedControl {
 		return propertyControlEvents(.valueChanged) { $0.selectedSegmentIndex }
 	}
 }
+
+#endif

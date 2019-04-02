@@ -1,3 +1,5 @@
+#if os(iOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UISlider {
@@ -10,3 +12,5 @@ extension JetpackExtensions where Base: UISlider {
 		return propertyControlEvents(.valueChanged) { $0.value }
 	}
 }
+
+#endif

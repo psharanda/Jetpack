@@ -148,6 +148,52 @@
 		1BB347901ED4240400697A3C /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1BB692381F6F288B000E0177 /* Timer+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */; };
 		1BB6923A1F6F2894000E0177 /* Observable+DispatchQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */; };
+		1BB841E32253584C006CDEA2 /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87041E9ADB540063D5EB /* UIRefreshControl.swift */; };
+		1BB841E42253584C006CDEA2 /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87061E9ADB540063D5EB /* UISlider.swift */; };
+		1BB841E52253584C006CDEA2 /* UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87071E9ADB540063D5EB /* UIStepper.swift */; };
+		1BB841E62253584C006CDEA2 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87081E9ADB540063D5EB /* UISwitch.swift */; };
+		1BB841E72253584C006CDEA2 /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */; };
+		1BB841E82253584C006CDEA2 /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FC1E9ADB540063D5EB /* UIBarButtonItem.swift */; };
+		1BB841E92253584C006CDEA2 /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FD1E9ADB540063D5EB /* UIBarItem.swift */; };
+		1BB841EA2253584C006CDEA2 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FF1E9ADB540063D5EB /* UIControl.swift */; };
+		1BB841EB2253584C006CDEA2 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FE1E9ADB540063D5EB /* UIButton.swift */; };
+		1BB841EC2253584C006CDEA2 /* UIGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87001E9ADB540063D5EB /* UIGestureRecognizer.swift */; };
+		1BB841ED2253584C006CDEA2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87011E9ADB540063D5EB /* UIImageView.swift */; };
+		1BB841EE2253584C006CDEA2 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87021E9ADB540063D5EB /* UILabel.swift */; };
+		1BB841EF2253584C006CDEA2 /* UIProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87031E9ADB540063D5EB /* UIProgressView.swift */; };
+		1BB841F02253584C006CDEA2 /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87041E9ADB540063D5EB /* UIRefreshControl.swift */; };
+		1BB841F12253584C006CDEA2 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87051E9ADB540063D5EB /* UISegmentedControl.swift */; };
+		1BB841F22253584C006CDEA2 /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87061E9ADB540063D5EB /* UISlider.swift */; };
+		1BB841F32253584C006CDEA2 /* UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87071E9ADB540063D5EB /* UIStepper.swift */; };
+		1BB841F42253584C006CDEA2 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87081E9ADB540063D5EB /* UISwitch.swift */; };
+		1BB841F52253584C006CDEA2 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87091E9ADB540063D5EB /* UITextField.swift */; };
+		1BB841F62253584C006CDEA2 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870A1E9ADB540063D5EB /* UITextView.swift */; };
+		1BB841F72253584C006CDEA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
+		1BB841F82253584C006CDEA2 /* UIViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */; };
+		1BB841F92253584D006CDEA2 /* UIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FB1E9ADB540063D5EB /* UIActivityIndicatorView.swift */; };
+		1BB841FA2253584D006CDEA2 /* UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FC1E9ADB540063D5EB /* UIBarButtonItem.swift */; };
+		1BB841FB2253584D006CDEA2 /* UIBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FD1E9ADB540063D5EB /* UIBarItem.swift */; };
+		1BB841FC2253584D006CDEA2 /* UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FF1E9ADB540063D5EB /* UIControl.swift */; };
+		1BB841FD2253584D006CDEA2 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E86FE1E9ADB540063D5EB /* UIButton.swift */; };
+		1BB841FE2253584D006CDEA2 /* UIGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87001E9ADB540063D5EB /* UIGestureRecognizer.swift */; };
+		1BB841FF2253584D006CDEA2 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87011E9ADB540063D5EB /* UIImageView.swift */; };
+		1BB842002253584D006CDEA2 /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87021E9ADB540063D5EB /* UILabel.swift */; };
+		1BB842012253584D006CDEA2 /* UIProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87031E9ADB540063D5EB /* UIProgressView.swift */; };
+		1BB842022253584D006CDEA2 /* UIRefreshControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87041E9ADB540063D5EB /* UIRefreshControl.swift */; };
+		1BB842032253584D006CDEA2 /* UISegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87051E9ADB540063D5EB /* UISegmentedControl.swift */; };
+		1BB842042253584D006CDEA2 /* UISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87061E9ADB540063D5EB /* UISlider.swift */; };
+		1BB842052253584D006CDEA2 /* UIStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87071E9ADB540063D5EB /* UIStepper.swift */; };
+		1BB842062253584D006CDEA2 /* UISwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87081E9ADB540063D5EB /* UISwitch.swift */; };
+		1BB842072253584D006CDEA2 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87091E9ADB540063D5EB /* UITextField.swift */; };
+		1BB842082253584D006CDEA2 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870A1E9ADB540063D5EB /* UITextView.swift */; };
+		1BB842092253584D006CDEA2 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E870C1E9ADB540063D5EB /* UIView.swift */; };
+		1BB8420A2253584D006CDEA2 /* UIViewAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E87E61E9E15E30063D5EB /* UIViewAnimation.swift */; };
+		1BB8420F22535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */; };
+		1BB8421022535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */; };
+		1BB8421122535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */; };
+		1BB8421222535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */; };
+		1BB8421322535AF8006CDEA2 /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
+		1BB8421422535AF8006CDEA2 /* CADisplayLink+Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B22A3291EB4FB8C00FBAEEA /* CADisplayLink+Task.swift */; };
 		1BC89F421F7FD21B008560A2 /* ArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */; };
 		1BC89F431F7FD21B008560A2 /* ArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */; };
 		1BC89F441F7FD21B008560A2 /* ArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */; };
@@ -156,10 +202,6 @@
 		1BC89F4A1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */; };
 		1BC89F4B1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */; };
 		1BC89F4C1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */; };
-		1BC89F4E1F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */; };
-		1BC89F4F1F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */; };
-		1BC89F501F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */; };
-		1BC89F511F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */; };
 		1BC89F531F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */; };
 		1BC89F541F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */; };
 		1BC89F551F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */; };
@@ -266,9 +308,9 @@
 		1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MutableMetaProperty.swift; path = Sources/MutableMetaProperty.swift; sourceTree = "<group>"; };
 		1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Timer+Jetpack.swift"; path = "Sources/Timer+Jetpack.swift"; sourceTree = "<group>"; };
 		1BB692391F6F2894000E0177 /* Observable+DispatchQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+DispatchQueue.swift"; path = "Sources/Observable+DispatchQueue.swift"; sourceTree = "<group>"; };
+		1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UpdateValueProtocol.swift; path = Sources/UpdateValueProtocol.swift; sourceTree = "<group>"; };
 		1BC89F411F7FD21B008560A2 /* ArrayProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArrayProperty.swift; path = Sources/ArrayProperty.swift; sourceTree = "<group>"; };
 		1BC89F481F7FD238008560A2 /* MutableArrayProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MutableArrayProperty.swift; path = Sources/MutableArrayProperty.swift; sourceTree = "<group>"; };
-		1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpdateValueProtocol.swift; path = Sources/UIKit/UpdateValueProtocol.swift; sourceTree = "<group>"; };
 		1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GetValueProtocol.swift; path = Sources/GetValueProtocol.swift; sourceTree = "<group>"; };
 		1BE3CD171EA5150F00C9B0F5 /* Observable+Share.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Observable+Share.swift"; path = "Sources/Observable+Share.swift"; sourceTree = "<group>"; };
 		52D6D97C1BEFF229002C0205 /* Jetpack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Jetpack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -377,8 +419,8 @@
 		1B6E873A1E9ADB680063D5EB /* Primitives */ = {
 			isa = PBXGroup;
 			children = (
+				1BB8420E22535A39006CDEA2 /* UpdateValueProtocol.swift */,
 				1B6E86E21E9ADB540063D5EB /* ObservableProtocol.swift */,
-				1BC89F4D1F7FEBA1008560A2 /* UpdateValueProtocol.swift */,
 				1BC89F521F7FEBB2008560A2 /* GetValueProtocol.swift */,
 				1B6E87BA1E9CEA950063D5EB /* Observable.swift */,
 				1B6E86F31E9ADB540063D5EB /* PublishSubject.swift */,
@@ -828,8 +870,8 @@
 				1B6E87161E9ADB540063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */,
 				1B6E87131E9ADB540063D5EB /* Observable+Combining.swift in Sources */,
-				1BC89F4E1F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
 				1BB6923A1F6F2894000E0177 /* Observable+DispatchQueue.swift in Sources */,
+				1BB8420F22535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */,
 				1B6E87371E9ADB540063D5EB /* UITextView.swift in Sources */,
 				1B6E87291E9ADB540063D5EB /* UIBarButtonItem.swift in Sources */,
 				1B6E872F1E9ADB540063D5EB /* UILabel.swift in Sources */,
@@ -867,37 +909,56 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB842012253584D006CDEA2 /* UIProgressView.swift in Sources */,
 				1B6E87871E9ADC280063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87841E9ADC270063D5EB /* Observable+Optional.swift in Sources */,
 				1B6E88341E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E877B1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E877F1E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
-				1BC89F4F1F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
+				1BB8421022535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */,
 				1B6E87801E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
+				1BB842082253584D006CDEA2 /* UITextView.swift in Sources */,
+				1BB8421322535AF8006CDEA2 /* CADisplayLink+Task.swift in Sources */,
 				1B6E87521E9ADC1E0063D5EB /* Property.swift in Sources */,
+				1BB842032253584D006CDEA2 /* UISegmentedControl.swift in Sources */,
+				1BB842062253584D006CDEA2 /* UISwitch.swift in Sources */,
 				1B8CD58B216B51B200350367 /* MetaProperty.swift in Sources */,
 				1B6E87531E9ADC1E0063D5EB /* PublishSubject.swift in Sources */,
+				1BB842092253584D006CDEA2 /* UIView.swift in Sources */,
 				1B6E876B1E9ADC230063D5EB /* Tuples+Repack.swift in Sources */,
+				1BB841FA2253584D006CDEA2 /* UIBarButtonItem.swift in Sources */,
 				1B6E87511E9ADC1E0063D5EB /* ObservableProtocol.swift in Sources */,
+				1BB842042253584D006CDEA2 /* UISlider.swift in Sources */,
 				1B6E88431E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
 				1B34602C1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */,
+				1BB841FD2253584D006CDEA2 /* UIButton.swift in Sources */,
 				1B6E877D1E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
+				1BB842002253584D006CDEA2 /* UILabel.swift in Sources */,
 				1BC89F541F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */,
 				1B2993BC216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1BC89F431F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
 				1BF014841EA208460061B4D9 /* NSObject+Jetpack.swift in Sources */,
 				1B6E874F1E9ADC1E0063D5EB /* Consumer.swift in Sources */,
+				1BB841FB2253584D006CDEA2 /* UIBarItem.swift in Sources */,
+				1BB841FC2253584D006CDEA2 /* UIControl.swift in Sources */,
 				1B6E87851E9ADC270063D5EB /* Observable+Result.swift in Sources */,
+				1BB841F92253584D006CDEA2 /* UIActivityIndicatorView.swift in Sources */,
+				1BB842022253584D006CDEA2 /* UIRefreshControl.swift in Sources */,
+				1BB8420A2253584D006CDEA2 /* UIViewAnimation.swift in Sources */,
 				1B69978E1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1BE3CD1A1EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
+				1BB841FF2253584D006CDEA2 /* UIImageView.swift in Sources */,
 				1B6E87541E9ADC1E0063D5EB /* MutableProperty.swift in Sources */,
 				1BF0147F1EA208360061B4D9 /* Result.swift in Sources */,
 				1BF014741EA208290061B4D9 /* Observable.swift in Sources */,
 				1BC89F4A1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
 				1B17E3751FB353CA009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E87831E9ADC270063D5EB /* Observable+Math.swift in Sources */,
+				1BB841FE2253584D006CDEA2 /* UIGestureRecognizer.swift in Sources */,
+				1BB842052253584D006CDEA2 /* UIStepper.swift in Sources */,
 				1B6E877C1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF0147B1EA208360061B4D9 /* Task.swift in Sources */,
+				1BB842072253584D006CDEA2 /* UITextField.swift in Sources */,
 				1BF014851EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				52D6D9EA1BEFFFA4002C0205 /* JetpackExtensions.swift in Sources */,
 				1B8CD590216B51D800350367 /* MutableMetaProperty.swift in Sources */,
@@ -916,15 +977,16 @@
 				1B6E88351E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B34602D1F6FD42D003BF7DC /* Timer+Jetpack.swift in Sources */,
 				1BF014811EA208360061B4D9 /* Result.swift in Sources */,
+				1BB841E62253584C006CDEA2 /* UISwitch.swift in Sources */,
 				1B6E87881E9ADC280063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E878C1E9ADC280063D5EB /* Observable+Filtering.swift in Sources */,
-				1BC89F511F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
 				1B6E88031E9E15F20063D5EB /* UILabel.swift in Sources */,
 				1B6E878D1E9ADC280063D5EB /* Observable+FlatMap.swift in Sources */,
 				1B6E87EB1E9E15E90063D5EB /* UIView.swift in Sources */,
 				1B6E875D1E9ADC1E0063D5EB /* Property.swift in Sources */,
 				1B2993BE216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1B6E87FE1E9E15F20063D5EB /* UIBarItem.swift in Sources */,
+				1BB841E42253584C006CDEA2 /* UISlider.swift in Sources */,
 				1B6E88001E9E15F20063D5EB /* UIButton.swift in Sources */,
 				1BC89F451F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
 				1B6E875E1E9ADC1E0063D5EB /* PublishSubject.swift in Sources */,
@@ -940,6 +1002,7 @@
 				1B17E3771FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */,
 				1B6E87FF1E9E15F20063D5EB /* UIControl.swift in Sources */,
 				1B6E875A1E9ADC1E0063D5EB /* Consumer.swift in Sources */,
+				1BB8421222535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */,
 				1B6E87921E9ADC280063D5EB /* Observable+Result.swift in Sources */,
 				1BE3CD1B1EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
 				1B8CD58D216B51B200350367 /* MetaProperty.swift in Sources */,
@@ -949,6 +1012,7 @@
 				1B6E87E91E9E15E30063D5EB /* UIViewAnimation.swift in Sources */,
 				1B8CD592216B51D800350367 /* MutableMetaProperty.swift in Sources */,
 				1BF014761EA208290061B4D9 /* Observable.swift in Sources */,
+				1BB841E32253584C006CDEA2 /* UIRefreshControl.swift in Sources */,
 				1B6997901FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E87FC1E9E15F20063D5EB /* UIActivityIndicatorView.swift in Sources */,
 				1B6E87901E9ADC280063D5EB /* Observable+Math.swift in Sources */,
@@ -959,6 +1023,7 @@
 				1BF014871EA208460061B4D9 /* NotificationCenter.swift in Sources */,
 				1B6E883F1E9E17180063D5EB /* Task.swift in Sources */,
 				1B6E878F1E9ADC280063D5EB /* Observable+Logging.swift in Sources */,
+				1BB841E52253584C006CDEA2 /* UIStepper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -966,37 +1031,56 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BB841EF2253584C006CDEA2 /* UIProgressView.swift in Sources */,
 				1BE3CD191EA5150F00C9B0F5 /* Observable+Share.swift in Sources */,
 				1B6E877A1E9ADC270063D5EB /* Observable+Transforming.swift in Sources */,
 				1B6E87771E9ADC270063D5EB /* Observable+Optional.swift in Sources */,
 				1B6E876E1E9ADC270063D5EB /* Observable+Binding.swift in Sources */,
 				1B6E87721E9ADC270063D5EB /* Observable+Filtering.swift in Sources */,
-				1BC89F501F7FEBA1008560A2 /* UpdateValueProtocol.swift in Sources */,
+				1BB8421122535A39006CDEA2 /* UpdateValueProtocol.swift in Sources */,
 				1BF014781EA208340061B4D9 /* Result.swift in Sources */,
+				1BB841F62253584C006CDEA2 /* UITextView.swift in Sources */,
+				1BB8421422535AF8006CDEA2 /* CADisplayLink+Task.swift in Sources */,
 				1BF014721EA208280061B4D9 /* Observable.swift in Sources */,
+				1BB841F12253584C006CDEA2 /* UISegmentedControl.swift in Sources */,
+				1BB841F42253584C006CDEA2 /* UISwitch.swift in Sources */,
 				1B8CD58C216B51B200350367 /* MetaProperty.swift in Sources */,
 				1B6E87731E9ADC270063D5EB /* Observable+FlatMap.swift in Sources */,
+				1BB841F72253584C006CDEA2 /* UIView.swift in Sources */,
 				1B6E87471E9ADC1D0063D5EB /* Property.swift in Sources */,
+				1BB841E82253584C006CDEA2 /* UIBarButtonItem.swift in Sources */,
 				1B6E87481E9ADC1D0063D5EB /* PublishSubject.swift in Sources */,
+				1BB841F22253584C006CDEA2 /* UISlider.swift in Sources */,
 				1B34602B1F6FD42C003BF7DC /* Timer+Jetpack.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
+				1BB841EB2253584C006CDEA2 /* UIButton.swift in Sources */,
 				1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */,
+				1BB841EE2253584C006CDEA2 /* UILabel.swift in Sources */,
 				1BC89F551F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */,
 				1B2993BD216BDFE5009A0A2B /* ReplaySubject.swift in Sources */,
 				1BC89F441F7FD21B008560A2 /* ArrayProperty.swift in Sources */,
 				1B6E883D1E9E17180063D5EB /* Task.swift in Sources */,
 				1BF014821EA208450061B4D9 /* NSObject+Jetpack.swift in Sources */,
+				1BB841E92253584C006CDEA2 /* UIBarItem.swift in Sources */,
+				1BB841EA2253584C006CDEA2 /* UIControl.swift in Sources */,
 				1B6E87701E9ADC270063D5EB /* Observable+Combining.swift in Sources */,
+				1BB841E72253584C006CDEA2 /* UIActivityIndicatorView.swift in Sources */,
+				1BB841F02253584C006CDEA2 /* UIRefreshControl.swift in Sources */,
+				1BB841F82253584C006CDEA2 /* UIViewAnimation.swift in Sources */,
 				1B69978F1FA58CFD00B1A7FF /* Observable+Creation.swift in Sources */,
 				1B6E88421E9E17250063D5EB /* DispatchQueue+Jetpack.swift in Sources */,
+				1BB841ED2253584C006CDEA2 /* UIImageView.swift in Sources */,
 				1B6E87441E9ADC1D0063D5EB /* Consumer.swift in Sources */,
 				1B6E87781E9ADC270063D5EB /* Observable+Result.swift in Sources */,
 				1B6E87491E9ADC1D0063D5EB /* MutableProperty.swift in Sources */,
 				1B6E87761E9ADC270063D5EB /* Observable+Math.swift in Sources */,
 				1BC89F4B1F7FD238008560A2 /* MutableArrayProperty.swift in Sources */,
 				1B17E3761FB353CB009EA30A /* Observable+DispatchQueue.swift in Sources */,
+				1BB841EC2253584C006CDEA2 /* UIGestureRecognizer.swift in Sources */,
+				1BB841F32253584C006CDEA2 /* UIStepper.swift in Sources */,
 				1B6E876F1E9ADC270063D5EB /* Observable+Buffering.swift in Sources */,
 				1BF014831EA208450061B4D9 /* NotificationCenter.swift in Sources */,
+				1BB841F52253584C006CDEA2 /* UITextField.swift in Sources */,
 				1B6E88331E9E170B0063D5EB /* Disposable.swift in Sources */,
 				1B6E87671E9ADC220063D5EB /* JetpackExtensions.swift in Sources */,
 				1B8CD591216B51D800350367 /* MutableMetaProperty.swift in Sources */,

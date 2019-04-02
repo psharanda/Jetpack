@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIProgressView {
@@ -6,3 +8,5 @@ extension JetpackExtensions where Base: UIProgressView {
         return jx_makeConsumer { $0.progress = $1 }
 	}
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 #if swift(>=4.2)
@@ -121,3 +123,5 @@ extension JetpackExtensions where Base: UIView {
         }
     }
 }
+
+#endif

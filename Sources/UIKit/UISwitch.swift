@@ -1,3 +1,5 @@
+#if os(iOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UISwitch {
@@ -10,3 +12,5 @@ extension JetpackExtensions where Base: UISwitch {
 		return propertyControlEvents(.valueChanged) { $0.isOn }
 	}
 }
+
+#endif

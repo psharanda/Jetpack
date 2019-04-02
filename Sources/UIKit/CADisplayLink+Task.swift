@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import Foundation
 import QuartzCore
 
@@ -67,3 +69,4 @@ private class DisplayLinkTask {
     }
 }
 
+#endif

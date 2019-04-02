@@ -1,3 +1,5 @@
+#if os(iOS) || os(tvOS)
+
 import UIKit
 
 extension JetpackExtensions where Base: UIBarItem {
@@ -14,3 +16,7 @@ extension JetpackExtensions where Base: UIBarItem {
 		return jx_makeConsumer { $0.title = $1 }
 	}
 }
+
+#endif
+
+
