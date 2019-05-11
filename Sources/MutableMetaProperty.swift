@@ -9,51 +9,47 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtoco
     
     public var value: T {
         get {
-            return _value
+            return mutableProperty.value.0
         }
         set {
             update(newValue)
         }
     }
-    
-    private let subject = PublishSubject<(T, Event)>()
-    private var _value: T
+
+    private let mutableProperty: MutableProperty<(T, Event)>
     
     public init(_ value: T) {
-        self._value = value
+        mutableProperty = MutableProperty((value, .resetEvent))
     }
     
     public func update(_ newValue: T) {
-        _value = newValue
-        subject.update((_value, .resetEvent))
+        mutableProperty.update((newValue, .resetEvent))
     }
     
     @discardableResult
     public func subscribe(_ observer: @escaping ((T, Event)) -> Void) -> Disposable {
-        observer((_value, .resetEvent))
-        return subject.subscribe(observer)
+        return mutableProperty.subscribe(observer)
     }
     
     public var asProperty: Property<T> {
-        return Property(observable: asObservable.map { $0.0 }) {
-            return self.value
-        }
+        return mutableProperty.asProperty.map { $0.0 }
     }
     
     public var asMutableProperty: MutableProperty<T> {
-        return MutableProperty(property: asProperty) {
-            self.update($0)
-        }
+        return mutableProperty.map(transform: {
+            $0.0
+        }, reduce: { lhs, _ in
+            (lhs.0, .resetEvent)
+        })
     }
     
     public var asMetaProperty: MetaProperty<T, Event> {
-        return MetaProperty(observable: asObservable) {
-            return self.value
-        }
+        return MetaProperty(property: mutableProperty.asProperty)
     }
     
     public func changeWithEvent(_ handler: (inout T)-> Event) {
-        let event = handler(&_value)
-        subject.update((_value, event))
+        var v = value
+        let event = handler(&v)
+        mutableProperty.update((v, event))
     }
 }

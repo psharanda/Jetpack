@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Jetpack"
-  s.version      = "4.1.3"
+  s.version      = "4.1.4"
   s.summary      = "Light and bright functional reactive framework"
   s.description  = <<-DESC
     Minimalistic implementation of rx primitives. Basically observer pattern implementations which helps to easily organize interaction of different components. 
