@@ -10,28 +10,33 @@ public protocol ChangeEventProtocol {
 }
 
 public final class MetaProperty<T, Event: ChangeEventProtocol>: ObservableProtocol, GetValueProtocol {
-    private let property: Property<(T, Event)>
-    
+    private let observable: Observable<(T, Event)>
+    private let getter: ()->T
+
     public var value: T {
-        return property.value.0
+        return getter()
     }
-    
-    init(property: Property<(T, Event)>) {
-        self.property = property
+
+    init(observable: Observable<(T, Event)>, getter: @escaping ()->T) {
+        self.getter = getter
+        self.observable = observable
     }
 
     @discardableResult
     public func subscribe(_ observer: @escaping ((T, Event)) -> Void) -> Disposable {
-        return property.subscribe(observer)
+        observer((value, .resetEvent))
+        return observable.subscribe(observer)
     }
-    
+
     public var asProperty: Property<T> {
-        return property.map { $0.0 }
+        return Property(observable: observable.map { $0.0 }) {
+            return self.value
+        }
     }
 }
 
 extension MetaProperty {
     public static func just(_ value: T) -> MetaProperty<T, Event> {
-        return MetaProperty(property: Property.just((value, Event.resetEvent)))
+        return MetaProperty(observable: Observable.just((value, .resetEvent)), getter: { value })
     }
 }

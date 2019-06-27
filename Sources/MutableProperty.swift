@@ -13,7 +13,7 @@ public final class MutableProperty<T>: ObservableProtocol, GetValueProtocol, Upd
             return property.value
         }
         set {
-            setter(newValue)
+            update(newValue)
         }
     }
     

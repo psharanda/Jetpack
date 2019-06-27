@@ -884,11 +884,15 @@ class JetpackTests: XCTestCase {
         let a = MutableArrayProperty<Int>([1,2,3])
         
         var s = [Int]()
-        
+
+        a.append(1)
+
+        var numberOfSets = 0
         a.subscribe {
             switch $0.1 {
             case .set:
                 s = $0.0
+                numberOfSets += 1
             case .remove(let idx):
                 s.remove(at: idx)
             case .insert(let idx):
@@ -905,9 +909,14 @@ class JetpackTests: XCTestCase {
         a.update(at: 2, with: 599)
         a.remove(at: 0)
         
+        XCTAssertEqual(numberOfSets, 1)
         XCTAssertEqual(a.value, s)
-        
-        XCTAssertEqual(s, [10, 599, 3])
+        XCTAssertEqual(s, [10, 599, 3, 1])
+
+        a.value = [10]
+
+        XCTAssertEqual(numberOfSets, 2)
+        XCTAssertEqual(s, [10])
     }
     
     func testArray2DProperty() {
