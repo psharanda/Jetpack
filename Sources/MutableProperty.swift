@@ -51,6 +51,10 @@ public final class MutableProperty<T>: ObservableProtocol, GetValueProtocol, Upd
     public var asProperty: Property<ValueType> {
         return property
     }
+    
+    public func change(_ handler: (inout T)-> Void) {
+        handler(&value)
+    }
 }
 
 extension MutableProperty {
