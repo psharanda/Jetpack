@@ -137,6 +137,7 @@
 		1B6E88471E9E17860063D5EB /* TaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6E88271E9E16FC0063D5EB /* TaskTests.swift */; };
 		1B8649A31EA0DCBB00D30004 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */; };
 		1B8649A61EA0DD0700D30004 /* NSObject+Jetpack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */; };
+		1B86CB0B23087E68000BD657 /* NSControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B86CB0823087E56000BD657 /* NSControl.swift */; };
 		1B8CD58A216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
 		1B8CD58B216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
 		1B8CD58C216B51B200350367 /* MetaProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8CD589216B51B200350367 /* MetaProperty.swift */; };
@@ -304,6 +305,7 @@
 		1B6E88401E9E17250063D5EB /* DispatchQueue+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Jetpack.swift"; path = "Sources/DispatchQueue+Jetpack.swift"; sourceTree = "<group>"; };
 		1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCenter.swift; path = Sources/Foundation/NotificationCenter.swift; sourceTree = "<group>"; };
 		1B8649A51EA0DD0700D30004 /* NSObject+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSObject+Jetpack.swift"; path = "Sources/Foundation/NSObject+Jetpack.swift"; sourceTree = "<group>"; };
+		1B86CB0823087E56000BD657 /* NSControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSControl.swift; sourceTree = "<group>"; };
 		1B8CD589216B51B200350367 /* MetaProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MetaProperty.swift; path = Sources/MetaProperty.swift; sourceTree = "<group>"; };
 		1B8CD58E216B51D800350367 /* MutableMetaProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MutableMetaProperty.swift; path = Sources/MutableMetaProperty.swift; sourceTree = "<group>"; };
 		1BB692371F6F288B000E0177 /* Timer+Jetpack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Timer+Jetpack.swift"; path = "Sources/Timer+Jetpack.swift"; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				52D6D9961BEFF375002C0205 /* JetpackExtensions.swift */,
 				1B8649A41EA0DCC300D30004 /* Foundation */,
 				1B17E3791FB353F8009EA30A /* CoreAnimation */,
+				1B86CB0723087E35000BD657 /* AppKit */,
 				1B6E86F91E9ADB540063D5EB /* UIKit */,
 			);
 			name = Extensions;
@@ -503,6 +506,14 @@
 				1B8649A21EA0DCBB00D30004 /* NotificationCenter.swift */,
 			);
 			name = Foundation;
+			sourceTree = "<group>";
+		};
+		1B86CB0723087E35000BD657 /* AppKit */ = {
+			isa = PBXGroup;
+			children = (
+				1B86CB0823087E56000BD657 /* NSControl.swift */,
+			);
+			path = AppKit;
 			sourceTree = "<group>";
 		};
 		52D6D9721BEFF229002C0205 = {
@@ -1054,6 +1065,7 @@
 				1B34602B1F6FD42C003BF7DC /* Timer+Jetpack.swift in Sources */,
 				1B6E87691E9ADC220063D5EB /* Tuples+Repack.swift in Sources */,
 				1BB841EB2253584C006CDEA2 /* UIButton.swift in Sources */,
+				1B86CB0B23087E68000BD657 /* NSControl.swift in Sources */,
 				1B6E87461E9ADC1D0063D5EB /* ObservableProtocol.swift in Sources */,
 				1BB841EE2253584C006CDEA2 /* UILabel.swift in Sources */,
 				1BC89F551F7FEBB2008560A2 /* GetValueProtocol.swift in Sources */,
