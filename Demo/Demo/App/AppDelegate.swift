@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Jetpack
 
 #if swift(>=4.2)
 typealias ApplicationLaunchOptionsKey = UIApplication.LaunchOptionsKey
@@ -22,16 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [ApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        let m = ListModel(items: ListPersistentStorage.load() ?? [])
+        let homeViewModel = HomeViewModel(items: ListPersistentStorage.load() ?? [])
         
-        m.items.subscribe {
-            ListPersistentStorage.save(items: $0.0)
-        }
         
-        let vm = ListViewModel(model: m)
-        let vc = ListViewController(viewModel: vm)
-        
-        w.rootViewController = UINavigationController(rootViewController: vc)
+        w.rootViewController = HomeNavigationController(viewModel: homeViewModel)
         w.makeKeyAndVisible()
         
         return true
@@ -61,4 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+
+
+
+
+
+
 

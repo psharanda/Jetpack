@@ -12,7 +12,7 @@ public typealias TableViewCellEditingStyle = UITableViewCell.EditingStyle
 public typealias TableViewCellEditingStyle = UITableViewCellEditingStyle
 #endif
 
-class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ListViewController: UITableViewController {
     
     private let addButton = UIBarButtonItem(barButtonSystemItem: .add)
     private let editButton = UIBarButtonItem(barButtonSystemItem: .edit)
@@ -23,12 +23,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private var didLoadTableView = false
     
-    let viewModel: ListViewModelProtocol
+    let viewModel: ListViewModel
     
-    init(viewModel: ListViewModelProtocol) {
+    init(viewModel: ListViewModel) {
         self.viewModel = viewModel
         
-        super.init(nibName: nil, bundle: nil)
+        super.init(style: .plain)
         
         //perform bindings
         self.viewModel.items.diff.subscribe { [weak self] in
@@ -56,31 +56,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var tableView = UITableView(frame: .zero, style: .plain)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "TODO"
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        view.addSubview(tableView)
+        title = "TODO"
 
         navigationItem.rightBarButtonItems = [addButton, undoButton]
         navigationItem.leftBarButtonItems = [editButtonItem, cleanButton]
     }
-    
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.setEditing(editing, animated: animated)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-    }
-    
+
     //MARK: - update
     
     private func updateTableView(oldItems: [Item], newItems: [Item], editEvent: ArrayEditEvent) {
@@ -125,12 +109,12 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //MARK: - UITableViewDataSource
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         didLoadTableView = true
         return viewModel.items.value.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellId = "CellId"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId) ?? UITableViewCell(style: .default, reuseIdentifier: cellId)
         
@@ -140,11 +124,11 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.didToggle(at: indexPath.row)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelect(at: indexPath.row)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: TableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: TableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         switch editingStyle {
         case .delete:
             viewModel.didDelete(at: indexPath.row)
@@ -153,15 +137,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         viewModel.didMove(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
 }

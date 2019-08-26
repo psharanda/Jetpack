@@ -6,7 +6,7 @@
 import Foundation
 import Jetpack
 
-class ListViewModel: ListViewModelProtocol {
+class ListViewModel {
     
     private let model: ListModel
     
@@ -26,8 +26,14 @@ class ListViewModel: ListViewModelProtocol {
         model.appendItem(Item(id: UUID().uuidString, title: title, completed: false))
     }
     
-    func didToggle(at: Int) {
-        model.toggleItem(at: at)
+    var onToggle: Observable<Int> {
+        return _onToggle.asObservable
+    }
+    
+    private let _onToggle = PublishSubject<Int>()
+    
+    func didSelect(at: Int) {
+        _onToggle.update(at)
     }
     
     func didDelete(at: Int) {
