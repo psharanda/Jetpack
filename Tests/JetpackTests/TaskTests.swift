@@ -3,6 +3,8 @@
 //  Copyright © 2017 Task. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS) || os(macOS)
+
 import Foundation
 import XCTest
 @testable import Jetpack
@@ -479,4 +481,6 @@ extension TaskTests {
         ]
     }
 }
+#endif
+
 #endif

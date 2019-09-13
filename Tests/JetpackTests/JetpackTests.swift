@@ -6,6 +6,8 @@
 //  Copyright © 2017 Jetpack. All rights reserved.
 //
 
+#if os(iOS) || os(tvOS) || os(macOS)
+
 import Foundation
 
 #if os(macOS)
@@ -1195,4 +1197,6 @@ extension JetpackTests {
         ]
     }
 }
+#endif
+
 #endif

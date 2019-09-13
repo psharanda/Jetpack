@@ -1,10 +1,9 @@
 //
-//  NSButton.swift
-//  Jetpack-iOS
-//
 //  Created by Pavel Sharanda on 8/17/19.
 //  Copyright © 2019 Jetpack. All rights reserved.
 //
+
+#if os(macOS)
 
 import Cocoa
 
@@ -22,3 +21,5 @@ extension JetpackExtensions where Base: NSButton {
         }).asObservable
     }
 }
+
+#endif
