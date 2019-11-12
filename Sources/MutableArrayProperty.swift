@@ -17,35 +17,35 @@ public final class MutableArrayProperty<T>: MutableMetaProperty<[T], ArrayEditEv
         super.init(value)
     }
     
-    public func update(at: Int, with value: T) {
-        changeWithEvent {
-            $0[at] = value
-            return .update(at)
+    public func update(at index: Int, with value: T) {
+        mutateWithEvent {
+            $0[index] = value
+            return .update(index)
         }
     }
 
-    public func remove(at: Int) {
-        changeWithEvent {
-            $0.remove(at: at)
-            return .remove(at)
+    public func remove(at index: Int) {
+        mutateWithEvent {
+            $0.remove(at: index)
+            return .remove(index)
         }
     }
     
     public func append(_ newElement: T) {        
-        return insert(newElement, at: value.count)
+        insert(newElement, at: value.count)
     }
     
-    public func insert(_ newElement: T, at: Int) {
-        changeWithEvent {
-            $0.insert(newElement, at: at)
-            return .insert(at)
+    public func insert(_ newElement: T, at index: Int) {
+        mutateWithEvent {
+            $0.insert(newElement, at: index)
+            return .insert(index)
         }
     }
     
-    public func move(from: Int, to: Int) {
-        changeWithEvent {
-            $0.insert($0.remove(at: from), at: to)
-            return .move(from, to)
+    public func move(from fromIndex: Int, to toIndex: Int) {
+        mutateWithEvent {
+            $0.insert($0.remove(at: fromIndex), at: toIndex)
+            return .move(fromIndex, toIndex)
         }
     }
 }
@@ -58,56 +58,56 @@ public final class MutableArray2DProperty<T>: MutableMetaProperty<[[T]], Array2D
     }
     
     public func updateSection(at: Int, with value: [T]) {
-        changeWithEvent {
+        mutateWithEvent {
             $0[at] = value
             return .updateSection(at)
         }
     }
     
     public func removeSection(at: Int) {
-        changeWithEvent {
+        mutateWithEvent {
             $0.remove(at: at)
             return .removeSection(at)
         }
     }
     
     public func insertSection(_ newElement: [T], at: Int) {
-        changeWithEvent {
+        mutateWithEvent {
             $0.insert(newElement, at: at)
             return .insertSection(at)
         }
     }
     
     public func moveSection(from: Int, to: Int) {
-        changeWithEvent {
+        mutateWithEvent {
             $0.insert($0.remove(at: from), at: to)
             return .moveSection(from, to)
         }
     }
     
     public func updateItem(at: IndexPath, with value: T) {
-        changeWithEvent {
+        mutateWithEvent {
             $0[at.section][at.item] = value
             return .updateItem(at)
         }
     }
     
     public func removeItem(at: IndexPath) {
-        changeWithEvent {
+        mutateWithEvent {
             $0[at.section].remove(at: at.item)
             return .removeItem(at)
         }
     }
     
     public func insertItem(_ newElement: T, at: IndexPath) {
-        changeWithEvent {
+        mutateWithEvent {
             $0[at.section].insert(newElement, at: at.item)
             return .insertItem(at)
         }
     }
     
     public func moveItem(from: IndexPath, to: IndexPath) {
-        changeWithEvent {
+        mutateWithEvent {
             $0[to.section].insert($0[from.section].remove(at: from.item), at: to.item)
             return .moveItem(from, to)
         }

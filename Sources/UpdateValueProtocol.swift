@@ -17,4 +17,3 @@ extension UpdateValueProtocol where UpdateValueType == Void {
     }
 }
 
-

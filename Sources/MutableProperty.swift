@@ -6,72 +6,61 @@
 import Foundation
 
 /// Wrapper around some mutable value. ('set/get/subscribe')
-public final class MutableProperty<T>: ObservableProtocol, GetValueProtocol, UpdateValueProtocol {
+public final class MutableProperty<T>: ObserveValueProtocol, GetValueProtocol, UpdateValueProtocol, MutateValueProtocol {
+    
+    private var _value: T
+    private let innerUnsafeSubject = UnsafeSubject<T>()
+    private let subjectLock = Lock()
+    private let valueLock = Lock()
+    private let mutateLock = Lock()
+    
+    public init(_ value: T) {
+        _value = value
+    }
     
     public var value: T {
         get {
-            return property.value
+            valueLock.synchronized {
+                return _value
+            }
         }
         set {
-            update(newValue)
+            mutate { $0 = newValue }
         }
     }
     
-    private let property: Property<T>
-    private let setter:  (T)->Void
-    
-    public init(_ value: T) {
-        
-        let subject = PublishSubject<T>()
-        var v = value
-        
-        property = Property(observable: subject.asObservable) {
-            return v
-        }
-        setter = {
-            v = $0
-            subject.update(v)
-        }
-    }
-    
-    init(property: Property<T>, setter: @escaping (T)->Void) {
-        self.property = property
-        self.setter = setter
-    }
-    
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
-        return property.subscribe(observer)
+        subjectLock.synchronized {
+            observer(_value)
+            return innerUnsafeSubject.subscribe(observer).locked(with: subjectLock)
+        }
     }
     
     public func update(_ newValue: T) {
-        setter(newValue)
+        mutate { $0 = newValue }
+    }
+    
+    public func mutate(_ transform: (inout T) -> ()) {
+        mutateLock.synchronized {
+            
+            let newValue: T = valueLock.synchronized {
+                transform(&_value)
+                return _value
+            }
+
+            subjectLock.synchronized {
+                innerUnsafeSubject.update(newValue)
+            }
+        }
     }
     
     public var asProperty: Property<ValueType> {
-        return property
+        return Property(observable: asObservable) { self.value }
     }
-    
-    public func change(_ handler: (inout T)-> Void) {
-        handler(&value)
+
+    public var asMainThreadProperty: Property<ValueType> {
+        return Property(observable: dispatch(on: .main)) { self.value }
     }
 }
 
-extension MutableProperty {
-    
-    public func map<U>(transform: @escaping (T) -> U, reduce: @escaping (T, U) -> T) -> MutableProperty<U> {
-        let p = property.map(transform)
-        return MutableProperty<U>(property: p) {
-            self.update(reduce(self.value, $0))
-        }
-    }
-    
-    public func map<U>(keyPath: WritableKeyPath<T, U>) -> MutableProperty<U> {
-        let p = property.map(keyPath: keyPath)
-        return MutableProperty<U>(property: p) {
-            var newValue = self.value
-            newValue[keyPath: keyPath] = $0
-            self.update(newValue)
-        }
-    }
-}
+

@@ -7,38 +7,25 @@ import Foundation
 
 
 /// Object which holds and manages observers and can broadcast values to them ('set/subscribe')
-public final class PublishSubject<T>: ObservableProtocol, UpdateValueProtocol {
-  
-    private var observers: [PublishSubjectObserver<T>] = []
-    private var lastToken: UInt = 0
-    
+public final class PublishSubject<T>: ObserveValueProtocol, UpdateValueProtocol {
+
+    private let innerUnsafeSubject = UnsafeSubject<T>()
+    private let lock = Lock()
+
     public init() { }
     
     public func update(_ newValue: T) {
-        observers.forEach {
-            $0.observer(newValue)
+        lock.synchronized {
+            innerUnsafeSubject.update(newValue)
         }
     }
     
-    @discardableResult
     public func subscribe(_ observer: @escaping (T) -> Void) -> Disposable {
-        lastToken += 1
-        
-        let token = lastToken
-        observers.append(PublishSubjectObserver<T>(token: token, observer: observer))
-        
-        return BlockDisposable {
-            guard let idx = (self.observers.firstIndex { $0.token == token }) else {
-                return
-            }
-            
-            self.observers.remove(at: idx)
+        lock.synchronized {
+            return innerUnsafeSubject.subscribe(observer).locked(with: lock)
         }
     }
 }
 
-private struct PublishSubjectObserver<T> {
-    let token: UInt
-    let observer: (T)->Void
-}
+
 

@@ -6,7 +6,7 @@
 import Foundation
 
 
-extension ObservableProtocol {
+extension ObserveValueProtocol {
     
     public func flatMapLatest<U>(_ f: @escaping ((ValueType) -> Observable<U>)) -> Observable<U> {
         return Observable { observer in

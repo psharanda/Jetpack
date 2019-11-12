@@ -9,15 +9,6 @@ public protocol Disposable {
     func dispose()
 }
 
-extension Disposable {
-    func with(disposable: Disposable) -> Disposable {
-        let c = CompositeDisposable()
-        c.add(disposable)
-        c.add(self)
-        return c
-    }
-}
-
 public final class  EmptyDisposable: Disposable {
     
     public init() {}
@@ -27,49 +18,75 @@ public final class  EmptyDisposable: Disposable {
 
 public final class BlockDisposable: Disposable {
     private var block: (() -> Void)?
+    private let lock = Lock()
     
     public init(block: @escaping () -> Void) {
         self.block = block
     }
     
     public func dispose() {
-        block?()
-        block = nil
+        lock.synchronized {
+            block?()
+            block = nil
+        }
     }
 }
 
+
 public final class SwapableDisposable: Disposable {
     private var disposable: Disposable?
+    private let lock = Lock()
     
     public init() { }
     
-    public func swap(with disposable: Disposable) {
-        dispose()
-        self.disposable = disposable
+    public func swap(with other: Disposable?) {
+        lock.synchronized {
+            disposable?.dispose()
+            disposable = other
+        }
     }
+    
     public func dispose() {
-        disposable?.dispose()
-        disposable = nil
+        swap(with: nil)
     }
 }
 
 public final class CompositeDisposable: Disposable {
-    private var disposables: [Disposable] = []
+    private var disposables = [Disposable]()
+    private let lock = Lock()
     
-    public init() {
-    }
+    public init() { }
     
-    public func add(_ disposable: Disposable?) {
-        if let d = disposable {
-            disposables.append(d)
+    public func add(_ disposable: Disposable) {
+        lock.synchronized {
+            disposables.append(disposable)
         }
     }
     
     public func dispose() {
-        disposables.forEach {
-            $0.dispose()
+        lock.synchronized {
+            disposables.forEach {
+                $0.dispose()
+            }
+            disposables.removeAll()
         }
-        disposables.removeAll()
+    }
+}
+
+public final class ScopedDisposable: Disposable {
+    
+    private let disposable: Disposable
+    
+    public init(disposable: Disposable) {
+        self.disposable = disposable
+    }
+    
+    public func dispose() {
+        disposable.dispose()
+    }
+    
+    deinit {
+        disposable.dispose()
     }
 }
 
@@ -82,18 +99,34 @@ public final class DisposeBag {
         multi.add(disposable)
     }
     
-    public func dispose() {
-        multi.dispose()
-    }
-    
     deinit {
-        dispose()
+        multi.dispose()
     }
 }
 
 
 extension Disposable {
+    
     public func disposed(by bag: DisposeBag) {
         bag.add(self)
+    }
+    
+    public func with(disposable: Disposable) -> Disposable {
+        let c = CompositeDisposable()
+        c.add(disposable)
+        c.add(self)
+        return c
+    }
+    
+    public func scoped() -> Disposable {
+        return ScopedDisposable(disposable: self)
+    }
+    
+    func locked(with lock: Lock) -> Disposable {
+        return BlockDisposable {
+            lock.synchronized {
+                self.dispose()
+            }
+        }
     }
 }

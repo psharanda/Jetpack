@@ -5,7 +5,7 @@
 
 import Foundation
 
-extension ObservableProtocol {
+extension ObserveValueProtocol {
     
     public func log(_ tag: String? = nil) -> Observable<ValueType> {
         let s = tag ?? "\(ValueType.self)"

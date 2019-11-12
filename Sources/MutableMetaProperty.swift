@@ -5,60 +5,67 @@
 
 import Foundation
 
-open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObservableProtocol, UpdateValueProtocol, GetValueProtocol {
-
-    public var value: T {
-        get {
-            return property.value
-        }
-        set {
-            update(newValue)
-        }
-    }
-
-    private let property: MetaProperty<T, Event>
-    private let setter:  (T, Event)->Void
+open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObserveValueProtocol, GetValueProtocol, UpdateValueProtocol, MutateValueProtocol  {
+    
+    private var _value: T
+    private let innerUnsafeSubject = UnsafeSubject<(T, Event)>()
+    private let subjectLock = Lock()
+    private let valueLock = Lock()
+    private let mutateLock = Lock()
 
     public init(_ value: T) {
-
-        let subject = PublishSubject<(T, Event)>()
-        var v = value
-
-        property = MetaProperty(observable: subject.asObservable) {
-            return v
+        _value = value
+    }
+    
+    public var value: T {
+        get {
+            valueLock.synchronized {
+                return _value
+            }
         }
-        setter = {
-            v = $0
-            subject.update((v, $1))
+        set {
+            mutate { $0 = newValue }
         }
     }
 
-    public func update(_ newValue: T) {
-        setter(newValue, .resetEvent)
-    }
-
-    @discardableResult
     public func subscribe(_ observer: @escaping ((T, Event)) -> Void) -> Disposable {
-        return property.subscribe(observer)
+        subjectLock.synchronized {
+            observer((_value, .resetEvent))
+            return innerUnsafeSubject.subscribe(observer).locked(with: subjectLock)
+        }
     }
-
-    public var asProperty: Property<T> {
-        return property.asProperty
+    
+    public func update(_ newValue: T) {
+        mutate { $0 = newValue }
     }
-
-    public var asMutableProperty: MutableProperty<T> {
-        return MutableProperty(property: asProperty) {
-            self.update($0)
+    
+    public func mutate(_ transform: (inout T) -> ()) {
+        mutateWithEvent {
+            transform(&$0)
+            return .resetEvent
         }
     }
 
+    public func mutateWithEvent(_ transform: (inout T)-> Event) {
+        mutateLock.synchronized {
+            
+            let (newValue, newEvent): (T, Event
+                ) =  valueLock.synchronized {
+                let event = transform(&_value)
+                return ( _value, event)
+            }
+
+            subjectLock.synchronized {
+                innerUnsafeSubject.update((newValue, newEvent))
+            }
+        }        
+    }
+    
     public var asMetaProperty: MetaProperty<T, Event> {
-        return property
+        return MetaProperty(observable: asObservable) { self.value }
     }
 
-    public func changeWithEvent(_ handler: (inout T)-> Event) {
-        var v = value
-        let event = handler(&v)
-        setter(v, event)
+    public var asMainThreadMetaProperty: MetaProperty<T, Event> {
+        return MetaProperty(observable: dispatch(on: .main)) { self.value }
     }
 }

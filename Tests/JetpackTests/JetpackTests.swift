@@ -6,8 +6,6 @@
 //  Copyright © 2017 Jetpack. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS) || os(macOS)
-
 import Foundation
 
 #if os(macOS)
@@ -21,24 +19,6 @@ import Jetpack
 
 class JetpackTests: XCTestCase {
     
-    func testJustValueObservable() {
-        
-        _ = Observable.just(1)
-        _ = Task.just(value: 1)
-        _ = Task<Int>.just(error: NSError() )
-        
-        let value = 10
-        let o = Observable.just(value)
-        
-        var fired = false
-        
-        o.subscribe {
-            fired = true
-            XCTAssertEqual(value, $0)
-        }
-        
-        XCTAssertEqual(fired, true)
-    }
     
     func testObservable() {
         
@@ -72,41 +52,11 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(fired, true)
         
-        button.click.map { _ in "hello" }.map { $0.uppercased() }.subscribe {
+        _ = button.click.map { _ in "hello" }.map { $0.uppercased() }.subscribe {
             XCTAssertEqual($0, "HELLO")
         }
         
         button.performClick()
-    }
-    
-    func testState() {
-        
-        class Test {
-            private let state = MutableProperty(0)
-            var stateProperty: Property<Int> {
-                return state.asProperty
-            }
-            
-            var consumer: Consumer<Int> {
-                return state.asConsumer
-            }
-        }
-        
-        
-        let t = Test()
-        
-        var fired = false
-        var value = 0
-        
-        t.stateProperty.map { $0 * 10 }.subscribe {
-            fired = true
-            XCTAssertEqual(value, $0)
-        }
-        
-        value = 100
-        t.consumer.update(value/10)
-        
-        XCTAssertEqual(fired, true)
     }
     
     func testFiredTimes() {
@@ -146,63 +96,6 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(firedTimes, 4)
     }
-    
-// this test requires host application
-//    func testJetpackButton() {
-//        let button = UIButton()
-//        var firedTimes = 0
-//
-//        button.jx.clicked.subscribe {
-//            firedTimes += 1
-//        }
-//
-//        button.sendActions(for: .touchUpInside)
-//
-//        XCTAssertEqual(firedTimes, 1)
-//
-//        button.sendActions(for: .touchUpInside)
-//
-//        XCTAssertEqual(firedTimes, 2)
-//
-//        button.jx_reset()
-//
-//        button.sendActions(for: .touchUpInside)
-//
-//        XCTAssertEqual(firedTimes, 2)
-//
-//        let d = button.jx.clicked.subscribe {
-//            firedTimes += 1
-//        }
-//
-//        button.sendActions(for: .touchUpInside)
-//
-//        XCTAssertEqual(firedTimes, 3)
-//
-//        d.dispose()
-//
-//        button.sendActions(for: .touchUpInside)
-//
-//        XCTAssertEqual(firedTimes, 3)
-//    }
-    
-    
-    #if os(macOS)
-    
-    #else
-    func testJetpackButton2() {
-    
-        let subject = PublishSubject<UIImage>()
-
-        do {
-        let button = UIButton()
-        subject.bind(button.jx.backgroundImage)
-        }
-
-        subject.update(UIImage())
-    
-    }
-    #endif
-    
     
     func testCombineLatest() {
         let a = PublishSubject<Int>()
@@ -351,133 +244,6 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(firedTimes, 2)
     }
     
-    func testCombine() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<String>()
-        
-        var firedTimes = 0
-        var i: Int?
-        var s: String?
-        
-        let d = a.combine(b).subscribe {
-            firedTimes += 1
-            i = $0.0
-            s = $0.1
-        }
-        
-        a.update(10)
-        
-        XCTAssertEqual(i, 10)
-        XCTAssertEqual(s, nil)
-        
-        
-        b.update("Hello")
-        
-        XCTAssertEqual(i, 10)
-        XCTAssertEqual(s, "Hello")
-        
-        XCTAssertEqual(firedTimes, 2)
-        
-        d.dispose()
-        
-        a.update(10)
-        b.update("Hello")
-        
-        XCTAssertEqual(firedTimes, 2)
-    }
-    
-    func testCombine4() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<String>()
-        let c = PublishSubject<Int>()
-        let d = PublishSubject<String>()
-        
-        var firedTimes = 0
-        var i: Int?
-        var s: String?
-        var i2: Int?
-        var s2: String?
-        
-        let disposable = a.combine(b, c, d).subscribe {
-            firedTimes += 1
-            i = $0.0
-            s = $0.1
-            i2 = $0.2
-            s2 = $0.3
-        }
-        
-        a.update(10)
-        
-        XCTAssertEqual(i, 10)
-        XCTAssertEqual(s, nil)
-        XCTAssertEqual(i2, nil)
-        XCTAssertEqual(s2, nil)
-        
-        b.update("Hello")
-        
-        XCTAssertEqual(i, 10)
-        XCTAssertEqual(s, "Hello")
-        XCTAssertEqual(i2, nil)
-        XCTAssertEqual(s2, nil)
-        
-        c.update(10)
-        d.update("Hello")
-        XCTAssertEqual(firedTimes, 4)
-        
-        disposable.dispose()
-        
-        a.update(10)
-        b.update("Hello")
-        
-        XCTAssertEqual(firedTimes, 4)
-    }
-    
-    func testCombineSameType() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<Int>()
-        let c = PublishSubject<Int>()
-        let d = PublishSubject<Int>()
-        
-        var firedTimes = 0
-        var a_: Int?
-        var b_: Int?
-        var c_: Int?
-        var d_: Int?
-        
-        let disposable = a.combine([b, c, d]).subscribe {
-            firedTimes += 1
-            a_ = $0[0]
-            b_ = $0[1]
-            c_ = $0[2]
-            d_ = $0[3]
-        }
-        
-        a.update(10)
-        
-        XCTAssertEqual(a_, 10)
-        XCTAssertEqual(b_, nil)
-        XCTAssertEqual(c_, nil)
-        XCTAssertEqual(d_, nil)
-        
-        b.update(10)
-        
-        XCTAssertEqual(a_, 10)
-        XCTAssertEqual(b_, 10)
-        XCTAssertEqual(c_, nil)
-        XCTAssertEqual(d_, nil)
-        
-        c.update(10)
-        d.update(10)
-        XCTAssertEqual(firedTimes, 4)
-        
-        disposable.dispose()
-        
-        a.update(10)
-        b.update(10)
-        
-        XCTAssertEqual(firedTimes, 4)
-    }
-    
     func testMerge() {
         let a = PublishSubject<Int>()
         let b = PublishSubject<Int>()
@@ -505,126 +271,6 @@ class JetpackTests: XCTestCase {
         b.update(10)
         
         XCTAssertEqual(firedTimes, 3)
-    }
-    
-    func testSample() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<Int>()
-        
-        var firedTimes = 0
-        
-        let disposable = a.sample(b).subscribe {
-            firedTimes += 1
-            XCTAssertEqual($0, 10)
-        }
-        
-        a.update(10)
-        XCTAssertEqual(firedTimes, 0)
-        
-        b.update(0)
-        XCTAssertEqual(firedTimes, 1)
-        
-        b.update(0)
-        XCTAssertEqual(firedTimes, 1)
-        
-        disposable.dispose()
-        
-        a.update(10)
-        b.update(10)
-        
-        XCTAssertEqual(firedTimes, 1)
-    }
-
-    func testWithLatestFrom() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<Int>()
-        
-        var firedTimes = 0
-        
-        let disposable = a.withLatestFrom(b).subscribe {
-            firedTimes += 1
-            XCTAssertEqual($0.0, 10)
-            XCTAssertEqual($0.1, 5)
-        }
-        
-        a.update(10)
-        a.update(10)
-        XCTAssertEqual(firedTimes, 0)
-        
-        b.update(5)
-        XCTAssertEqual(firedTimes, 0)
-        
-        a.update(10)
-        XCTAssertEqual(firedTimes, 1)
-        
-        disposable.dispose()
-        
-        a.update(10)
-        b.update(5)
-        
-        XCTAssertEqual(firedTimes, 1)
-    }
-    
-    func testAmb() {
-        let a = PublishSubject<Int>()
-        let b = PublishSubject<Int>()
-        let c = PublishSubject<Int>()
-        
-        var firedTimes = 0
-        
-        let disposable = a.amb(b, c).subscribe {
-            firedTimes += 1
-            XCTAssertEqual($0, 10)
-        }
-        
-        a.update(10)
-        a.update(10)
-        XCTAssertEqual(firedTimes, 2)
-        
-        b.update(20)
-        XCTAssertEqual(firedTimes, 2)
-        
-        c.update(30)
-        XCTAssertEqual(firedTimes, 2)
-        
-        disposable.dispose()
-        
-        a.update(10)
-        b.update(5)
-        b.update(30)
-        
-        XCTAssertEqual(firedTimes, 2)
-    }
-    
-    func testBufferSize() {
-        let a = PublishSubject<Int>()
-        
-        var output: [Int] = []
-        let disposable = a.buffer(timeInterval: 100, maxSize: 3).subscribe {
-            output = $0
-        }
-        
-        a.update(1)
-        a.update(2)
-        XCTAssertEqual(output, [])
-    
-        a.update(3)
-        XCTAssertEqual(output, [1, 2, 3])
-        
-        a.update(4)
-        a.update(5)
-        XCTAssertEqual(output, [1, 2, 3])
-        
-        a.update(6)
-        XCTAssertEqual(output, [4, 5, 6])
-        
-        disposable.dispose()
-        
-        a.update(6)
-        a.update(6)
-        a.update(6)
-        
-        XCTAssertEqual(output, [4, 5, 6])
     }
     
     func testFlatMapLatest() {
@@ -655,27 +301,6 @@ class JetpackTests: XCTestCase {
         buttonClick.update()
     }
     
-    func testFlatMapLatestTask() {
-        
-        let buttonClick = PublishSubject<Void>()
-        
-        var genValue = 10
-        let expectedValue = Result(value: 20)
-        
-        buttonClick
-            .flatMapLatest { _ in
-                return Task.performed(workerQueue: DispatchQueue.global(qos: .background), worker: { .success(genValue) }).asObservable
-            }
-            .subscribe {
-                XCTAssertEqual($0.isEqual(expectedValue), true)
-        }
-        
-        buttonClick.update()
-        
-        genValue = 20
-        buttonClick.update()
-    }
-    
     func testFlatMapMerge() {
         
         let buttonClick = PublishSubject<Void>()
@@ -702,97 +327,6 @@ class JetpackTests: XCTestCase {
         
         genValue = 30
         buttonClick.update()
-    }
-    
-    #if os(macOS)
-
-    #else
-    func testNotificationCenter() {
-        var firedTimes = 0
-
-        let notificationName = Notification.Name("tn")
-        let disposable = NotificationCenter.default.jx.observer(forName: notificationName).subscribe { value in
-        firedTimes += 1
-        XCTAssertEqual(value.userInfo?["hello"] as! String, "world")
-        }
-
-        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["hello": "world"])
-        XCTAssertEqual(firedTimes, 1)
-
-        disposable.dispose()
-
-        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["hello": "world"])
-
-        XCTAssertEqual(firedTimes, 1)
-    }
-    #endif
-    
-    func testMemory() {
-        
-        numberOfDeinits = 0
-        
-        class View {
-            private let name = MutableProperty<String>("John")
-            deinit {
-                numberOfDeinits += 1
-            }
-            
-            var nameChanged: Observable<String> {
-                return name.asObservable
-            }
-            
-            private let value = MutableProperty<String>("FRP")
-            
-            var valueConsumer: Consumer<String> {
-                return value.asConsumer
-            }
-            
-            private var increment = 0
-            private let subject = PublishSubject<Void>()
-            
-            var subjectConsumer: Consumer<Void> {
-                return subject.asConsumer
-            }
-            
-            init() {
-                subject.subscribe { [weak self] in
-                    self?.increment += 1
-                }
-            }
-        }
-        
-        class Model {
-            private let name = MutableProperty<String>("John")
-            deinit {
-                numberOfDeinits += 1
-            }
-            
-            var nameConsumer: Consumer<String> {
-                return name.asConsumer
-            }
-            
-            private let value = MutableProperty<String>("FRP")
-            
-            var valueChanged: Observable<String> {
-                return value.asObservable
-            }
-        }
-        
-        func scope() {
-            let view = View()
-            
-            let model = Model()
-
-            view.nameChanged.bind(model.nameConsumer)
-            model.valueChanged.bind(view.valueConsumer)
-            view.nameChanged.bind(view.valueConsumer)
-            
-            view.nameChanged.just.bind(view.subjectConsumer)
-        }
-        
-        scope()
-        
-        XCTAssertEqual(numberOfDeinits, 2)
     }
 
     
@@ -838,9 +372,9 @@ class JetpackTests: XCTestCase {
         
         var initial = true
         
-        state.diff.subscribe { (oldValue, newValue) in
+        _ = state.withOldValue.subscribe { (newValue, oldValue) in
             if initial {
-                XCTAssertEqual(oldValue, 10)
+                XCTAssertEqual(oldValue, nil)
                 XCTAssertEqual(newValue, 10)
             } else {
                 XCTAssertEqual(oldValue, 10)
@@ -855,7 +389,7 @@ class JetpackTests: XCTestCase {
         let state = MutableProperty(10)
         
         var ref = 10
-        state.distinct.subscribe {
+        _ = state.distinctUntilChanged.subscribe {
             XCTAssertEqual(ref, $0)
         }
         
@@ -869,7 +403,7 @@ class JetpackTests: XCTestCase {
         let state = MutableProperty(Optional.some(10))
         
         var ref: Int? = 10
-        state.distinct.subscribe {
+        _ = state.distinctUntilChanged.subscribe {
             XCTAssertEqual(ref, $0)
         }
         
@@ -890,7 +424,7 @@ class JetpackTests: XCTestCase {
         a.append(1)
 
         var numberOfSets = 0
-        a.subscribe {
+        _ = a.subscribe {
             switch $0.1 {
             case .set:
                 s = $0.0
@@ -926,7 +460,7 @@ class JetpackTests: XCTestCase {
 
         var s = [[Int]]()
 
-        a.subscribe {
+        _ = a.subscribe {
             switch $0.1 {
             case .set:
                 s = $0.0
@@ -968,38 +502,6 @@ class JetpackTests: XCTestCase {
         XCTAssertEqual(s[2], [])
     }
     
-    func testKeyPathMap() {
-        
-        struct User {
-            var name: String
-            var age: Int
-        }
-        
-        let prop = MutableProperty(User(name: "John", age: 30))
-        
-        let nameProp = prop.map(keyPath: \User.name)
-        
-        nameProp.update("Mike")
-        
-        XCTAssertEqual(prop.value.name, nameProp.value)
-    }
-    
-    func testDeferred() {
-        var test = 10
-        
-        let obs = Observable.deferred {
-            return .just(15)
-        }
-        
-        XCTAssertEqual(test, 10)
-        
-        obs.subscribe { val in
-            test = val
-        }
-        
-        XCTAssertEqual(test, 15)
-    }
-    
     func testDeferred2() {
         var test = 10
         
@@ -1009,7 +511,7 @@ class JetpackTests: XCTestCase {
         
         XCTAssertEqual(test, 10)
         
-        obs.subscribe { val in
+        _ = obs.subscribe { val in
             test = val
         }
         
@@ -1031,10 +533,10 @@ class JetpackTests: XCTestCase {
         let ro = work.shareReplay(2)
         
         var values = [Int]()
-        ro.subscribe {
+        _ = ro.subscribe {
             values.append($0)
         }
-        ro.subscribe {
+        _ = ro.subscribe {
             values.append($0)
         }
         
@@ -1053,7 +555,7 @@ class JetpackTests: XCTestCase {
         source.update(3)
         d.dispose()
         source.update(4)
-        sr.subscribe {
+        _ = sr.subscribe {
             values.append($0)
         }
         source.update(5)
@@ -1106,8 +608,7 @@ class JetpackTests: XCTestCase {
         var values = [Int]()
         let source = PublishSubject<Int>()
         
-        source
-            .throttle(timeInterval: 0.1)
+        _ = source.throttle(timeInterval: 0.1, on: .main)
             .subscribe {
                 values.append($0)
         }
@@ -1130,60 +631,265 @@ class JetpackTests: XCTestCase {
             XCTAssertNil(error)
         }
     }
+    
+    func testBind() {
+        struct Test {
+            var isEnabled = false
+        }
+        
+        let p = MutableProperty(Test())
+        
+        _ = Observable.just(true).bind(to: p) { to, from  in
+            to.isEnabled = from
+        }
+        
+        XCTAssertTrue(p.value.isEnabled)
+        
+        _ = Observable.just(Test()).bind(to: p) { to, from in
+            to.isEnabled = from.isEnabled
+        }
+        
+        XCTAssertFalse(p.value.isEnabled)
+    }
+    
+    func testRepeated() {
+        
+        let expect = expectation(description: "result")
+        
+        var counter = 0
+        
+        var d: Disposable?
+        d = Observable.repeated(timeInterval: 0.1).subscribe {
+            counter += 1
+            
+            if counter == 5 {
+                d?.dispose()
+                expect.fulfill()
+            }
+        }
+        
+        self.waitForExpectations(timeout: 1) { error in
+            XCTAssertEqual(counter, 5)
+        }
+    }
+    
+    func testScopedDisposable() {
+        var counter = 0
+        let p = MutableProperty(())
+        
+        var d: Disposable? = p.subscribe {
+            counter += 1
+        }.scoped()
+        d = d ?? d
+        d = nil
+        
+        p.update()
+        
+        XCTAssertEqual(counter, 1)
+    }
 
+    func testStressMutableProperty() {
+        let numberOfQueues = 20
+        let numberOfIteration = 5000
+        let prop = MutableProperty(0)
+        stressTest(numberOfQueues: numberOfQueues,
+                   numberOfIterations: numberOfIteration,
+                   when: {  prop.mutate { $0 += 1} },
+                   then: { XCTAssertEqual(prop.value, numberOfQueues*numberOfIteration) })
+    }
     
-//    func testThrottleFlatMapLatest(timeIntervals: [TimeInterval], expectedValues: [Int]) {
-//        
-//        let expect = expectation(description: "result")
-//        
-//        var values = [Int]()
-//        let source = PublishSubject<Int>()
-//        
-//        source
-//            .throttle(timeInterval: 0.1)
-//            .flatMapLatest {
-//                Observable.delayed($0, timeInterval: 0.1)
-//            }
-//            .subscribe {
-//                values.append($0)
-//        }
-//        
-//        var deadline = DispatchTime.now()
-//        timeIntervals.enumerated().forEach { t in
-//            deadline = deadline + t.element
-//            DispatchQueue.main.asyncAfter(deadline: deadline) {
-//                source.update(t.offset)
-//                if t.offset == timeIntervals.count - 1 {
-//                    DispatchQueue.main.asyncAfter(deadline: deadline + 0.2) {
-//                        XCTAssertEqual(values, expectedValues)
-//                        expect.fulfill()
-//                    }
-//                }
-//            }
-//        }
-//        
-//        self.waitForExpectations(timeout: 5) { error in
-//            XCTAssertNil(error)
-//        }
-//    }
-    
-    func testChange() {
+    func testStressMutablePropertyOrder() {
+        let numberOfQueues = 20
+        let numberOfIteration = 50
         let prop = MutableProperty(0)
         
-        var numberOfFires = 0
-        
-        prop.subscribe { _ in
-            numberOfFires += 1
+        var counter = 0
+        _ = prop.subscribe {
+            XCTAssertEqual($0, counter)
+            counter += 1
         }
         
-        XCTAssertEqual(numberOfFires, 1)
-        
-        prop.change {
-            $0 = 10
-            $0 = 11
+        stressTest(numberOfQueues: numberOfQueues,
+                   numberOfIterations: numberOfIteration,
+                   when: {  prop.mutate { $0 += 1} },
+                   then: { XCTAssertEqual(prop.value, numberOfQueues*numberOfIteration) })
+    }
+
+
+    func testStressCombine() {
+        let numberOfQueues = 20
+        let numberOfIteration = 5000
+
+        let prop1 = MutableProperty(0)
+        let prop2 = MutableProperty(0)
+
+        var counter = 0
+
+        _ = prop1.combineLatest(prop2).subscribe { _ in
+            counter += 1
+        }
+
+        let when = {
+            prop1.update(0)
+            prop2.update(0)
+        }
+
+        let then = {
+            XCTAssertEqual(counter, numberOfQueues*numberOfIteration*2 + 1)
+        }
+
+        stressTest(numberOfQueues: numberOfQueues, numberOfIterations: numberOfIteration, when: when, then: then)
+    }
+
+    func testStressZip() {
+        let numberOfQueues = 20
+        let numberOfIteration = 5000
+
+        let prop1 = MutableProperty(0)
+        let prop2 = MutableProperty(0)
+
+        var counter = 0
+
+        _ = prop1.zip(prop2).subscribe { _ in
+            counter += 1
+        }
+
+        let when = {
+            prop1.update(0)
+            prop2.update(0)
         }
         
-        XCTAssertEqual(numberOfFires, 2)
+        stressTest(numberOfQueues: numberOfQueues, numberOfIterations: numberOfIteration, when: when, then: {})
+    }
+
+    func testStressTakeFirst() {
+        let numberOfQueues = 20
+        let numberOfIteration = 5000
+        let prop = MutableProperty(0)
+
+        var counter = 0
+
+        let first = 10
+
+        _ = prop.take(first: first).subscribe { _ in
+            counter += 1
+        }
+
+        stressTest(numberOfQueues: numberOfQueues,
+                   numberOfIterations: numberOfIteration,
+                   when: {  prop.mutate { $0 += 1} },
+                   then: { XCTAssertEqual(counter, first) })
+    }
+
+    func testStressTakeWhile() {
+        let numberOfQueues = 20
+        let numberOfIteration = 5000
+        let prop = MutableProperty(0)
+
+        var counter = 0
+
+        let first = numberOfQueues * numberOfIteration - 1
+
+        _ = prop.take(while: { value in
+            return value < first
+
+        }).subscribe { _ in
+            counter += 1
+        }
+
+        stressTest(numberOfQueues: numberOfQueues,
+                   numberOfIterations: numberOfIteration,
+                   when: {  prop.mutate { $0 += 1} },
+                   then: { XCTAssertEqual(counter, first) })
+    }
+    
+    func testStressShareReplay() {
+        let numberOfQueues = 20
+        let numberOfIteration = 10
+        let prop = MutableProperty(0)
+        let replay = prop.shareReplay()
+        
+        _ = stressTest(numberOfQueues: numberOfQueues,
+                   numberOfIterations: numberOfIteration,
+                   when: {
+                    prop.update(0)
+                    _ = replay.subscribe { _ in  } },
+                   then: {  })
+    }
+    
+    private func stressTest(numberOfQueues: Int,
+                            numberOfIterations: Int,
+                            when: @escaping ()->Void,
+                            then: ()->Void) {
+
+        let group = DispatchGroup()
+
+        for _ in 0..<numberOfQueues {
+            group.enter()
+            DispatchQueue.global(qos: .utility).async {
+                for _ in 0..<numberOfIterations {
+                    when()
+                }
+                group.leave()
+            }
+        }
+
+        group.wait()
+
+        then()
+    }
+
+    func testReactive() {
+
+        let expect = expectation(description: "result")
+
+        class ViewModel {
+            @Reactive(ui: true) public private(set) var counter = 0
+            @Subject<Void>(ui: true) public private(set) var didFinish
+
+            func touch() {
+                _counter.mutableProperty.update(0)
+                _didFinish.publishSubject.update()
+            }
+        }
+
+        let viewModel = ViewModel()
+
+        _ = viewModel.$didFinish.subscribe { _ in
+            XCTAssertTrue(Thread.isMainThread)
+        }
+
+        _ = viewModel.$counter.subscribe { _ in
+            XCTAssertTrue(Thread.isMainThread)
+        }
+
+        let numberOfQueues = 20
+        let numberOfIterations = 10
+
+        expect.expectedFulfillmentCount = numberOfQueues
+
+        for _ in 0..<numberOfQueues {
+            DispatchQueue.global(qos: .utility).async {
+                for _ in 0..<numberOfIterations {
+                    viewModel.touch()
+                }
+                expect.fulfill()
+            }
+        }
+
+        self.waitForExpectations(timeout: 3) { error in
+            XCTAssertNil(error)
+        }
+    }
+
+    func testDeadlock() {
+        let p = MutableProperty(0)
+
+        _ = p.asMainThreadProperty.subscribe { _ in
+            _ = p.subscribe { _ in
+                p.update(p.value)
+            }
+        }
     }
 }
 
@@ -1197,6 +903,4 @@ extension JetpackTests {
         ]
     }
 }
-#endif
-
 #endif
