@@ -9,13 +9,13 @@
 import Foundation
 
 extension ObserveValueProtocol {
-    public func delay(timeInterval: TimeInterval, on queue: DispatchQueue) ->  Observable<ValueType> {
+    public func delay(timeInterval: TimeInterval, on queue: DispatchQueue) -> Observable<ValueType> {
         return flatMapLatest { value in
             return Observable.delayed(value, timeInterval: timeInterval, on: queue)
         }
     }
     
-    public func dispatch(on queue: DispatchQueue) ->  Observable<ValueType> {
+    public func dispatch(on queue: DispatchQueue) -> Observable<ValueType> {
         return flatMapLatest { value in
             return Observable.dispatched(value, on: queue)
         }

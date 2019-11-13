@@ -7,7 +7,7 @@ import Foundation
 
 extension ObserveValueProtocol {
     
-    public func map<U>(_ transform: @escaping (ValueType)-> U) -> Observable<U> {
+    public func map<U>(_ transform: @escaping (ValueType) -> U) -> Observable<U> {
         return Observable { observer in
             return self.subscribe { result in
                 observer(transform(result))
@@ -19,7 +19,7 @@ extension ObserveValueProtocol {
         return map { $0[keyPath: keyPath] }
     }
     
-    public func compactMap<U>(_ transform: @escaping (ValueType)-> U?) -> Observable<U> {
+    public func compactMap<U>(_ transform: @escaping (ValueType) -> U?) -> Observable<U> {
         return Observable { observer in
             return self.subscribe { result in
                 if let newResult = transform(result) {
@@ -120,7 +120,7 @@ extension ObserveValueProtocol {
         }
     }
 
-    public func take(while f: @escaping (ValueType)->Bool) -> Observable<ValueType> {
+    public func take(while f: @escaping (ValueType) -> Bool) -> Observable<ValueType> {
         return Observable { observer in
             var canEmit = true
             var disposable: Disposable?

@@ -12,7 +12,7 @@ final class UnsafeSubject<T> {
 
     private struct ObserverHolder<T> {
         let token: UInt
-        let observer: (T)->Void
+        let observer: (T) -> Void
     }
     
     private var observers: [ObserverHolder<T>] = []

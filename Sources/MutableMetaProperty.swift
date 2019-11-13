@@ -46,7 +46,7 @@ open class MutableMetaProperty<T, Event: ChangeEventProtocol>: ObserveValueProto
         }
     }
 
-    public func mutateWithEvent(_ transform: (inout T)-> Event) {
+    public func mutateWithEvent(_ transform: (inout T) -> Event) {
         mutateLock.synchronized {
             
             let (newValue, newEvent): (T, Event

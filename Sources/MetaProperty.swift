@@ -11,13 +11,13 @@ public protocol ChangeEventProtocol {
 
 public final class MetaProperty<T, Event: ChangeEventProtocol>: ObserveValueProtocol, GetValueProtocol {
     private let observable: Observable<(T, Event)>
-    private let getter: ()->T
+    private let getter: () -> T
 
     public var value: T {
         return getter()
     }
 
-    init(observable: Observable<(T, Event)>, getter: @escaping ()->T) {
+    init(observable: Observable<(T, Event)>, getter: @escaping () -> T) {
         self.getter = getter
         self.observable = observable
     }

@@ -9,13 +9,13 @@ import Foundation
 public final class Property<T>: ObserveValueProtocol , GetValueProtocol {
     
     private let observable: Observable<T>
-    private let getter: ()->T
+    private let getter: () -> T
     
     public var value: T {
         return getter()
     }
     
-    init(observable: Observable<T>, getter: @escaping ()->T) {
+    init(observable: Observable<T>, getter: @escaping () -> T) {
         self.getter = getter
         self.observable = observable
     }
@@ -36,7 +36,7 @@ public final class Property<T>: ObserveValueProtocol , GetValueProtocol {
         return observable.subscribe(observer)
     }
     
-    public func map<U>(_ transform: @escaping (ValueType)-> U) -> Property<U> {
+    public func map<U>(_ transform: @escaping (ValueType) -> U) -> Property<U> {
         return Property<U>(observable: map(transform)) {
             return transform(self.getter())
         }
@@ -46,7 +46,7 @@ public final class Property<T>: ObserveValueProtocol , GetValueProtocol {
         return map { $0[keyPath: keyPath] }
     }
     
-    public func compactMap<U>(_ transform: @escaping (T)-> U?) -> Property<U?> {
+    public func compactMap<U>(_ transform: @escaping (T) -> U?) -> Property<U?> {
         return Property<U?>(observable: compactMap(transform).map { Optional.some($0) }, initialValue: transform(value))
     }
     

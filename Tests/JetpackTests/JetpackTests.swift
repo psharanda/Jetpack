@@ -819,8 +819,8 @@ class JetpackTests: XCTestCase {
     
     private func stressTest(numberOfQueues: Int,
                             numberOfIterations: Int,
-                            when: @escaping ()->Void,
-                            then: ()->Void) {
+                            when: @escaping () -> Void,
+                            then: () -> Void) {
 
         let group = DispatchGroup()
 

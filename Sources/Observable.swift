@@ -29,14 +29,8 @@ public final class Observable<T>: ObserveValueProtocol {
 }
 
 extension Observable {
-
-    public static func performed(workerQueue: DispatchQueue, completionQueue: DispatchQueue, worker: @escaping () -> T) ->  Observable<T> {
-        return Observable<Void>.dispatched((), on: workerQueue)
-            .map(worker)
-            .dispatch(on: completionQueue)
-    }
     
-    public static func delayed(_ value: T, timeInterval: TimeInterval, on queue: DispatchQueue) ->  Observable<T> {
+    public static func delayed(_ value: T, timeInterval: TimeInterval, on queue: DispatchQueue) -> Observable<T> {
         return Observable { observer in
             return queue.jx_asyncAfter(deadline: .now() + timeInterval) {
                 observer(value)
@@ -68,7 +62,7 @@ extension Observable {
         }
     }
     
-    public static func dispatched(_ value: T, on queue: DispatchQueue) ->  Observable<T> {
+    public static func dispatched(_ value: T, on queue: DispatchQueue) -> Observable<T> {
         return Observable { observer in
             if queue == .main && Thread.isMainThread {
                 observer(value)
@@ -79,6 +73,10 @@ extension Observable {
                 }
             }            
         }
+    }
+    
+    public static func performed(on queue: DispatchQueue, worker: @escaping () -> T) -> Observable<T> {
+        return Observable<Void>.dispatched((), on: queue).map(worker)
     }
     
     public static func just(_ value: T) -> Observable<T> {
@@ -94,7 +92,7 @@ extension Observable {
         }
     }
     
-    public static func deferred(_ f: @escaping ()->T) -> Observable<T> {
+    public static func deferred(_ f: @escaping () -> T) -> Observable<T> {
         return Observable { observer in
             observer(f())
             return EmptyDisposable()
@@ -103,7 +101,7 @@ extension Observable {
 }
 
 extension Observable where T == Void {
-    public static func delayed(timeInterval: TimeInterval, on queue: DispatchQueue) ->  Observable<Void> {
+    public static func delayed(timeInterval: TimeInterval, on queue: DispatchQueue) -> Observable<Void> {
         return Observable.delayed((), timeInterval: timeInterval, on: queue)
     }
        
