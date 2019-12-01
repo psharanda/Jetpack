@@ -49,15 +49,10 @@ extension ObserveValueProtocol {
             var lastValue: ValueType?
 
             return self.subscribe { result in
-                if let lastValue = lastValue, !isEqual(lastValue, result) {
+                if (lastValue.map { !isEqual($0, result) }) ?? true {
+                    lastValue = result
                     observer(result)
-                } else {
-                    if lastValue == nil {
-                        observer(result)
-                    }
                 }
-                
-                lastValue = result
             }
         }
     }
@@ -69,8 +64,9 @@ extension ObserveValueProtocol {
         return Observable { observer in
             var prevValue: ValueType?
             return self.subscribe { result in
-                observer((result, prevValue))
+                let oldPrevValue = prevValue
                 prevValue = result
+                observer((result, oldPrevValue))
             }
         }
     }
@@ -109,8 +105,8 @@ extension ObserveValueProtocol {
             var disposable: Disposable?
             disposable = self.subscribe { result in
                 if counter < first {
-                    observer(result)
                     counter += 1
+                    observer(result)
                 } else {
                     disposable?.dispose()
                     disposable = nil
