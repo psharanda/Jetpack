@@ -84,7 +84,7 @@ extension ObservableProtocol where ValueType: ResultConvertible {
 
 extension ObservableProtocol where ValueType: ValueConvertible {
     /// Add handler to perform specific action on each value
-    public func forEachValue(_ handler:  @escaping(ResultValueType) -> Void) -> Observable<ValueType> {
+    public func forEachValue(_ handler:  @escaping(ValueType.ValueType) -> Void) -> Observable<ValueType> {
         return forEach { result in
             if let value = result.value {
                 handler(value)
