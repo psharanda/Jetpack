@@ -839,49 +839,6 @@ class JetpackTests: XCTestCase {
         then()
     }
 
-    func testReactive() {
-
-        let expect = expectation(description: "result")
-
-        class ViewModel {
-            @Reactive(ui: true) public private(set) var counter = 0
-            @Subject<Void>(ui: true) public private(set) var didFinish
-
-            func touch() {
-                _counter.mutableProperty.update(0)
-                _didFinish.publishSubject.update()
-            }
-        }
-
-        let viewModel = ViewModel()
-
-        _ = viewModel.$didFinish.subscribe { _ in
-            XCTAssertTrue(Thread.isMainThread)
-        }
-
-        _ = viewModel.$counter.subscribe { _ in
-            XCTAssertTrue(Thread.isMainThread)
-        }
-
-        let numberOfQueues = 20
-        let numberOfIterations = 10
-
-        expect.expectedFulfillmentCount = numberOfQueues
-
-        for _ in 0..<numberOfQueues {
-            DispatchQueue.global(qos: .utility).async {
-                for _ in 0..<numberOfIterations {
-                    viewModel.touch()
-                }
-                expect.fulfill()
-            }
-        }
-
-        self.waitForExpectations(timeout: 3) { error in
-            XCTAssertNil(error)
-        }
-    }
-
     func testDeadlock() {
         let p = MutableProperty(0)
 
